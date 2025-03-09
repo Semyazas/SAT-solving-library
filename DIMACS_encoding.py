@@ -78,5 +78,55 @@ class DIMACS_decoder:
         print(token)
         if token in {"and", "or"}:
             left = self._parse_formula(tokens)
-            right = self._parse_formula(token)
+            right = self._parse_formula(tokens)
             return FormulaNode(token, left, right)
+        
+        elif token == "not":
+            subformula = self._parse_formula(tokens)  # Apply "not" to a node
+            return FormulaNode("not", subformula)
+        
+        else:
+            self.variables.add(token)
+            return FormulaNode(token)
+
+    def NNF_tree2CNF_tree(self, root_tree: FormulaNode) -> None:
+        print(root_tree.op)
+        print(root_tree)
+        if root_tree.op == "or":
+            if root_tree.right != None and root_tree.left.op == "and":# we have: (X and Y) or P <--> (P or X) and (P or Y)
+                root_tree.op = "and"
+                P = root_tree.right
+                X = root_tree.left.left
+                Y = root_tree.left.right
+
+                root_tree.left = FormulaNode("or",P,Y)
+                root_tree.right = FormulaNode("or",P, X)
+            if root_tree.right != None and root_tree.right.op == "and":# we have: P or (X and Y) <--> (P or X) and (P or Y)
+                root_tree.op = "and"
+                P = root_tree.left
+                X = root_tree.right.left
+                Y = root_tree.right.right
+
+                root_tree.left = FormulaNode("or",P,Y)
+                root_tree.right = FormulaNode("or",P, X)
+
+            self.NNF_tree2CNF_tree(root_tree.left)
+            self.NNF_tree2CNF_tree(root_tree.right)
+
+    def NNF2CNF(self, formula: list[str]) -> list[str]:
+        """Converts a formula from Negation Normal Form (NNF) to Conjunctive Normal Form (CNF)."""
+        root_tree = self._parse_formula(formula)
+        print("NNF Syntax Tree:", root_tree)  # Debugging
+
+        self.NNF_tree2CNF_tree(root_tree)
+        print("CNF Syntax Tree:", root_tree) # Debugging
+        return []  # Placeholder until transformation is implemented
+
+
+if __name__ == "__main__":
+    decoder = DIMACS_decoder("input.txt")
+    decoder.get_formulas()
+    
+    if decoder.formulas:
+        decoder.NNF2CNF(decoder.formulas[1])  # Convert the first formula to CNF
+    print("Final Parsed Formulas:", decoder.formulas)
