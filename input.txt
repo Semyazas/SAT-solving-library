@@ -1,0 +1,8 @@
+(or  
+    (and x y)
+    (not z)
+)
+(or  
+    (and x (and (or aaa bbb) (not d)))
+    (or z (and qqq pp))
+)
