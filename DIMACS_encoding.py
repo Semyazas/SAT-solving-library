@@ -43,8 +43,6 @@ class DIMACS_decoder:
         stack = []
         formula = []
 
-        print("Tokens:", tokens)  # Debug print
-
         for token in tokens:
             if token == "(":
                 stack.append(token)
@@ -75,7 +73,7 @@ class DIMACS_decoder:
         token = tokens.pop(0)
         while token == "(" or token == ")":
             token = tokens.pop(0)
-        print(token)
+      #  print(token)
         if token in {"and", "or"}:
             left = self._parse_formula(tokens)
             right = self._parse_formula(tokens)
@@ -89,44 +87,92 @@ class DIMACS_decoder:
             self.variables.add(token)
             return FormulaNode(token)
 
+
+    def DetectOrAnd(self,root_tree : FormulaNode) -> bool:
+        if root_tree is None:
+            return False
+        if root_tree.op == "or" and (root_tree.left.op == "and" or root_tree.right.op == "and"):
+            return True
+        elif root_tree.op in {"or", "and"}:
+            return self.DetectOrAnd(root_tree.left) or self.DetectOrAnd(root_tree.right)
+
     def NNF_tree2CNF_tree(self, root_tree: FormulaNode) -> None:
-        print(root_tree.op)
-        print(root_tree)
+        if root_tree is None:
+            return
         if root_tree.op == "or":
-            if root_tree.right != None and root_tree.left.op == "and":# we have: (X and Y) or P <--> (P or X) and (P or Y)
-                root_tree.op = "and"
-                P = root_tree.right
+            # Case: (X ∧ Y) ∨ P → (P ∨ X) ∧ (P ∨ Y)
+            if root_tree.left and root_tree.left.op == "and":
                 X = root_tree.left.left
                 Y = root_tree.left.right
+                P = root_tree.right
 
-                root_tree.left = FormulaNode("or",P,Y)
-                root_tree.right = FormulaNode("or",P, X)
-            if root_tree.right != None and root_tree.right.op == "and":# we have: P or (X and Y) <--> (P or X) and (P or Y)
                 root_tree.op = "and"
+                root_tree.left = FormulaNode("or", P, X)
+                root_tree.right = FormulaNode("or", P, Y)
+
+            # Case: P ∨ (X ∧ Y) → (P ∨ X) ∧ (P ∨ Y)
+            elif root_tree.right and root_tree.right.op == "and":
                 P = root_tree.left
                 X = root_tree.right.left
                 Y = root_tree.right.right
 
-                root_tree.left = FormulaNode("or",P,Y)
-                root_tree.right = FormulaNode("or",P, X)
+                root_tree.op = "and"
+                root_tree.left = FormulaNode("or", P, X)
+                root_tree.right = FormulaNode("or", P, Y)
 
+        # Recursive call (only if left/right exists)
+        if root_tree.left:
             self.NNF_tree2CNF_tree(root_tree.left)
+        if root_tree.right:
             self.NNF_tree2CNF_tree(root_tree.right)
 
     def NNF2CNF(self, formula: list[str]) -> list[str]:
         """Converts a formula from Negation Normal Form (NNF) to Conjunctive Normal Form (CNF)."""
         root_tree = self._parse_formula(formula)
-        print("NNF Syntax Tree:", root_tree)  # Debugging
-
+    #    print("NNF Syntax Tree:", root_tree)  # Debugging
         self.NNF_tree2CNF_tree(root_tree)
-        print("CNF Syntax Tree:", root_tree) # Debugging
-        return []  # Placeholder until transformation is implemented
+     #   print("CNF Syntax Tree:", root_tree) # Debugging
+
+        while  self.DetectOrAnd(root_tree):
+            self.NNF_tree2CNF_tree(root_tree)
+    #        print("CNF Syntax Tree:", root_tree) # Debugging
+        return root_tree  # Placeholder until transformation is implemented
+    
+    def _extract_clause(self, node : FormulaNode, clause : list[str]) -> FormulaNode:
+     #   print(node)
+        if node.op == "or":
+            for child in [node.right, node.left]:
+                if child.op == "not":
+                    clause.append(child.op + " " + str(child.left))
+                
+                elif child.op == "or":
+                    self._extract_clause(child, clause)
+                else:
+                    self._extract_clause(child, clause)
+
+        elif node.op == "not":
+            clause.append(node.op + " " + str(node.left))
+            
+        elif node.op != "and":
+            clause.append(node.op)
 
 
+
+    def extract_clauses(self,formula : FormulaNode, result : list[list[str]])-> list[list[str]]:
+        if formula.op == "and":
+            self.extract_clauses(formula.left,result)
+            self.extract_clauses(formula.right,result)
+            
+        if formula.op == "or":
+            clause = []
+            self._extract_clause(formula, clause)
+            result.append(clause)
 if __name__ == "__main__":
     decoder = DIMACS_decoder("input.txt")
     decoder.get_formulas()
     
     if decoder.formulas:
-        decoder.NNF2CNF(decoder.formulas[1])  # Convert the first formula to CNF
-    print("Final Parsed Formulas:", decoder.formulas)
+        syntax_tree= decoder.NNF2CNF(decoder.formulas[1])  # Convert the first formula to CNF
+        result = []
+        decoder.extract_clauses(syntax_tree, result)
+        print(result)
