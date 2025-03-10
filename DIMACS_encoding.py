@@ -25,7 +25,9 @@ class DIMACS_decoder:
     def __init__(self, filename):
         self.filename = filename
         self.variables = set()
+        self.var2dimacs_map= {}
         self.formulas = []
+        self.dmacs2var_map = {}
 
     def split_parentheses(self, lines):
         """Splits parentheses while keeping tokens intact."""
@@ -156,8 +158,6 @@ class DIMACS_decoder:
         elif node.op != "and":
             clause.append(node.op)
 
-
-
     def extract_clauses(self,formula : FormulaNode, result : list[list[str]])-> list[list[str]]:
         if formula.op == "and":
             self.extract_clauses(formula.left,result)
@@ -167,6 +167,37 @@ class DIMACS_decoder:
             clause = []
             self._extract_clause(formula, clause)
             result.append(clause)
+    def get_var_mapping(self):
+        for i,var in enumerate(list(self.variables)):
+            self.var2dimacs_map[var] = i
+            self.dmacs2var_map[i] = var
+
+
+    def get_DIMACS(self,clauses :list[list[str]]) -> list[list[int]]:
+        DMACS_clauses = []
+        for clause in clauses:
+            DMACS_clause = []   
+            for literal in clause:
+                spl = literal.split()
+                if len(spl) > 1:
+                    DMACS_clause.append(-self.var2dimacs_map[spl[1]])
+                else:
+                    DMACS_clause.append(self.var2dimacs_map[spl[0]])
+            DMACS_clauses.append(DMACS_clause)
+        
+        return DMACS_clauses
+    
+    def print_DIMACS(self, dmacs_formula):
+        print("c")
+        for variable in self.variables:
+            print(f"c variable:  {variable} -> {self.var2dimacs_map[variable]}")
+        print(f"p cnf {len(self.variables)} {len(dmacs_formula)}")
+        for clause in dmacs_formula:
+            to_print = ""
+            for literal in clause:
+                to_print += str(literal) + " "
+            print(to_print.strip() + " 0")
+
 if __name__ == "__main__":
     decoder = DIMACS_decoder("input.txt")
     decoder.get_formulas()
