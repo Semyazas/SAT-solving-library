@@ -1,4 +1,5 @@
 import re
+from Syntax_tree import FormulaTree
 
 def read_file(filename: str) -> list[str]:
     """Reads a file and returns a list of lines stripped of whitespace."""
@@ -24,158 +25,26 @@ class FormulaNode:
 class DIMACS_decoder:
     def __init__(self, filename):
         self.filename = filename
-        self.variables = set()
+        self.syntax_tree = FormulaTree(filename)
+        self.syntax_tree.NNF2CNF(self.syntax_tree.formulas[0])
+        self.clauses = []
+        self.syntax_tree.extract_clauses(self.syntax_tree.root, self.clauses)
+
+        self.variables = self.syntax_tree.variables
+        self.formulas = self.syntax_tree.formulas
+        
         self.var2dimacs_map= {}
-        self.formulas = []
         self.dmacs2var_map = {}
 
-    def split_parentheses(self, lines):
-        """Splits parentheses while keeping tokens intact."""
-        new_lines = []
-        for line in lines:
-            tokens = re.findall(r'\(|\)|\w+', line)  # Extracts words and parentheses separately
-            new_lines.extend(tokens)
-        return new_lines
-
-    def get_formulas(self):
-        """Parses formulas from the input file and stores them."""
-        lines = read_file(self.filename)
-        tokens = self.split_parentheses(lines)
-        
-        stack = []
-        formula = []
-
-        for token in tokens:
-            if token == "(":
-                stack.append(token)
-            elif token == ")":
-                if not stack:
-                    raise SyntaxError("Mismatched closing parenthesis!")
-                stack.pop()  # Corrected: use pop() instead of pop(0)
-            else:
-                if token not in {"or", "and", "not"} and token not in self.variables:
-                    self.variables.add(token)  # Add new variables
-            
-            formula.append(token)
-
-            if not stack:  # If all parentheses are closed, store the formula
-                self.formulas.append(formula)
-                formula = []
-        
-        if stack:
-            raise SyntaxError("Unmatched opening parenthesis!")
-
-        print("Parsed Formulas:", self.formulas)  # Debug print
-
-    def _parse_formula(self, tokens: list[str]) -> FormulaNode:
-        """Recursively parses a list of tokens into a formula tree."""
-        if not tokens:
-            raise ValueError("Empty token list in _parse_formula")
-
-        token = tokens.pop(0)
-        while token == "(" or token == ")":
-            token = tokens.pop(0)
-      #  print(token)
-        if token in {"and", "or"}:
-            left = self._parse_formula(tokens)
-            right = self._parse_formula(tokens)
-            return FormulaNode(token, left, right)
-        
-        elif token == "not":
-            subformula = self._parse_formula(tokens)  # Apply "not" to a node
-            return FormulaNode("not", subformula)
-        
-        else:
-            self.variables.add(token)
-            return FormulaNode(token)
-
-
-    def DetectOrAnd(self,root_tree : FormulaNode) -> bool:
-        if root_tree is None:
-            return False
-        if root_tree.op == "or" and (root_tree.left.op == "and" or root_tree.right.op == "and"):
-            return True
-        elif root_tree.op in {"or", "and"}:
-            return self.DetectOrAnd(root_tree.left) or self.DetectOrAnd(root_tree.right)
-
-    def NNF_tree2CNF_tree(self, root_tree: FormulaNode) -> None:
-        if root_tree is None:
-            return
-        if root_tree.op == "or":
-            # Case: (X ∧ Y) ∨ P → (P ∨ X) ∧ (P ∨ Y)
-            if root_tree.left and root_tree.left.op == "and":
-                X = root_tree.left.left
-                Y = root_tree.left.right
-                P = root_tree.right
-
-                root_tree.op = "and"
-                root_tree.left = FormulaNode("or", P, X)
-                root_tree.right = FormulaNode("or", P, Y)
-
-            # Case: P ∨ (X ∧ Y) → (P ∨ X) ∧ (P ∨ Y)
-            elif root_tree.right and root_tree.right.op == "and":
-                P = root_tree.left
-                X = root_tree.right.left
-                Y = root_tree.right.right
-
-                root_tree.op = "and"
-                root_tree.left = FormulaNode("or", P, X)
-                root_tree.right = FormulaNode("or", P, Y)
-
-        # Recursive call (only if left/right exists)
-        if root_tree.left:
-            self.NNF_tree2CNF_tree(root_tree.left)
-        if root_tree.right:
-            self.NNF_tree2CNF_tree(root_tree.right)
-
-    def NNF2CNF(self, formula: list[str]) -> list[str]:
-        """Converts a formula from Negation Normal Form (NNF) to Conjunctive Normal Form (CNF)."""
-        root_tree = self._parse_formula(formula)
-    #    print("NNF Syntax Tree:", root_tree)  # Debugging
-        self.NNF_tree2CNF_tree(root_tree)
-     #   print("CNF Syntax Tree:", root_tree) # Debugging
-
-        while  self.DetectOrAnd(root_tree):
-            self.NNF_tree2CNF_tree(root_tree)
-    #        print("CNF Syntax Tree:", root_tree) # Debugging
-        return root_tree  # Placeholder until transformation is implemented
-    
-    def _extract_clause(self, node : FormulaNode, clause : list[str]) -> FormulaNode:
-     #   print(node)
-        if node.op == "or":
-            for child in [node.right, node.left]:
-                if child.op == "not":
-                    clause.append(child.op + " " + str(child.left))
-                
-                elif child.op == "or":
-                    self._extract_clause(child, clause)
-                else:
-                    self._extract_clause(child, clause)
-
-        elif node.op == "not":
-            clause.append(node.op + " " + str(node.left))
-            
-        elif node.op != "and":
-            clause.append(node.op)
-
-    def extract_clauses(self,formula : FormulaNode, result : list[list[str]])-> list[list[str]]:
-        if formula.op == "and":
-            self.extract_clauses(formula.left,result)
-            self.extract_clauses(formula.right,result)
-            
-        if formula.op == "or":
-            clause = []
-            self._extract_clause(formula, clause)
-            result.append(clause)
     def get_var_mapping(self):
         for i,var in enumerate(list(self.variables)):
             self.var2dimacs_map[var] = i
             self.dmacs2var_map[i] = var
 
 
-    def get_DIMACS(self,clauses :list[list[str]]) -> list[list[int]]:
+    def get_DIMACS(self) -> list[list[int]]:
         DMACS_clauses = []
-        for clause in clauses:
+        for clause in self.clauses:
             DMACS_clause = []   
             for literal in clause:
                 spl = literal.split()
@@ -200,10 +69,13 @@ class DIMACS_decoder:
 
 if __name__ == "__main__":
     decoder = DIMACS_decoder("input.txt")
-    decoder.get_formulas()
     
+    print(decoder.formulas)
     if decoder.formulas:
-        syntax_tree= decoder.NNF2CNF(decoder.formulas[1])  # Convert the first formula to CNF
-        result = []
-        decoder.extract_clauses(syntax_tree, result)
-        print(result)
+
+        decoder.get_var_mapping()
+        print("Variables:", decoder.variables)
+        print("mapping",decoder.var2dimacs_map)
+        DIMACS = decoder.get_DIMACS()
+        decoder.print_DIMACS(DIMACS)
+        print(decoder.clauses)
