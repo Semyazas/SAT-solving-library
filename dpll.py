@@ -68,6 +68,28 @@ def dpll(clauses: list[list[int]],p_model : dict[int,bool]) \
     """
     pass
 
+def unit_propagation_tests():
+    formula_from_presentation = [
+                                    [-1],
+                                    [2,-3],
+                                    [1,-2],
+                                    [1,2,3],
+                                    [-1,3]
+                                ]
+    p_model = {1:False, 2:False,3:True}
+
+    assert [] == unit_propagation(formula_from_presentation,{})[1]
+
+    almost_formula_from_presentation = [
+                                    [-1],
+                                    [2,-3],
+                                    [1,4],
+                                    [1,2,3],
+                                    [-1,3]
+                                ]
+    p_model = [-1, 4]
+    assert p_model == unit_propagation(almost_formula_from_presentation,{})[1]
+
 def simple_test_correct_model():
     clauses1 = [[1,2],
                [-1,2],
@@ -92,3 +114,4 @@ def simple_test_correct_model():
 
 if __name__ == "__main__":
     simple_test_correct_model()
+    unit_propagation_tests()
