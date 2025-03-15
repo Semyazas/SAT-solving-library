@@ -1,4 +1,43 @@
 
+def remove_clauses_with_l(l : int, clauses : list[int]) -> None:
+    l_in_clauses = True
+    while l_in_clauses:
+        l_in_clauses = False
+        for i in range(len(clauses)):
+            if l in clauses[i]:
+                clauses.remove(clauses[i])
+                l_in_clauses = True
+                break
+
+#TODO: zajisti, aby jsi neměl klauzuli [1,-1]
+def unit_propagation(clauses : list[list[int]], p_model : dict[int,bool], \
+                        ) -> tuple[list[int], list[list[int]]]:
+    """
+    Perform unit propagation to reduce the number of variables in the model.
+    """
+    if [] in clauses:
+        return None, []
+
+    res = []
+    def _unit_clause():
+        return next((clause[0] for clause in clauses if len(clause) == 1), None)
+       
+    l = _unit_clause()
+    while l != None:
+        res.append(l)
+        if l > 0:
+            p_model[l] = True
+        else:
+            p_model[-l] = False
+        remove_clauses_with_l(l,clauses)
+        for clause in clauses:
+            if -l in clause:
+                clause.remove(-l)
+        if [] in clauses:
+            return clauses, []
+        l = _unit_clause()
+    return clauses, res
+
 def is_model(clauses: list[list[int]], p_model : dict[int,bool], \
                     variables: list[int]) -> bool:
     """
