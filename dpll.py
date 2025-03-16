@@ -62,12 +62,66 @@ def is_model(clauses: list[list[int]], p_model : dict[int,bool], \
             return False
     return True
     
+def choose_literal(clauses: list[list[int]]) -> int:
+    """
+    Choose a literal that appears in the most number of clauses.
+    """
+    lit_counts = defaultdict(int)
+    for clause in clauses:
+        for lit in clause:
+            lit_counts[lit] += 1
+
+    max_count = 0
+    max_lit = None
+    for lit, count in lit_counts.items():
+        if count > max_count:
+            max_count = count
+            max_lit = lit
+    return max_lit
+
+def apply_l(l : int, clauses : list[list[int]]) -> list[list[int]]:
+    """
+    Apply unit propagation and return modified clauses.
+    """
+    remove_clauses_with_l(l, clauses )
+    for clause in clauses:
+        if -l in clause:
+            clause.remove(-l)
+
+    return clauses
+
+def make_literal_val(literal : int, model : dict[int,bool], val = True) -> dict[int,bool]:
+    upd_model = model.copy()
+    if literal > 0:
+        upd_model[literal] = True
+    else:
+        upd_model[-literal] = False
+    return model
+
 def dpll(clauses: list[list[int]],p_model : dict[int,bool]) \
                             ->tuple[bool,dict[int,bool]]:
     """
     Implements the DPLL algorithm for SAT problem resolution."
     """
-    pass
+    upd_clauses, _, upd_p_model = unit_propagation(clauses,p_model)
+    if upd_clauses == None:
+        return upd_p_model
+    elif [] in upd_clauses:
+        return None
+    
+    l = choose_literal(upd_clauses)
+    tmp_clauses = apply_l(l,upd_clauses)
+    
+    tmp_model = make_literal_val(l,upd_p_model)
+    res = dpll(tmp_clauses, tmp_model)
+
+    if res != None:
+        return res
+    tmp_model = make_literal_val(l,upd_p_model,val = False)
+    res = dpll(tmp_clauses,tmp_model,upd_p_model)
+    if res!= None:
+        return res
+    return None
 
 def unit_propagation_tests():
     formula_from_presentation = [
