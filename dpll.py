@@ -104,14 +104,14 @@ def dpll(clauses: list[list[int]],p_model : dict[int,bool]) \
     Implements the DPLL algorithm for SAT problem resolution."
     """
     upd_clauses, _, upd_p_model = unit_propagation(clauses,p_model)
-    if upd_clauses == None:
+    if upd_clauses == []:
         return upd_p_model
     elif [] in upd_clauses:
         return None
     
     l = choose_literal(upd_clauses)
     tmp_clauses = apply_l(l,upd_clauses)
-    
+
     tmp_model = make_literal_val(l,upd_p_model)
     res = dpll(tmp_clauses, tmp_model)
 
