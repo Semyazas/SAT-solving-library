@@ -93,9 +93,9 @@ def apply_l(l : int, clauses : list[list[int]]) -> list[list[int]]:
 def make_literal_val(literal : int, model : dict[int,bool], val = True) -> dict[int,bool]:
     upd_model = model.copy()
     if literal > 0:
-        upd_model[literal] = True
+        model[literal] = True
     else:
-        upd_model[-literal] = False
+        model[-literal] = False
     return model
 
 def dpll(clauses: list[list[int]],p_model : dict[int,bool]) \
