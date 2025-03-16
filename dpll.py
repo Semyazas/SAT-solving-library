@@ -167,6 +167,21 @@ def simple_test_correct_model():
     assert is_model(clauses1, p_model1, vars1)
     assert not is_model(clauses1, p_not_model1, vars1)
 
+def simple_test_dpll():
+    almost_formula_from_presentation = [
+                                    [-1],
+                                    [2,-3],
+                                    [1,-4],
+                                    [1,2,3],
+                                    [3]
+                                ]
+    p_model1 = {1:False, 2:True, 3:True, 4:False}
+
+    assert dpll(almost_formula_from_presentation, {}) == p_model1
+
+    assert dpll([[-1,2],[-2],[1]],{}) == None
+
 if __name__ == "__main__":
     simple_test_correct_model()
     unit_propagation_tests()
+    simple_test_dpll()
