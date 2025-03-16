@@ -1,3 +1,4 @@
+from collections import defaultdict
 
 def remove_clauses_with_l(l : int, clauses : list[int]) -> None:
     l_in_clauses = True
@@ -11,12 +12,12 @@ def remove_clauses_with_l(l : int, clauses : list[int]) -> None:
 
 #TODO: zajisti, aby jsi neměl klauzuli [1,-1]
 def unit_propagation(clauses : list[list[int]], p_model : dict[int,bool], \
-                        ) -> tuple[list[int], list[list[int]]]:
+                        ) -> tuple[list[int], list[list[int]],dict[int,bool]]:
     """
     Perform unit propagation to reduce the number of variables in the model.
     """
     if [] in clauses:
-        return None, []
+        return None, [], p_model
 
     res = []
     def _unit_clause():
@@ -34,9 +35,9 @@ def unit_propagation(clauses : list[list[int]], p_model : dict[int,bool], \
             if -l in clause:
                 clause.remove(-l)
         if [] in clauses:
-            return clauses, []
+            return clauses, [], {}
         l = _unit_clause()
-    return clauses, res
+    return clauses, res, p_model
 
 def is_model(clauses: list[list[int]], p_model : dict[int,bool], \
                     variables: list[int]) -> bool:
