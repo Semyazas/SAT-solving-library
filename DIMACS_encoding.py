@@ -38,8 +38,8 @@ class DIMACS_decoder:
 
     def get_var_mapping(self):
         for i,var in enumerate(list(self.variables)):
-            self.var2dimacs_map[var] = i
-            self.dmacs2var_map[i] = var
+            self.var2dimacs_map[var] = i+1
+            self.dmacs2var_map[i+1] = var
 
 
     def get_DIMACS(self) -> list[list[int]]:
