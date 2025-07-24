@@ -1,6 +1,6 @@
 from collections import defaultdict
 from DIMACS_reader import read_DIMACS
-from DIMACS_encoding import DIMACS_decoder
+from task1.DIMACS_encoding import DIMACS_decoder
 
 import sys
 
@@ -46,32 +46,37 @@ class SAT_dpll:
                 return None, {}
             p_model[abs(l)] = val
             
-            for clause in self.watched_literals.setdefault(abs(l),[]): # updating watched_literals
-                if self.clause_satisfied(clause,p_model):
+            for clause in clauses:
+                if self.clause_satisfied(clause, p_model):
                     continue
-                rest = [lit for lit in clause if lit not in (l, -l) 
-                                  and abs(lit) not in p_model.keys()]
-                if len(rest) == 1:
-                    unit_clauses.append(rest[0]) 
-                elif len(rest) == 0: # not satisfied and everything is assigned --> conflict
+                unassigned = [lit for lit in clause if abs(lit) not in p_model]
+                if len(unassigned) == 1:
+                    unit_clauses.append(unassigned[0])
+                elif len(unassigned) == 0:
                     return None, {}
-                else:
-                    self.watched_literals.setdefault(abs(rest[0]), []).append(clause)
+
 
         return res, p_model
         
-    def choose_literal(self, clauses: list[list[int]]) -> int:
+    def choose_literal(self, clauses: list[list[int]], model) -> int:
+        #TODO: Debug this
+        #TODO: repeating clauses: debug decoder
         """
         Choose a literal that appears in the most number of clauses.
         """
-        unassigned_literals = [lit for lit in self.variables if lit not in self.p_model]
+        unassigned_literals = [lit for lit in self.variables if lit not in model]
         lit_counts = defaultdict(int)
         for clause in clauses:
-            for lit in [l for l in clause if l in unassigned_literals]:
+            for lit in [l for l in clause if abs(l) in unassigned_literals]:
                 lit_counts[lit] += 1
 
         max_count = 0
         max_lit = None
+   #     print("lit counts: ", lit_counts)
+   #     print(model)
+   #     print("clauses: ", clauses)
+   #     print("unassigned literals: ", unassigned_literals)
+   #     print(lit_counts)
         for lit, count in lit_counts.items():
             if count > max_count:
                 max_count = count
@@ -79,12 +84,21 @@ class SAT_dpll:
         return max_lit
 
 
-    def make_literal_val(literal : int, model : dict[int,bool], val = True) -> dict[int,bool]:
+    def make_literal_val(self,literal : int, model : dict[int,bool], val = True) -> dict[int,bool]:
+        if literal == None:
+            return None
         if literal > 0:
-            model[literal] = True
+            model[literal] = val
         else:
-            model[-literal] = False
+            model[-literal] = not val
         return model
+    
+    def delete_satisfied_clauses(self,clauses: list[list[int]],p_model : dict[int,bool]) -> list[list[int]]:
+        updated_clauses = []
+        for clause in clauses:
+            if not self.clause_satisfied(clause,p_model):
+                updated_clauses.append(clause)
+        return updated_clauses
 
     def dpll(self,clauses: list[list[int]],p_model : dict[int,bool]) \
                                 ->tuple[bool,dict[int,bool]]:
@@ -99,13 +113,20 @@ class SAT_dpll:
         if self.is_model(clauses,upd_p_model):
             return upd_p_model
         
-        l = self.choose_literal(clauses)
+        l = self.choose_literal(clauses,upd_p_model)
 
         for v in [True, False]:
-            tmp_model = self.make_literal_val(l,upd_p_model,val = v)
-            res = self.dpll(clauses, tmp_model)
-            if res != None:
-                return res
+       #     print(l)
+       #     print(clauses)
+       #     print("model: ", upd_p_model)
+            tmp_model = self.make_literal_val(l,upd_p_model.copy(), v)
+            if tmp_model is not None:
+                
+                updated_clauses = self.delete_satisfied_clauses(clauses,tmp_model)
+        #     print("updated clauses:", updated_clauses)
+                res = self.dpll(updated_clauses, tmp_model)
+                if res != None:
+                    return res
         return None
 
 if __name__ == "__main__":
@@ -119,8 +140,11 @@ if __name__ == "__main__":
         elif sys.argv[1] == "-s":
             D_decoder = DIMACS_decoder(sys.argv[2])
             D_decoder.get_var_mapping()
-            clauses, variables =  D_decoder.get_DIMACS(), D_decoder.variables
+            clauses, variables =  D_decoder.get_DIMACS(), D_decoder.var2dimacs_map.values()
     
-    print(clauses, variables)
+    #print(clauses, variables)
     solver = SAT_dpll(clauses,variables)
-    print(solver(clauses, {}))
+    model = solver.dpll(clauses, {})
+
+    for var in model:
+        print(D_decoder.dmacs2var_map[var], " ", model[var])
