@@ -1,4 +1,4 @@
-from Syntax_tree import read_file
+from task1.Syntax_tree import read_file
 
 def read_DIMACS(filename: str) -> tuple[list[list[int]], list[int]]:
     clauses = []
