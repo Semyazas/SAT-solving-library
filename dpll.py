@@ -1,209 +1,134 @@
 from collections import defaultdict
-from DIMACS_reader import read_DIMACS
-from task1.DIMACS_encoding import DIMACS_decoder
 import time
 import sys
-
-#TODO: 
+from DIMACS_reader import read_DIMACS
 
 class SAT_dpll:
-    def __init__(self, clauses, variables):
+    def __init__(self, clauses, nvars):
         self.clauses = clauses
-        self.p_model = {}
-        self.watched_literals = {}
-        self.variables = variables
-        self.number_of_decisions = 0
-        self.steps_of_unit_propagation = 0
-    #    self.literal_counts = 
+        self.nvars = nvars
+        print(nvars)
+        self.assign = [None for _ in range(nvars+1)]   # 1-indexed
+        self.trail = []                     # stack of assigned literals
+        self.num_decisions = 0
+        self.steps_up = 0
+        self.adjacency_dict = {}
 
-    def _init_watched_literals(self):
-        for clause in self.clauses:
-            self.watched_literals.setdefault(abs(clause[0]),[]).append(clause)
-            if len(clause) >= 2:
-                self.watched_literals.setdefault(abs(clause[1]),[]).append(clause)
-
-    def clause_satisfied(self,clause : list[int],p_model : dict) -> bool:
-        return any(p_model[abs(lit)] == (lit > 0) for lit in clause if abs(lit) in p_model.keys())
-    
-    def is_model(self,clauses: list[list[int]], p_model : dict[int,bool]) -> bool:
-        """
-        Check if given model satisfies all clauses.
-        """
-        return all(self.clause_satisfied(clause, p_model) for clause in clauses)
-    def unit_propagation(self, clauses, p_model):
-        """
-        Fast unit propagation: iterative, no repeated scans of all clauses.
-        Returns (conflict_found, model, updated_clauses)
-        """
-        unit_queue = []
-        updated_clauses = []
-
-        # Initial scan: filter clauses & collect unit literals
-        for clause in clauses:
-            # If already satisfied, skip
-            if self.clause_satisfied(clause, p_model):
-                continue
-
-            # Remove falsified literals
-            new_clause = [lit for lit in clause
-                        if abs(lit) not in p_model or p_model[abs(lit)] == (lit > 0)]
-
-            # Empty clause → conflict
-            if not new_clause:
-                return None, {}, None
-
-            updated_clauses.append(new_clause)
-
-            # Collect new units
-            if len(new_clause) == 1:
-                unit_queue.append(new_clause[0])
-
-        # Iteratively assign unit literals
-        while unit_queue:
-            
-         #   print(updated_clauses)
-            lit = unit_queue.pop()
-         #   print(lit)
-            val = lit > 0
-
-            # Conflict if opposite assignment already exists
-            if abs(lit) in p_model:
-                if p_model[abs(lit)] != val:
-                    return None, {}, None
-                continue
-
-            # Assign literal
-            p_model[abs(lit)] = val
-            self.steps_of_unit_propagation += 1
-
-            # Propagate only on unsatisfied clauses
-            new_clauses = []
-            for clause in updated_clauses:
-                # Skip satisfied
-                if any(p_model.get(abs(l)) == (l > 0) for l in clause):
-                    continue
-
-                # Filter falsified literals
-                new_clause = [l for l in clause
-                            if abs(l) not in p_model or p_model[abs(l)] == (l > 0)]
-
-                # Conflict?
-                if not new_clause:
-                    return None, {}, None
-
-                # Unit clause detected → enqueue
-                if len(new_clause) == 1 and new_clause[0] not in unit_queue:
-                    unit_queue.append(new_clause[0])
-
-                new_clauses.append(new_clause)
-
-            updated_clauses = new_clauses
-       # print("done")
-        return [], p_model, updated_clauses
-
-
-
-    def choose_literal(self, clauses: list[list[int]], model) -> int:
-        #TODO: Debug this
-        #TODO: repeating clauses: debug decoder
-        """
-        Choose a literal that appears in the most number of clauses.
-        """
-        unassigned_literals = set(self.variables) - model.keys()
-        lit_counts = defaultdict(int)
+        # Precompute literal occurrences for fast heuristic
+        self.lit_counts = defaultdict(int)
         for clause in clauses:
             for lit in clause:
-                if abs(lit) in unassigned_literals:
-                    lit_counts[lit] += 1
+                self.lit_counts[lit] += 1
 
-        return max(lit_counts, key=lit_counts.get, default=None)
+    def value(self, lit):
+        """Return literal truth value under current assignment or None."""
+        val = self.assign[abs(lit)]
+        return val if lit > 0 else (not val if val is not None else None)
 
+    def enqueue(self, lit):
+        """Assign literal and push to trail."""
+        self.assign[abs(lit)] = lit > 0
+        self.trail.append(lit)
 
-    def make_literal_val(self,literal : int, model : dict[int,bool], val = True) -> dict[int,bool]:
-        if literal == None:
-            return None
-        if literal > 0:
-            model[literal] = val
-        else:
-            model[-literal] = not val
-        return model
-    
-    def dpll(self,clauses: list[list[int]],p_model : dict[int,bool]) \
-                                ->tuple[bool,dict[int,bool]]:
+    def backtrack(self, old_len):
+        """Undo assignments down to old_len of trail."""
+        while len(self.trail) > old_len:
+            lit = self.trail.pop()
+            self.assign[abs(lit)] = None
+
+    def unit_propagate(self, changed_literal : int) -> bool:
         """
-        Implements the DPLL algorithm for SAT problem resolution."
+        Standard unit propagation scanning all clauses.
+        Returns True if consistent, False if conflict.
         """
-        updated_vars, upd_p_model, updated_clauses = self.unit_propagation(clauses,p_model)
+        changed = True
+        to_check = changed_literal
+        while changed:
+            changed = False
+            for clause in self.clauses:
+                # Check clause under current assignment
+                satisfied = False
+                unassigned = []
+                for lit in clause:
+                    val = self.value(lit)
+                    if val is True:
+                        satisfied = True
+                        break
+                    if val is None:
+                        unassigned.append(lit)
 
-        #print("upd model: ",upd_p_model)
-        #print(updated_clauses)
-        if None == updated_vars:
-            return None
-        
-        if not updated_clauses:
-            return upd_p_model
-        
-        l = self.choose_literal(updated_clauses,upd_p_model)
+                if satisfied:
+                    continue
+                if len(unassigned) == 0:
+                    return False  # conflict
+                if len(unassigned) == 1:
+                    # Unit literal
+                    lit = unassigned[0]
+                    if self.value(lit) is False:
+                        return False
+                    if self.value(lit) is None:
+                        self.enqueue(lit)
+                        self.steps_up += 1
+                        changed = True
+        return True
 
-        if l is None:
-            return upd_p_model
+    def choose_literal(self):
+        """Pick literal with maximum occurrence among unassigned vars."""
+        best_lit = None
+        best_count = -1
+        for var in range(1, self.nvars+1):
+            if self.assign[var] is None:
+                cnt_pos = self.lit_counts[var]
+                cnt_neg = self.lit_counts[-var]
+                if cnt_pos >= cnt_neg:
+                    lit = var
+                    cnt = cnt_pos
+                else:
+                    lit = -var
+                    cnt = cnt_neg
+                if cnt > best_count:
+                    best_count = cnt
+                    best_lit = lit
+        return best_lit
 
-        for v in [True, False]:
-            self.number_of_decisions +=1
-            tmp_model = self.make_literal_val(l,upd_p_model.copy(), v)
-            if tmp_model is not None:   
-                res = self.dpll(updated_clauses, tmp_model)
-                if res != None:
-                    return res
-        return None
-    
-    def solve(self,clauses : list[list[int]]) :
-        start_time = time.perf_counter()
-        model = self.dpll(clauses,{})
-        end_time = time.perf_counter()
+    def dpll(self):
+        if not self.unit_propagate():
+            return False
+        lit = self.choose_literal()
+        if lit is None:
+            return True  # all variables assigned, SAT
 
-        computation_time = end_time - start_time
+        self.num_decisions += 1
+        trail_len = len(self.trail)
 
-        return (model != None,
-                model, 
-                computation_time,
-                self.number_of_decisions,
-                self.steps_of_unit_propagation
-        )
+        # Try True
+        self.enqueue(lit)
+        if self.dpll():
+            return True
+        self.backtrack(trail_len)
+
+        # Try False
+        self.enqueue(-lit)
+        if self.dpll():
+            return True
+        self.backtrack(trail_len)
+
+        return False
+
+    def solve(self):
+        start = time.perf_counter()
+        sat = self.dpll()
+        end = time.perf_counter()
+        model = {i: self.assign[i] for i in range(1, self.nvars+1)}
+        return sat, model, end-start, self.num_decisions, self.steps_up
+
 
 if __name__ == "__main__":
-    clauses, variables = [],[]
-    print(sys.argv)
-    dimacs = True
-    if len(sys.argv) == 3:
-        if sys.argv[1] == "-d":
-            print("running")
-            clauses, variables = read_DIMACS(sys.argv[2])
-
-        elif sys.argv[1] == "-s":
-            D_decoder = DIMACS_decoder(sys.argv[2])
-            D_decoder.get_var_mapping()
-            clauses, variables =  D_decoder.get_DIMACS(), D_decoder.var2dimacs_map.values()
-            dimacs = False
-    #print(clauses, variables)
-    solver = SAT_dpll(clauses,variables)
-    solved, model, computation_time, n_decs, st_up  =  solver.solve(clauses)
-
-    print("SAT: ", solved)
-    if not dimacs:
-        for var in model:
-            print(D_decoder.dmacs2var_map[var], " ", model[var])
-    else:
-        print(model)
-        print(clauses)
-        vals=  list(model.keys()).copy()
-        vals.sort()
-        for var in vals:
-            if model[var] == False:
-                print(-var)
-            else:
-                print(var)
-
-    print("computation time: ", computation_time)
-    print("number of decisions: ", n_decs)
-    print("steps of unit propagation: ", st_up)
+    clauses, variables = [], []
+    if len(sys.argv) == 3 and sys.argv[1] == "-d":
+        clauses, variables = read_DIMACS(sys.argv[2])
+    print("vars: ", variables)
+    solver = SAT_dpll(clauses, max(variables))
+    sat, model, t, decs, ups = solver.solve()
+    print("SAT:", sat)
+    print("time:", t, "decisions:", decs, "UP steps:", ups)
