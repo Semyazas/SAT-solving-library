@@ -4,7 +4,7 @@ def read_DIMACS(filename: str) -> tuple[list[list[int]], list[int]]:
     clauses = []
     variables = []
     lines = read_file(filename)
-
+    num_vars,num_clauses = 0,0
     for line in lines:
     
         if line.startswith('p'):
@@ -13,8 +13,10 @@ def read_DIMACS(filename: str) -> tuple[list[list[int]], list[int]]:
 
         if line.split()[0].lstrip("+-").isnumeric():
             clause = list(map(int, line.split()[:-1]))
-            clauses.append(clause)
-    return clauses, variables
+            if clause:
+                clauses.append(clause)
+
+    return clauses, variables, num_vars, num_clauses
 
 
 if __name__ == '__main__':

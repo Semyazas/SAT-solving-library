@@ -1,7 +1,6 @@
 from dpll import SAT_dpll
 
 def unit_propagation_tests():
-
     formula_from_presentation = [
                                     [-1],
                                     [2,3],
@@ -11,8 +10,9 @@ def unit_propagation_tests():
                                 ]
     p_model = {1:False, 2:False,3:True}
     solver1 = SAT_dpll(formula_from_presentation,[1,2,3])
+   # print(solver1.unit_propagation(formula_from_presentation,{})[2])
 
-    assert p_model == solver1.unit_propagation(formula_from_presentation,{})[1]
+    assert p_model == solver1.unit_propagation(formula_from_presentation,{})[2]
 
     almost_formula_from_presentation = [
                                     [-1],
@@ -23,7 +23,7 @@ def unit_propagation_tests():
                                 ]
     solver2 = SAT_dpll(almost_formula_from_presentation,[1,2,3])
     p_model = {1:False, 4:True}
-    assert p_model == solver2.unit_propagation(almost_formula_from_presentation,{})[1]
+    assert p_model == solver2.unit_propagation(almost_formula_from_presentation,{})[2]
 
 def simple_test_correct_model():
     clauses1 = [[1,2],

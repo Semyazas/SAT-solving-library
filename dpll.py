@@ -2,23 +2,24 @@ from collections import defaultdict
 import time
 import sys
 from DIMACS_reader import read_DIMACS
+from task1.DIMACS_encoding import DIMACS_decoder
 
 class SAT_dpll:
     def __init__(self, clauses, nvars):
         self.clauses = clauses
         self.nvars = nvars
-        print(nvars)
         self.assign = [None for _ in range(nvars+1)]   # 1-indexed
         self.trail = []                     # stack of assigned literals
         self.num_decisions = 0
         self.steps_up = 0
-        self.adjacency_dict = {}
+        self.adjacency_dict = defaultdict(list)
 
         # Precompute literal occurrences for fast heuristic
         self.lit_counts = defaultdict(int)
         for clause in clauses:
             for lit in clause:
                 self.lit_counts[lit] += 1
+                self.adjacency_dict[lit].append(clause)
 
     def value(self, lit):
         """Return literal truth value under current assignment or None."""
@@ -36,16 +37,21 @@ class SAT_dpll:
             lit = self.trail.pop()
             self.assign[abs(lit)] = None
 
-    def unit_propagate(self, changed_literal : int) -> bool:
+    def unit_propagate(self, changed_literal : int = None) -> bool:
         """
         Standard unit propagation scanning all clauses.
         Returns True if consistent, False if conflict.
         """
-        changed = True
-        to_check = changed_literal
-        while changed:
-            changed = False
-            for clause in self.clauses:
+        to_check = []
+        if changed_literal != None:
+            to_check = [changed_literal]
+        while to_check:
+            checked = None
+            iterate_through = self.clauses
+            if to_check != []:
+                checked = to_check.pop()
+                iterate_through = self.adjacency_dict[checked]
+            for clause in iterate_through:
                 # Check clause under current assignment
                 satisfied = False
                 unassigned = []
@@ -69,7 +75,8 @@ class SAT_dpll:
                     if self.value(lit) is None:
                         self.enqueue(lit)
                         self.steps_up += 1
-                        changed = True
+                        to_check.append(-lit)
+                
         return True
 
     def choose_literal(self):
@@ -91,8 +98,9 @@ class SAT_dpll:
                     best_lit = lit
         return best_lit
 
-    def dpll(self):
-        if not self.unit_propagate():
+    def dpll(self,literal):
+        a = literal if literal == None else -literal
+        if not self.unit_propagate(a):
             return False
         lit = self.choose_literal()
         if lit is None:
@@ -103,13 +111,13 @@ class SAT_dpll:
 
         # Try True
         self.enqueue(lit)
-        if self.dpll():
+        if self.dpll(lit):
             return True
         self.backtrack(trail_len)
 
         # Try False
         self.enqueue(-lit)
-        if self.dpll():
+        if self.dpll(-lit):
             return True
         self.backtrack(trail_len)
 
@@ -117,7 +125,7 @@ class SAT_dpll:
 
     def solve(self):
         start = time.perf_counter()
-        sat = self.dpll()
+        sat = self.dpll(None)
         end = time.perf_counter()
         model = {i: self.assign[i] for i in range(1, self.nvars+1)}
         return sat, model, end-start, self.num_decisions, self.steps_up
@@ -125,10 +133,25 @@ class SAT_dpll:
 
 if __name__ == "__main__":
     clauses, variables = [], []
-    if len(sys.argv) == 3 and sys.argv[1] == "-d":
-        clauses, variables = read_DIMACS(sys.argv[2])
-    print("vars: ", variables)
+    dimacs = True
+    if len(sys.argv) == 3:
+        if sys.argv[1] == "-d":
+            clauses, variables = read_DIMACS(sys.argv[2])
+        elif sys.argv[1] == "-s":
+            D_decoder = DIMACS_decoder(sys.argv[2])
+            D_decoder.get_var_mapping()
+            clauses = D_decoder.get_DIMACS()
+            variables = list(D_decoder.var2dimacs_map.values())
+            dimacs = False
+
     solver = SAT_dpll(clauses, max(variables))
-    sat, model, t, decs, ups = solver.solve()
-    print("SAT:", sat)
-    print("time:", t, "decisions:", decs, "UP steps:", ups)
+    solved, model, t, n_dec, n_up = solver.solve()
+
+    print("SAT:", solved)
+    if model:
+        vals = sorted(model.keys())
+        for var in vals:
+            print(var if model[var] else -var)
+    print("time:", t)
+    print("decisions:", n_dec)
+    print("unit propagations:", n_up)

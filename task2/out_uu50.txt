@@ -1,0 +1,300 @@
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-01.cnf lasted 0.003932499996153638
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-02.cnf lasted 0.003548200009390712
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-03.cnf lasted 0.002996799972606823
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-04.cnf lasted 0.006980000005569309
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-05.cnf lasted 0.005977399996481836
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-06.cnf lasted 0.004182100004982203
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-07.cnf lasted 0.0053610000177286565
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-08.cnf lasted 0.005572499998379499
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-09.cnf lasted 0.0038089000154286623
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-010.cnf lasted 0.00273510001716204
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-011.cnf lasted 0.006574800005182624
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-012.cnf lasted 0.004308700008550659
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-013.cnf lasted 0.004941599996527657
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-014.cnf lasted 0.0024545000051148236
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-015.cnf lasted 0.00488490000134334
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-016.cnf lasted 0.0032313000119756907
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-017.cnf lasted 0.0037293999921530485
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-018.cnf lasted 0.0031076000013854355
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-019.cnf lasted 0.004201400006422773
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-020.cnf lasted 0.0038324999914038926
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-021.cnf lasted 0.006589399999938905
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-022.cnf lasted 0.009686200006399304
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-023.cnf lasted 0.011315400013700128
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-024.cnf lasted 0.007783900015056133
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-025.cnf lasted 0.006019100022967905
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-026.cnf lasted 0.004976299998816103
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-027.cnf lasted 0.007192399993073195
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-028.cnf lasted 0.008262199989985675
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-029.cnf lasted 0.006052000011550263
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-030.cnf lasted 0.008567899989429861
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-031.cnf lasted 0.0053659999975934625
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-032.cnf lasted 0.0032065999985206872
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-033.cnf lasted 0.0037136000173632056
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-034.cnf lasted 0.006580799992661923
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-035.cnf lasted 0.008253400010289624
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-036.cnf lasted 0.003708000003825873
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-037.cnf lasted 0.009501100023044273
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-038.cnf lasted 0.0019717999966815114
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-039.cnf lasted 0.0049433999811299145
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-040.cnf lasted 0.0033745999971870333
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-041.cnf lasted 0.01115360000403598
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-042.cnf lasted 0.008413400006247684
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-043.cnf lasted 0.003725400019902736
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-044.cnf lasted 0.01601169997593388
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-045.cnf lasted 0.005275600007735193
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-046.cnf lasted 0.0030906000174582005
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-047.cnf lasted 0.007883199985371903
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-048.cnf lasted 0.004914100019959733
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-049.cnf lasted 0.006315900012850761
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-050.cnf lasted 0.007676800014451146
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-051.cnf lasted 0.004917900019790977
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-052.cnf lasted 0.008536499983165413
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-053.cnf lasted 0.005482100008521229
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-054.cnf lasted 0.0059160999953746796
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-055.cnf lasted 0.0037683999980799854
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-056.cnf lasted 0.009898099990095943
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-057.cnf lasted 0.004699900018749759
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-058.cnf lasted 0.0028683000127784908
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-059.cnf lasted 0.007645799982128665
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-060.cnf lasted 0.00623460000497289
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-061.cnf lasted 0.008121900027617812
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-062.cnf lasted 0.002810800011502579
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-063.cnf lasted 0.006326200003968552
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-064.cnf lasted 0.005980799993267283
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-065.cnf lasted 0.006147900014184415
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-066.cnf lasted 0.004545700008748099
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-067.cnf lasted 0.005233700008830056
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-068.cnf lasted 0.010527400008868426
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-069.cnf lasted 0.007864099985454232
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-070.cnf lasted 0.00668789999326691
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-071.cnf lasted 0.004446500010089949
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-072.cnf lasted 0.006604700000025332
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-073.cnf lasted 0.006177799979923293
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-074.cnf lasted 0.006605900009162724
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-075.cnf lasted 0.005076100002042949
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-076.cnf lasted 0.004964200023096055
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-077.cnf lasted 0.006485199992312118
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-078.cnf lasted 0.005215699988184497
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-079.cnf lasted 0.004135600000154227
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-080.cnf lasted 0.003162200009683147
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-081.cnf lasted 0.005513400014024228
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-082.cnf lasted 0.003783099993597716
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-083.cnf lasted 0.007688999990932643
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-084.cnf lasted 0.003810399997746572
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-085.cnf lasted 0.008256400004029274
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-086.cnf lasted 0.01657599999452941
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-087.cnf lasted 0.005100000009406358
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-088.cnf lasted 0.0022892999986652285
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-089.cnf lasted 0.0029996999946888536
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-090.cnf lasted 0.0047904999810270965
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-091.cnf lasted 0.004008400021120906
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-092.cnf lasted 0.010868400015169755
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-093.cnf lasted 0.002722000004723668
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-094.cnf lasted 0.009753300022566691
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-095.cnf lasted 0.004991200024960563
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-096.cnf lasted 0.004788300022482872
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-097.cnf lasted 0.008472499990602955
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-098.cnf lasted 0.006000299996230751
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-099.cnf lasted 0.009417199995368719
+---------------------------------------------
+SAT result: False
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-0100.cnf lasted 0.003504099993733689
+---------------------------------------------

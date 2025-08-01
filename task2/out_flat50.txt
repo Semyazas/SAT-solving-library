@@ -1,0 +1,216 @@
+SAT result: True
+Experiment with inputs\flat50\flat50-1.cnf lasted 0.0010902000067289919
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-2.cnf lasted 0.0013716999965254217
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-3.cnf lasted 0.0027113000105600804
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-4.cnf lasted 0.0013115000037942082
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-5.cnf lasted 0.0011070999898947775
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-6.cnf lasted 0.002689999993890524
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-7.cnf lasted 0.0038825999945402145
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-8.cnf lasted 0.0008492000051774085
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-9.cnf lasted 0.0010884999937843531
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-10.cnf lasted 0.0011952999921049923
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-11.cnf lasted 0.000614699994912371
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-12.cnf lasted 0.0005642000178340822
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-13.cnf lasted 0.001408900017850101
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-14.cnf lasted 0.0007959000067785382
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-15.cnf lasted 0.0023156999959610403
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-16.cnf lasted 0.0006314000056590885
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-17.cnf lasted 0.0015833000070415437
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-18.cnf lasted 0.0012427000037860125
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-19.cnf lasted 0.0009800000116229057
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-20.cnf lasted 0.0006915999983903021
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-21.cnf lasted 0.0028098000038880855
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-22.cnf lasted 0.0015047999913804233
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-23.cnf lasted 0.0009205000242218375
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-24.cnf lasted 0.0012483999889809638
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-25.cnf lasted 0.0028566999826580286
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-26.cnf lasted 0.00127119998796843
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-27.cnf lasted 0.0018097000138368458
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-28.cnf lasted 0.0008667000220157206
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-29.cnf lasted 0.0024744000111240894
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-30.cnf lasted 0.0006508000078611076
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-31.cnf lasted 0.0012467000051401556
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-32.cnf lasted 0.0010790000087581575
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-33.cnf lasted 0.003764900000533089
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-34.cnf lasted 0.0017247000068891793
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-35.cnf lasted 0.0006241000082809478
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-36.cnf lasted 0.0027882000140380114
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-37.cnf lasted 0.0014381000073626637
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-38.cnf lasted 0.0012012000079266727
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-39.cnf lasted 0.004389300011098385
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-40.cnf lasted 0.00218829998630099
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-41.cnf lasted 0.0006179000192787498
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-42.cnf lasted 0.002705999999307096
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-43.cnf lasted 0.001781200000550598
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-44.cnf lasted 0.0009665999969001859
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-45.cnf lasted 0.0025459999742452055
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-46.cnf lasted 0.0005484000139404088
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-47.cnf lasted 0.0023452999885194004
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-48.cnf lasted 0.001106200012145564
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-49.cnf lasted 0.007216300000436604
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-50.cnf lasted 0.002688799984753132
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-51.cnf lasted 0.002674699993804097
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-52.cnf lasted 0.0021581000182777643
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-53.cnf lasted 0.0009553999989293516
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-54.cnf lasted 0.0005485000147018582
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-55.cnf lasted 0.0012428000045474619
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-56.cnf lasted 0.0016280999989248812
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-57.cnf lasted 0.0016165999986696988
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-58.cnf lasted 0.0014186000043991953
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-59.cnf lasted 0.001508699991973117
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-60.cnf lasted 0.0008095999946817756
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-61.cnf lasted 0.0005313999718055129
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-62.cnf lasted 0.0023905999842099845
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-63.cnf lasted 0.0006221999938134104
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-64.cnf lasted 0.001789500005543232
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-65.cnf lasted 0.0010215000074822456
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-66.cnf lasted 0.001629200007300824
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-67.cnf lasted 0.0010279999987687916
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-68.cnf lasted 0.0005604000180028379
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-69.cnf lasted 0.0006528999947477132
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-70.cnf lasted 0.005911500018555671
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-71.cnf lasted 0.0022533999872393906
+---------------------------------------------
+SAT result: True
+Experiment with inputs\flat50\flat50-72.cnf lasted 0.0014227000065147877
+---------------------------------------------
