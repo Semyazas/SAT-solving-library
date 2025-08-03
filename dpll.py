@@ -14,28 +14,80 @@ class SAT_dpll:
         self.steps_up = 0
         self.adjacency_dict = defaultdict(list)
 
+        self.clause_to_Wliterals = defaultdict(list)
+        self.literal_to_clauses = defaultdict(set)
+
         # Precompute literal occurrences for fast heuristic
         self.lit_counts = defaultdict(int)
         for clause in clauses:
             for lit in clause:
                 self.lit_counts[lit] += 1
-                self.adjacency_dict[lit].append(clause)
+
+        self.begin_watched_literals()
 
     def value(self, lit):
         """Return literal truth value under current assignment or None."""
         val = self.assign[abs(lit)]
         return val if lit > 0 else (not val if val is not None else None)
 
-    def enqueue(self, lit):
+    def enqueue(self, lit : int) -> None:
         """Assign literal and push to trail."""
         self.assign[abs(lit)] = lit > 0
         self.trail.append(lit)
 
-    def backtrack(self, old_len):
+    def backtrack(self, old_len : int) -> None:
         """Undo assignments down to old_len of trail."""
         while len(self.trail) > old_len:
             lit = self.trail.pop()
             self.assign[abs(lit)] = None
+    
+    def begin_watched_literals(self) -> None:
+        for  cl_idx,clause in enumerate(self.clauses):
+            self.clause_to_Wliterals[cl_idx] = [clause[0]]
+            self.literal_to_clauses[clause[0]].add(cl_idx)
+            if len(clause) >=2:
+                self.clause_to_Wliterals[cl_idx].append(clause[1])
+                self.literal_to_clauses[clause[1]].add(cl_idx)
+
+
+    def unit_propagate_w_watched_lits(self, changed_literal=None):
+        to_check = [changed_literal] if changed_literal is not None else []
+        assign = self.assign
+        clauses = self.clauses
+        cl_wlits = self.clause_to_Wliterals
+        lit_to_cls = self.literal_to_clauses
+
+        while to_check:
+            checked = to_check.pop()
+            for cl_idx in list(lit_to_cls[checked]):  # iterate over copy
+                w1, w2 = cl_wlits[cl_idx]
+                other = w1 if w1 != checked else w2
+
+                # check if clause is already satisfied
+                val = assign[abs(other)]
+                if (val and other > 0) or (val is False and other < 0):
+                    continue
+
+                # try to move watched literal
+                moved = False
+                for lit in clauses[cl_idx]:
+                    if lit != other:
+                        v = assign[abs(lit)]
+                        if v is None or (v and lit > 0) or (v is False and lit < 0):
+                            cl_wlits[cl_idx] = [other, lit]
+                            lit_to_cls[lit].add(cl_idx)
+                            lit_to_cls[checked].discard(cl_idx)
+                            moved = True
+                            break
+
+                if not moved:
+                    if val is False or (val is True and other < 0):
+                        return False  # conflict
+                    if val is None:
+                        self.enqueue(other)
+                        self.steps_up += 1
+                        to_check.append(-other)
+        return True
 
     def unit_propagate(self, changed_literal : int = None) -> bool:
         """
@@ -99,8 +151,10 @@ class SAT_dpll:
         return best_lit
 
     def dpll(self,literal):
+     #   print("rekurzuju")
         a = literal if literal == None else -literal
-        if not self.unit_propagate(a):
+        ok = self.unit_propagate_w_watched_lits(a)
+        if not ok:
             return False
         lit = self.choose_literal()
         if lit is None:
@@ -120,7 +174,6 @@ class SAT_dpll:
         if self.dpll(-lit):
             return True
         self.backtrack(trail_len)
-
         return False
 
     def solve(self):

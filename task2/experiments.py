@@ -125,7 +125,7 @@ if __name__ == "__main__":
             total_n_dec += n_dec
             total_n_UP += n_up
             assert(sat == all_sat)
-   #         print(file_name + " DONE")
+            print(file_name + " DONE")
             
     average_time = total_time/len(file_names)
     average_n_UP = total_n_UP / len(file_names)
