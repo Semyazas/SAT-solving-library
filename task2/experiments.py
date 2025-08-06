@@ -7,7 +7,12 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from dpll import SAT_dpll
 from DIMACS_reader import read_DIMACS
 from task1.DIMACS_encoding import DIMACS_decoder
-
+from decision_heuristics.choose_literal.choose_best_score import choose_literal
+from decision_heuristics.choose_literal.choose_random import choose_random
+from decision_heuristics.precompute_score.jaroslow_wang_h import JW_heuristic
+from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
+from propagate.unit_propagate_adjacency_list import unit_propagate_basic
+from propagate.unit_propagate_watched_literals import unit_propagate_w_watched_lits
 
 def collect_files_ais() -> list[str]:
     file_names = [
@@ -21,23 +26,44 @@ def collect_files(prefix : str, rng: int, start = 0) -> list[str]:
    # print(file_names)
     return file_names
 
-def run_small_experiment(input_file : str,
-        f, DIMACS  : bool = False) -> tuple[bool, int]:
+def run_small_experiment(
+        input_file : str,
+        f, 
+        DIMACS  : bool = False,
+        watched_l : bool = False,
+        score_h : str= None
+        ) -> tuple[bool, int]:
     
     clauses, variables = [],[]
     n_vars,n_cl = 0,0
+
     if not DIMACS:
         D_decoder = DIMACS_decoder(input_file)
         D_decoder.get_var_mapping()
         clauses, variables =  D_decoder.get_DIMACS(), D_decoder.var2dimacs_map.values()
     else:
         clauses, variables, n_vars, n_cl =  read_DIMACS(input_file)
-    #    print("cl: ",clauses)
 
    # print("vars: ", variables)
-    solver = SAT_dpll(clauses,max(variables))
+    solver = None
+    if score_h is None:
+        solver = SAT_dpll(
+            clauses,
+            max(variables),
+            choose_lit = choose_random
+        )
+    else:
+        score_heur = JW_heuristic if score_h == "jw" else lit_counts_h
+        solver = SAT_dpll(
+            clauses,
+            max(variables),
+            choose_lit = choose_literal,
+            score_h=score_heur
+        )
 
-    solved, _, cpu_time, n_dec, n_up   = solver.solve()
+    propagate = unit_propagate_w_watched_lits if watched_l else unit_propagate_basic
+
+    solved, _, cpu_time, n_dec, n_up   = solver.solve(propagate)
     print(f"SAT result: {solved}", file = f)
     print(f"number of clauses: ", n_cl ,file=f)
     print(f"number of variables: ", n_vars,file=f)
@@ -52,7 +78,7 @@ if __name__ == "__main__":
     file_names = []
     is_dimacs = False
     all_sat = False
-    if len(sys.argv) == 3:
+    if  (len(sys.argv) == 5):
         if sys.argv[2] == "toy":
             file_names = ["..\\task1\\tsetin_inputs\\inputs\\nested_5.sat",
                         "..\\task1\\tsetin_inputs\\inputs\\nested_8.sat",
@@ -109,7 +135,7 @@ if __name__ == "__main__":
             all_sat= False
         is_dimacs = True
     else:
-        print("Something wrong, input format is: experiments [output_file] [input_directory/toy]")
+        print("Something wrong, input format is: experiments [output_file] [input_directory/toy] [w/a] [jw/lc/rand]")
         exit(0)
 
     total_time = 0
@@ -118,9 +144,24 @@ if __name__ == "__main__":
     n_cl = 0
     n_vars = 0
   #  print(file_names)
-    with open(sys.argv[1],"w") as f:
-        for file_name in file_names:
-            sat , t, n_dec, n_up, n_vars, n_cl = run_small_experiment(file_name,f, is_dimacs)
+    watched_l = True if sys.argv[3] == "w" else False
+    print(watched_l)
+
+    score_h = None
+    if sys.argv[4] == "jw":
+        score_h = JW_heuristic
+    elif sys.argv[4] == "lc":
+        score_h = lit_counts_h    
+
+    with open(sys.argv[1],"w") as file:
+        for file_name in file_names:       
+            sat , t, n_dec, n_up, n_vars, n_cl = run_small_experiment(
+                file_name,
+                file,   
+                is_dimacs, 
+                watched_l,
+                score_h
+            )
             total_time += t
             total_n_dec += n_dec
             total_n_UP += n_up

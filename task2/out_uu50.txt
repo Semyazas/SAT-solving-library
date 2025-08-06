@@ -1,300 +1,700 @@
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-01.cnf lasted 0.003932499996153638
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-01.cnf lasted 0.03478700004052371
+number of decisions:  746
+number of UP steps:  4720
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-02.cnf lasted 0.003548200009390712
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-02.cnf lasted 0.012961600034032017
+number of decisions:  184
+number of UP steps:  1698
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-03.cnf lasted 0.002996799972606823
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-03.cnf lasted 0.018771399976685643
+number of decisions:  352
+number of UP steps:  1945
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-04.cnf lasted 0.006980000005569309
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-04.cnf lasted 0.04325879999669269
+number of decisions:  685
+number of UP steps:  5633
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-05.cnf lasted 0.005977399996481836
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-05.cnf lasted 0.04398269997909665
+number of decisions:  944
+number of UP steps:  5415
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-06.cnf lasted 0.004182100004982203
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-06.cnf lasted 0.03850980004062876
+number of decisions:  1722
+number of UP steps:  3774
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-07.cnf lasted 0.0053610000177286565
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-07.cnf lasted 0.025893000012729317
+number of decisions:  336
+number of UP steps:  3070
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-08.cnf lasted 0.005572499998379499
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-08.cnf lasted 0.025002800044603646
+number of decisions:  389
+number of UP steps:  3023
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-09.cnf lasted 0.0038089000154286623
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-09.cnf lasted 0.014294099994003773
+number of decisions:  255
+number of UP steps:  1995
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-010.cnf lasted 0.00273510001716204
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-010.cnf lasted 0.032103899982757866
+number of decisions:  832
+number of UP steps:  3488
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-011.cnf lasted 0.006574800005182624
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-011.cnf lasted 0.027492200024425983
+number of decisions:  498
+number of UP steps:  3678
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-012.cnf lasted 0.004308700008550659
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-012.cnf lasted 0.047960299998521805
+number of decisions:  803
+number of UP steps:  5489
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-013.cnf lasted 0.004941599996527657
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-013.cnf lasted 0.020775499986484647
+number of decisions:  386
+number of UP steps:  2553
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-014.cnf lasted 0.0024545000051148236
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-014.cnf lasted 0.04043260001344606
+number of decisions:  813
+number of UP steps:  5136
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-015.cnf lasted 0.00488490000134334
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-015.cnf lasted 0.045764599984977394
+number of decisions:  864
+number of UP steps:  5692
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-016.cnf lasted 0.0032313000119756907
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-016.cnf lasted 0.027250299986917526
+number of decisions:  559
+number of UP steps:  2978
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-017.cnf lasted 0.0037293999921530485
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-017.cnf lasted 0.0278692000429146
+number of decisions:  533
+number of UP steps:  3521
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-018.cnf lasted 0.0031076000013854355
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-018.cnf lasted 0.02856240002438426
+number of decisions:  552
+number of UP steps:  3597
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-019.cnf lasted 0.004201400006422773
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-019.cnf lasted 0.03070770000340417
+number of decisions:  485
+number of UP steps:  2998
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-020.cnf lasted 0.0038324999914038926
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-020.cnf lasted 0.06048369995551184
+number of decisions:  1131
+number of UP steps:  7270
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-021.cnf lasted 0.006589399999938905
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-021.cnf lasted 0.05036079999990761
+number of decisions:  971
+number of UP steps:  5901
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-022.cnf lasted 0.009686200006399304
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-022.cnf lasted 0.09100339998258278
+number of decisions:  2004
+number of UP steps:  11203
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-023.cnf lasted 0.011315400013700128
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-023.cnf lasted 0.0754939999897033
+number of decisions:  1583
+number of UP steps:  9426
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-024.cnf lasted 0.007783900015056133
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-024.cnf lasted 0.07026080001378432
+number of decisions:  1254
+number of UP steps:  8771
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-025.cnf lasted 0.006019100022967905
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-025.cnf lasted 0.04651650000596419
+number of decisions:  707
+number of UP steps:  4286
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-026.cnf lasted 0.004976299998816103
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-026.cnf lasted 0.039442399982362986
+number of decisions:  724
+number of UP steps:  5006
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-027.cnf lasted 0.007192399993073195
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-027.cnf lasted 0.07158210000488907
+number of decisions:  980
+number of UP steps:  7062
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-028.cnf lasted 0.008262199989985675
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-028.cnf lasted 0.1617281999788247
+number of decisions:  1116
+number of UP steps:  7052
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-029.cnf lasted 0.006052000011550263
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-029.cnf lasted 0.1634228000184521
+number of decisions:  1540
+number of UP steps:  7899
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-030.cnf lasted 0.008567899989429861
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-030.cnf lasted 0.03806220000842586
+number of decisions:  673
+number of UP steps:  4951
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-031.cnf lasted 0.0053659999975934625
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-031.cnf lasted 0.03488439996726811
+number of decisions:  715
+number of UP steps:  4082
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-032.cnf lasted 0.0032065999985206872
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-032.cnf lasted 0.01890679995995015
+number of decisions:  328
+number of UP steps:  2330
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-033.cnf lasted 0.0037136000173632056
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-033.cnf lasted 0.02329219999955967
+number of decisions:  246
+number of UP steps:  2453
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-034.cnf lasted 0.006580799992661923
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-034.cnf lasted 0.038274999998975545
+number of decisions:  522
+number of UP steps:  3790
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-035.cnf lasted 0.008253400010289624
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-035.cnf lasted 0.0612894999794662
+number of decisions:  1259
+number of UP steps:  7257
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-036.cnf lasted 0.003708000003825873
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-036.cnf lasted 0.02714429999468848
+number of decisions:  613
+number of UP steps:  2905
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-037.cnf lasted 0.009501100023044273
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-037.cnf lasted 0.055190599989145994
+number of decisions:  865
+number of UP steps:  5841
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-038.cnf lasted 0.0019717999966815114
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-038.cnf lasted 0.019992100016679615
+number of decisions:  437
+number of UP steps:  2307
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-039.cnf lasted 0.0049433999811299145
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-039.cnf lasted 0.024251400027424097
+number of decisions:  502
+number of UP steps:  2845
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-040.cnf lasted 0.0033745999971870333
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-040.cnf lasted 0.025521799980197102
+number of decisions:  398
+number of UP steps:  2901
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-041.cnf lasted 0.01115360000403598
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-041.cnf lasted 0.14909210003679618
+number of decisions:  4429
+number of UP steps:  15988
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-042.cnf lasted 0.008413400006247684
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-042.cnf lasted 0.09454389999154955
+number of decisions:  2088
+number of UP steps:  11413
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-043.cnf lasted 0.003725400019902736
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-043.cnf lasted 0.03775840002344921
+number of decisions:  855
+number of UP steps:  4274
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-044.cnf lasted 0.01601169997593388
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-044.cnf lasted 0.06581529998220503
+number of decisions:  1149
+number of UP steps:  8062
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-045.cnf lasted 0.005275600007735193
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-045.cnf lasted 0.07465919997775927
+number of decisions:  1543
+number of UP steps:  9398
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-046.cnf lasted 0.0030906000174582005
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-046.cnf lasted 0.031369300035294145
+number of decisions:  883
+number of UP steps:  4054
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-047.cnf lasted 0.007883199985371903
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-047.cnf lasted 0.07584529998712242
+number of decisions:  1661
+number of UP steps:  9467
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-048.cnf lasted 0.004914100019959733
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-048.cnf lasted 0.051893800031393766
+number of decisions:  1231
+number of UP steps:  5717
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-049.cnf lasted 0.006315900012850761
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-049.cnf lasted 0.0919389000046067
+number of decisions:  3638
+number of UP steps:  10404
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-050.cnf lasted 0.007676800014451146
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-050.cnf lasted 0.05497090000426397
+number of decisions:  887
+number of UP steps:  5726
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-051.cnf lasted 0.004917900019790977
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-051.cnf lasted 0.03179400000954047
+number of decisions:  595
+number of UP steps:  4044
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-052.cnf lasted 0.008536499983165413
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-052.cnf lasted 0.042756800015922636
+number of decisions:  870
+number of UP steps:  4918
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-053.cnf lasted 0.005482100008521229
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-053.cnf lasted 0.04707039997447282
+number of decisions:  912
+number of UP steps:  6152
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-054.cnf lasted 0.0059160999953746796
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-054.cnf lasted 0.05871439998736605
+number of decisions:  1203
+number of UP steps:  7568
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-055.cnf lasted 0.0037683999980799854
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-055.cnf lasted 0.024676800007000566
+number of decisions:  483
+number of UP steps:  2891
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-056.cnf lasted 0.009898099990095943
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-056.cnf lasted 0.03853989997878671
+number of decisions:  833
+number of UP steps:  4963
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-057.cnf lasted 0.004699900018749759
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-057.cnf lasted 0.05045049998443574
+number of decisions:  849
+number of UP steps:  5851
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-058.cnf lasted 0.0028683000127784908
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-058.cnf lasted 0.042534500011242926
+number of decisions:  1152
+number of UP steps:  5046
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-059.cnf lasted 0.007645799982128665
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-059.cnf lasted 0.06817980000050738
+number of decisions:  1328
+number of UP steps:  9240
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-060.cnf lasted 0.00623460000497289
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-060.cnf lasted 0.042308000032790005
+number of decisions:  1160
+number of UP steps:  5136
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-061.cnf lasted 0.008121900027617812
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-061.cnf lasted 0.06460290000541136
+number of decisions:  1526
+number of UP steps:  8035
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-062.cnf lasted 0.002810800011502579
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-062.cnf lasted 0.02143439999781549
+number of decisions:  416
+number of UP steps:  2357
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-063.cnf lasted 0.006326200003968552
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-063.cnf lasted 0.02463040000293404
+number of decisions:  408
+number of UP steps:  3504
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-064.cnf lasted 0.005980799993267283
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-064.cnf lasted 0.03831560001708567
+number of decisions:  893
+number of UP steps:  4844
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-065.cnf lasted 0.006147900014184415
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-065.cnf lasted 0.0695924999890849
+number of decisions:  1396
+number of UP steps:  9168
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-066.cnf lasted 0.004545700008748099
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-066.cnf lasted 0.046339299995452166
+number of decisions:  948
+number of UP steps:  6233
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-067.cnf lasted 0.005233700008830056
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-067.cnf lasted 0.0589621999533847
+number of decisions:  855
+number of UP steps:  4972
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-068.cnf lasted 0.010527400008868426
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-068.cnf lasted 0.07042900001397356
+number of decisions:  1290
+number of UP steps:  8794
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-069.cnf lasted 0.007864099985454232
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-069.cnf lasted 0.0586718000122346
+number of decisions:  1289
+number of UP steps:  5482
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-070.cnf lasted 0.00668789999326691
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-070.cnf lasted 0.09947779995854944
+number of decisions:  1994
+number of UP steps:  13405
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-071.cnf lasted 0.004446500010089949
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-071.cnf lasted 0.021119799988809973
+number of decisions:  423
+number of UP steps:  2759
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-072.cnf lasted 0.006604700000025332
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-072.cnf lasted 0.04280830000061542
+number of decisions:  970
+number of UP steps:  5666
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-073.cnf lasted 0.006177799979923293
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-073.cnf lasted 0.11511169996811077
+number of decisions:  3168
+number of UP steps:  12759
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-074.cnf lasted 0.006605900009162724
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-074.cnf lasted 0.026487700000870973
+number of decisions:  511
+number of UP steps:  3466
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-075.cnf lasted 0.005076100002042949
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-075.cnf lasted 0.040795399982016534
+number of decisions:  845
+number of UP steps:  4780
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-076.cnf lasted 0.004964200023096055
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-076.cnf lasted 0.027259700000286102
+number of decisions:  514
+number of UP steps:  3465
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-077.cnf lasted 0.006485199992312118
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-077.cnf lasted 0.028745500021614134
+number of decisions:  437
+number of UP steps:  3462
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-078.cnf lasted 0.005215699988184497
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-078.cnf lasted 0.03940459998557344
+number of decisions:  614
+number of UP steps:  4818
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-079.cnf lasted 0.004135600000154227
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-079.cnf lasted 0.03660320001654327
+number of decisions:  693
+number of UP steps:  4762
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-080.cnf lasted 0.003162200009683147
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-080.cnf lasted 0.02921890001744032
+number of decisions:  506
+number of UP steps:  3295
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-081.cnf lasted 0.005513400014024228
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-081.cnf lasted 0.024735999992117286
+number of decisions:  371
+number of UP steps:  3144
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-082.cnf lasted 0.003783099993597716
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-082.cnf lasted 0.017812900012359023
+number of decisions:  311
+number of UP steps:  2358
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-083.cnf lasted 0.007688999990932643
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-083.cnf lasted 0.10826690000249073
+number of decisions:  2433
+number of UP steps:  12504
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-084.cnf lasted 0.003810399997746572
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-084.cnf lasted 0.045808699971530586
+number of decisions:  825
+number of UP steps:  5310
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-085.cnf lasted 0.008256400004029274
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-085.cnf lasted 0.031171699985861778
+number of decisions:  570
+number of UP steps:  3735
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-086.cnf lasted 0.01657599999452941
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-086.cnf lasted 0.08098470000550151
+number of decisions:  1585
+number of UP steps:  9473
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-087.cnf lasted 0.005100000009406358
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-087.cnf lasted 0.05145590001484379
+number of decisions:  1010
+number of UP steps:  5916
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-088.cnf lasted 0.0022892999986652285
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-088.cnf lasted 0.02266580000286922
+number of decisions:  426
+number of UP steps:  2372
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-089.cnf lasted 0.0029996999946888536
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-089.cnf lasted 0.02567200001794845
+number of decisions:  442
+number of UP steps:  2855
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-090.cnf lasted 0.0047904999810270965
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-090.cnf lasted 0.0164441000088118
+number of decisions:  204
+number of UP steps:  1741
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-091.cnf lasted 0.004008400021120906
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-091.cnf lasted 0.013747200020588934
+number of decisions:  242
+number of UP steps:  1527
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-092.cnf lasted 0.010868400015169755
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-092.cnf lasted 0.19531609996920452
+number of decisions:  1473
+number of UP steps:  9665
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-093.cnf lasted 0.002722000004723668
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-093.cnf lasted 0.010700899991206825
+number of decisions:  167
+number of UP steps:  1325
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-094.cnf lasted 0.009753300022566691
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-094.cnf lasted 0.07222209998872131
+number of decisions:  1485
+number of UP steps:  6603
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-095.cnf lasted 0.004991200024960563
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-095.cnf lasted 0.06701209995662794
+number of decisions:  2367
+number of UP steps:  6620
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-096.cnf lasted 0.004788300022482872
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-096.cnf lasted 0.043795700010377914
+number of decisions:  868
+number of UP steps:  5138
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-097.cnf lasted 0.008472499990602955
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-097.cnf lasted 0.03878969996003434
+number of decisions:  699
+number of UP steps:  4035
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-098.cnf lasted 0.006000299996230751
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-098.cnf lasted 0.040014399972278625
+number of decisions:  694
+number of UP steps:  4793
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-099.cnf lasted 0.009417199995368719
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-099.cnf lasted 0.11499919998459518
+number of decisions:  3044
+number of UP steps:  13587
 ---------------------------------------------
 SAT result: False
-Experiment with inputs\uuf50\UUF50.218.1000\uuf50-0100.cnf lasted 0.003504099993733689
+number of clauses:  218
+number of variables:  50
+Experiment with inputs\uuf50\UUF50.218.1000\uuf50-0100.cnf lasted 0.029027300013694912
+number of decisions:  536
+number of UP steps:  3332
 ---------------------------------------------

@@ -5,23 +5,27 @@ from DIMACS_reader import read_DIMACS
 from task1.DIMACS_encoding import DIMACS_decoder
 
 class SAT_dpll:
-    def __init__(self, clauses, nvars):
+    def __init__(self, clauses, nvars,choose_lit ,score_h = None):
         self.clauses = clauses
         self.nvars = nvars
         self.assign = [None for _ in range(nvars+1)]   # 1-indexed
         self.trail = []                     # stack of assigned literals
         self.num_decisions = 0
         self.steps_up = 0
-        self.adjacency_dict = defaultdict(list)
+        self.choose_lit = choose_lit
 
+        self.adjacency_dict = defaultdict(list)
         self.clause_to_Wliterals = defaultdict(list)
         self.literal_to_clauses = defaultdict(set)
 
         # Precompute literal occurrences for fast heuristic
-        self.lit_counts = defaultdict(int)
+        self.score = score_h(
+            clauses = clauses,
+            variables = [i for i in range(1,nvars+1)]
+        )
         for clause in clauses:
             for lit in clause:
-                self.lit_counts[lit] += 1
+                self.adjacency_dict[lit].append(clause)
 
         self.begin_watched_literals()
 
@@ -50,7 +54,12 @@ class SAT_dpll:
                 self.literal_to_clauses[clause[1]].add(cl_idx)
 
 
-    def unit_propagate_w_watched_lits(self, changed_literal=None):
+    def unit_propagate_w_watched_lits(
+        self, changed_literal : int = None) -> bool:
+        """
+        Standard unit propagation using watched literals.
+        Returns True if consistent, False if conflict.
+        """
         to_check = [changed_literal] if changed_literal is not None else []
         assign = self.assign
         clauses = self.clauses
@@ -89,7 +98,8 @@ class SAT_dpll:
                         to_check.append(-other)
         return True
 
-    def unit_propagate(self, changed_literal : int = None) -> bool:
+    def unit_propagate(self,
+        changed_literal : int = None) -> bool:
         """
         Standard unit propagation scanning all clauses.
         Returns True if consistent, False if conflict.
@@ -131,54 +141,45 @@ class SAT_dpll:
                 
         return True
 
-    def choose_literal(self):
-        """Pick literal with maximum occurrence among unassigned vars."""
-        best_lit = None
-        best_count = -1
-        for var in range(1, self.nvars+1):
-            if self.assign[var] is None:
-                cnt_pos = self.lit_counts[var]
-                cnt_neg = self.lit_counts[-var]
-                if cnt_pos >= cnt_neg:
-                    lit = var
-                    cnt = cnt_pos
-                else:
-                    lit = -var
-                    cnt = cnt_neg
-                if cnt > best_count:
-                    best_count = cnt
-                    best_lit = lit
-        return best_lit
 
-    def dpll(self,literal):
+    def dpll(self,literal : int, propagate ) -> bool:
      #   print("rekurzuju")
-        a = literal if literal == None else -literal
-        ok = self.unit_propagate_w_watched_lits(a)
+        falsified_lit = literal if literal == None else -literal
+        ok , steps_it = propagate(
+            changed_literal = falsified_lit,
+            adjacency_dict = self.adjacency_dict,
+            clauses = self.clauses,
+            value = self.value,
+            enqueue = self.enqueue,
+            assign = self.assign,
+            clause_to_Wliterals = self.clause_to_Wliterals,
+            literal_to_clauses = self.literal_to_clauses,
+            trail = self.trail
+        )
+        self.steps_up+= steps_it
         if not ok:
             return False
-        lit = self.choose_literal()
+        lit = self.choose_lit(self.assign, self.score, self.nvars)
         if lit is None:
             return True  # all variables assigned, SAT
 
         self.num_decisions += 1
         trail_len = len(self.trail)
 
-        # Try True
         self.enqueue(lit)
-        if self.dpll(lit):
+        if self.dpll(lit,propagate):
             return True
         self.backtrack(trail_len)
 
-        # Try False
         self.enqueue(-lit)
-        if self.dpll(-lit):
+        if self.dpll(-lit,propagate):
             return True
         self.backtrack(trail_len)
         return False
 
-    def solve(self):
+    def solve(self, propagete ):
         start = time.perf_counter()
-        sat = self.dpll(None)
+        sat = self.dpll(None, propagete)
         end = time.perf_counter()
         model = {i: self.assign[i] for i in range(1, self.nvars+1)}
         return sat, model, end-start, self.num_decisions, self.steps_up
