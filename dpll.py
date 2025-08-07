@@ -17,12 +17,13 @@ class SAT_dpll:
         self.adjacency_dict = defaultdict(list)
         self.clause_to_Wliterals = defaultdict(list)
         self.literal_to_clauses = defaultdict(set)
-
+        self.score = None
         # Precompute literal occurrences for fast heuristic
-        self.score = score_h(
-            clauses = clauses,
-            variables = [i for i in range(1,nvars+1)]
-        )
+        if score_h != None:
+            self.score = score_h(
+                clauses = clauses,
+                variables = [i for i in range(1,nvars+1)]
+            )
         for clause in clauses:
             for lit in clause:
                 self.adjacency_dict[lit].append(clause)
@@ -54,94 +55,6 @@ class SAT_dpll:
                 self.literal_to_clauses[clause[1]].add(cl_idx)
 
 
-    def unit_propagate_w_watched_lits(
-        self, changed_literal : int = None) -> bool:
-        """
-        Standard unit propagation using watched literals.
-        Returns True if consistent, False if conflict.
-        """
-        to_check = [changed_literal] if changed_literal is not None else []
-        assign = self.assign
-        clauses = self.clauses
-        cl_wlits = self.clause_to_Wliterals
-        lit_to_cls = self.literal_to_clauses
-
-        while to_check:
-            checked = to_check.pop()
-            for cl_idx in list(lit_to_cls[checked]):  # iterate over copy
-                w1, w2 = cl_wlits[cl_idx]
-                other = w1 if w1 != checked else w2
-
-                # check if clause is already satisfied
-                val = assign[abs(other)]
-                if (val and other > 0) or (val is False and other < 0):
-                    continue
-
-                # try to move watched literal
-                moved = False
-                for lit in clauses[cl_idx]:
-                    if lit != other:
-                        v = assign[abs(lit)]
-                        if v is None or (v and lit > 0) or (v is False and lit < 0):
-                            cl_wlits[cl_idx] = [other, lit]
-                            lit_to_cls[lit].add(cl_idx)
-                            lit_to_cls[checked].discard(cl_idx)
-                            moved = True
-                            break
-
-                if not moved:
-                    if val is False or (val is True and other < 0):
-                        return False  # conflict
-                    if val is None:
-                        self.enqueue(other)
-                        self.steps_up += 1
-                        to_check.append(-other)
-        return True
-
-    def unit_propagate(self,
-        changed_literal : int = None) -> bool:
-        """
-        Standard unit propagation scanning all clauses.
-        Returns True if consistent, False if conflict.
-        """
-        to_check = []
-        if changed_literal != None:
-            to_check = [changed_literal]
-        while to_check:
-            checked = None
-            iterate_through = self.clauses
-            if to_check != []:
-                checked = to_check.pop()
-                iterate_through = self.adjacency_dict[checked]
-            for clause in iterate_through:
-                # Check clause under current assignment
-                satisfied = False
-                unassigned = []
-                for lit in clause:
-                    val = self.value(lit)
-                    if val is True:
-                        satisfied = True
-                        break
-                    if val is None:
-                        unassigned.append(lit)
-
-                if satisfied:
-                    continue
-                if len(unassigned) == 0:
-                    return False  # conflict
-                if len(unassigned) == 1:
-                    # Unit literal
-                    lit = unassigned[0]
-                    if self.value(lit) is False:
-                        return False
-                    if self.value(lit) is None:
-                        self.enqueue(lit)
-                        self.steps_up += 1
-                        to_check.append(-lit)
-                
-        return True
-
-
     def dpll(self,literal : int, propagate ) -> bool:
      #   print("rekurzuju")
         falsified_lit = literal if literal == None else -literal
@@ -159,7 +72,10 @@ class SAT_dpll:
         self.steps_up+= steps_it
         if not ok:
             return False
-        lit = self.choose_lit(self.assign, self.score, self.nvars)
+        lit = self.choose_lit(
+            assign = self.assign,
+            score = self.score,
+            vars = self.nvars)
         if lit is None:
             return True  # all variables assigned, SAT
 

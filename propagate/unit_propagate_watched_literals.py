@@ -10,7 +10,6 @@ def unit_propagate_w_watched_lits(
     assign = args["assign"]
     cl_wlits = args["clause_to_Wliterals"]
     lit_to_cls = args["literal_to_clauses"]
-    trail = args["trail"]
     to_check = [changed_literal] if changed_literal is not None else []
     steps_up = 0
     while to_check:

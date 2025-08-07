@@ -1,13 +1,12 @@
 from collections import defaultdict
 
-def choose_literal(
-        assign : list[int], 
-        score : defaultdict,
-        nvars : int
-        ) -> int:
+def choose_literal(**args) -> int:
     """Pick literal with maximum occurrence among unassigned vars."""
     best_lit = None
     best_count = -1
+    nvars  = args["vars"]
+    assign = args["assign"]
+    score  = args["score"]
     for var in range(1, nvars+1):
         if assign[var] is None:
             cnt_pos = score[var]
