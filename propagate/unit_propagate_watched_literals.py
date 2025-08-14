@@ -1,3 +1,4 @@
+
 def unit_propagate_w_watched_lits(
     **args) -> tuple[bool,int]:
     """
@@ -12,11 +13,16 @@ def unit_propagate_w_watched_lits(
     lit_to_cls = args["literal_to_clauses"]
     to_check = [changed_literal] if changed_literal is not None else []
     steps_up = 0
+    vsids = args.get("vsids", None) 
     while to_check:
         checked = to_check.pop()
         for cl_idx in list(lit_to_cls[checked]):  # iterate over copy
-            w1, w2 = cl_wlits[cl_idx]
-            other = w1 if w1 != checked else w2
+            if len(cl_wlits[cl_idx]) == 1:
+                w1 = cl_wlits[cl_idx][0] 
+                other = w1
+            else:
+                w1, w2 = cl_wlits[cl_idx]
+                other = w1 if w1 != checked else w2
 
             # check if clause is already satisfied
             val = assign[abs(other)]
@@ -36,6 +42,8 @@ def unit_propagate_w_watched_lits(
                         break
             if not moved:
                 if val is False or (val is True and other < 0):
+                    if vsids is not None:
+                        vsids.bump_vars_from_clause(clauses[cl_idx])
                     return False, steps_up  # conflict
                 if val is None:
                     enqueue(other)

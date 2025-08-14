@@ -1,28 +1,28 @@
 SAT result: True
 number of clauses:  581
 number of variables:  61
-Experiment with inputs\ais\ais6.cnf lasted 0.0021638000034727156
+Experiment with inputs\ais\ais6.cnf lasted 0.0008105000015348196
 number of decisions:  25
-number of UP steps:  361
+number of UP steps:  342
 ---------------------------------------------
 SAT result: True
 number of clauses:  1520
 number of variables:  113
-Experiment with inputs\ais\ais8.cnf lasted 0.04425399994943291
+Experiment with inputs\ais\ais8.cnf lasted 0.01821639999980107
 number of decisions:  194
-number of UP steps:  5148
+number of UP steps:  5610
 ---------------------------------------------
 SAT result: True
 number of clauses:  3151
 number of variables:  181
-Experiment with inputs\ais\ais10.cnf lasted 0.7910861999844201
+Experiment with inputs\ais\ais10.cnf lasted 0.24406230001477525
 number of decisions:  3033
-number of UP steps:  95673
+number of UP steps:  105376
 ---------------------------------------------
 SAT result: True
 number of clauses:  5666
 number of variables:  265
-Experiment with inputs\ais\ais12.cnf lasted 16.09525269997539
+Experiment with inputs\ais\ais12.cnf lasted 7.773992000031285
 number of decisions:  66154
-number of UP steps:  2356365
+number of UP steps:  2606670
 ---------------------------------------------

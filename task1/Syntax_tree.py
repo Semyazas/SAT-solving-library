@@ -1,26 +1,10 @@
 import re
-def read_file(filename: str) -> list[str]:
-    """Reads a file and returns a list of lines stripped of whitespace."""
-   # print("file to read:", filename)
-    with open(filename, 'r') as file:
-        return [line.strip() for line in file.readlines() if line.strip()]  # Remove empty lines
+from .formula_node import FormulaNode, read_file
 
-
-class FormulaNode:
-    def __init__(self, op, left=None, right=None):
-        self.op = op   # 'and', 'or', 'not', or variable name
-        self.left = left
-        self.right = right  # Only used for binary ops
-    
-    def __repr__(self):
-        if self.op in {"and", "or"}:
-            return f"({self.op} {self.left} {self.right})"
-        elif self.op == "not":
-            return f"(not {self.left})"
-        else:
-            return self.op  # Variable
-
-class FormulaTree: # class that makes input into syntax tree, it is also capable of converting it to CNF
+class FormulaTree: 
+    """
+    class that makes input into syntax tree, it is also capable of converting it to CNF
+    """
     def __init__(self, filename: str):
         self.filename = filename
         self.variables = set()
@@ -30,7 +14,9 @@ class FormulaTree: # class that makes input into syntax tree, it is also capable
     
 
     def split_parentheses(self, lines):
-        """Splits parentheses while keeping tokens intact."""
+        """
+        Splits parentheses while keeping tokens intact.
+        """
         new_lines = []
         for line in lines:
             tokens = re.findall(r'\(|\)|\w+', line)  # Extracts words and parentheses separately
@@ -38,7 +24,9 @@ class FormulaTree: # class that makes input into syntax tree, it is also capable
         return new_lines
 
     def get_formulas(self):
-        """Parses formulas from the input file and stores them."""
+        """
+        Parses formulas from the input file and stores them.
+        """
         lines = read_file(self.filename)
         tokens = self.split_parentheses(lines)
         
@@ -51,14 +39,14 @@ class FormulaTree: # class that makes input into syntax tree, it is also capable
             elif token == ")":
                 if not stack:
                     raise SyntaxError("Mismatched closing parenthesis!")
-                stack.pop()  # Corrected: use pop() instead of pop(0)
+                stack.pop() 
             else:
                 if token not in {"or", "and", "not"} and token not in self.variables:
-                    self.variables.add(token)  # Add new variables
+                    self.variables.add(token)  
             
             formula.append(token)
 
-            if not stack:  # If all parentheses are closed, store the formula
+            if not stack:  #
                 self.formulas.append(formula)
                 formula = []
         
@@ -68,7 +56,9 @@ class FormulaTree: # class that makes input into syntax tree, it is also capable
     #    print("Parsed Formulas:", self.formulas)  # Debug print
 
     def _parse_formula(self, tokens: list[str]) -> FormulaNode:
-        """Recursively parses a list of tokens into a formula tree."""
+        """
+        Recursively parses a list of tokens into a formula tree.
+        """
         if not tokens:
             raise ValueError("Empty token list in _parse_formula")
 
@@ -82,7 +72,7 @@ class FormulaTree: # class that makes input into syntax tree, it is also capable
             return FormulaNode(token, left, right)
         
         elif token == "not":
-            subformula = self._parse_formula(tokens)  # Apply "not" to a node
+            subformula = self._parse_formula(tokens)  
             return FormulaNode("not", subformula)
         
         else:
@@ -129,7 +119,9 @@ class FormulaTree: # class that makes input into syntax tree, it is also capable
             self.NNF_tree2CNF_tree(root_tree.right)
 
     def NNF2CNF(self, formula: list[str]) -> None:
-        """Converts a formula from Negation Normal Form (NNF) to Conjunctive Normal Form (CNF)."""
+        """
+        Converts a formula from Negation Normal Form (NNF) to Conjunctive Normal Form (CNF).
+        """
         root_tree = self._parse_formula(formula)
     #    print("NNF Syntax Tree:", root_tree)  # Debugging
         self.NNF_tree2CNF_tree(root_tree)
@@ -138,7 +130,7 @@ class FormulaTree: # class that makes input into syntax tree, it is also capable
         while  self.DetectOrAnd(root_tree):
             self.NNF_tree2CNF_tree(root_tree)
     #        print("CNF Syntax Tree:", root_tree) # Debugging
-        self.root = root_tree  # Placeholder until transformation is implemented
+        self.root = root_tree  
     
     def clean_CNF(self, formula: list[list[str]]) -> list[list[str]]:
         """By cleaning CNF we delete redundant clauses and redundant literals in clauses."""

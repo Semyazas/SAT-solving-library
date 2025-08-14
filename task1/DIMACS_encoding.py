@@ -1,29 +1,8 @@
-import re
-from task1.Syntax_tree import FormulaTree
+# in task1_tests.py
+
+# in DIMACS_encoding.py
+from .Syntax_tree import FormulaTree
 import sys
-
-def read_file(filename: str) -> list[str]:
-    """Reads a file and returns a list of lines stripped of whitespace."""
-   # print(filename)
-    with open(filename, 'r') as file:
-        return [line.strip() for line in file.readlines() if line.strip()]  # Remove empty lines
-
-
-class FormulaNode:
-    def __init__(self, op, left=None, right=None):
-        self.op = op   # 'and', 'or', 'not', or variable name
-        self.left = left
-        self.right = right  # Only used for binary ops
-    
-    def __repr__(self):
-        if self.op in {"and", "or"}:
-            return f"({self.op} {self.left} {self.right})"
-        elif self.op == "not":
-            return f"(not {self.left})"
-        else:
-            return self.op  # Variable
-        
-
 class DIMACS_decoder:
     def __init__(self, filename):
         self.filename = filename

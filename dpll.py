@@ -3,9 +3,17 @@ import time
 import sys
 from DIMACS_reader import read_DIMACS
 from task1.DIMACS_encoding import DIMACS_decoder
-
+from propagate.unit_propagate_watched_literals import unit_propagate_w_watched_lits
+from decision_heuristics.choose_literal.choose_best_score import choose_literal
+from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
+import os
 class SAT_dpll:
-    def __init__(self, clauses, nvars,choose_lit ,score_h = None):
+    """
+    Class that implements SAT solver using dpll algorithm.
+    If we call this file, it will use watched literals and literal counts 
+    heuristic as default.
+    """
+    def __init__(self, clauses, nvars,choose_lit ,score_h = None, VSIDS = None):
         self.clauses = clauses
         self.nvars = nvars
         self.assign = [None for _ in range(nvars+1)]   # 1-indexed
@@ -18,6 +26,7 @@ class SAT_dpll:
         self.clause_to_Wliterals = defaultdict(list)
         self.literal_to_clauses = defaultdict(set)
         self.score = None
+        self.vsids = VSIDS
         # Precompute literal occurrences for fast heuristic
         if score_h != None:
             self.score = score_h(
@@ -67,7 +76,8 @@ class SAT_dpll:
             assign = self.assign,
             clause_to_Wliterals = self.clause_to_Wliterals,
             literal_to_clauses = self.literal_to_clauses,
-            trail = self.trail
+            trail = self.trail,
+            vsids = self.vsids
         )
         self.steps_up+= steps_it
         if not ok:
@@ -76,6 +86,7 @@ class SAT_dpll:
             assign = self.assign,
             score = self.score,
             vars = self.nvars)
+        
         if lit is None:
             return True  # all variables assigned, SAT
 
@@ -100,28 +111,42 @@ class SAT_dpll:
         model = {i: self.assign[i] for i in range(1, self.nvars+1)}
         return sat, model, end-start, self.num_decisions, self.steps_up
 
-
+# TODO: debug -s variant
 if __name__ == "__main__":
     clauses, variables = [], []
     dimacs = True
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     if len(sys.argv) == 3:
+        filepath = os.path.join(BASE_DIR, sys.argv[2])
         if sys.argv[1] == "-d":
-            clauses, variables = read_DIMACS(sys.argv[2])
+            clauses, variables,_,_ = read_DIMACS(filepath)
         elif sys.argv[1] == "-s":
-            D_decoder = DIMACS_decoder(sys.argv[2])
+            D_decoder = DIMACS_decoder(filepath)
             D_decoder.get_var_mapping()
             clauses = D_decoder.get_DIMACS()
             variables = list(D_decoder.var2dimacs_map.values())
             dimacs = False
 
-    solver = SAT_dpll(clauses, max(variables))
-    solved, model, t, n_dec, n_up = solver.solve()
+    solver = SAT_dpll(
+        clauses,
+        max(variables),
+        choose_lit=choose_literal,
+        score_h=lit_counts_h,
+        VSIDS=None
+    )
+    solved, model, t, n_dec, n_up = solver.solve(unit_propagate_w_watched_lits)
 
     print("SAT:", solved)
     if model:
-        vals = sorted(model.keys())
-        for var in vals:
-            print(var if model[var] else -var)
+        if dimacs:
+            vals = sorted(model.keys())
+            for var in vals:
+                print(var if model[var] else -var)
+        else:
+            vals = sorted(model.keys())
+            for var in vals:
+                print(D_decoder.dmacs2var_map[var], ": ", model[var])
+
     print("time:", t)
     print("decisions:", n_dec)
     print("unit propagations:", n_up)

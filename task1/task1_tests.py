@@ -1,10 +1,15 @@
-from DIMACS_encoding import DIMACS_decoder
-
+from .DIMACS_encoding import DIMACS_decoder
+import os
 
 if __name__ == "__main__":
-   decoder_nested5 = DIMACS_decoder("tsetin_inputs\\inputs\\nested_5.sat")
-   decoder_nested8 = DIMACS_decoder("tsetin_inputs\\inputs\\nested_8.sat")
-   decoder_toy5 = DIMACS_decoder("tsetin_inputs\\inputs\\toy_5.sat")
+   BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+   filepath1 = os.path.join(BASE_DIR, "tsetin_inputs", "inputs", "nested_5.sat")
+   filepath2 = os.path.join(BASE_DIR, "tsetin_inputs", "inputs", "nested_8.sat")
+   filepath3 = os.path.join(BASE_DIR, "tsetin_inputs", "inputs", "toy_5.sat")
+
+   decoder_nested5 = DIMACS_decoder(filepath1)
+   decoder_nested8 = DIMACS_decoder(filepath2)
+   decoder_toy5 = DIMACS_decoder(filepath3)
 
    correct_out1 =[["x1", "x7","not x4"],
         ["x3","x9","x7","x1"],

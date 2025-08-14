@@ -1,0 +1,15 @@
+SAT result: True
+Experiment with ..\task1\tsetin_inputs\inputs\nested_5.sat lasted 0.0006206999969435856
+---------------------------------------------
+SAT result: True
+Experiment with ..\task1\tsetin_inputs\inputs\nested_8.sat lasted 0.5646555999992415
+---------------------------------------------
+SAT result: True
+Experiment with ..\task1\tsetin_inputs\inputs\toy_5.sat lasted 0.00037569999403785914
+---------------------------------------------
+SAT result: True
+Experiment with ..\task1\tsetin_inputs\inputs\toy_50.sat lasted 0.0006244000105652958
+---------------------------------------------
+SAT result: True
+Experiment with ..\task1\tsetin_inputs\inputs\toy_100.sat lasted 0.0013913000002503395
+---------------------------------------------

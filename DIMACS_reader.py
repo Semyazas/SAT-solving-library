@@ -1,5 +1,8 @@
-from task1.Syntax_tree import read_file
-
+def read_file(filename: str) -> list[str]:
+    """Reads a file and returns a list of lines stripped of whitespace."""
+   # print(filename)
+    with open(filename, 'r') as file:
+        return [line.strip() for line in file.readlines() if line.strip()]  # Remove empty lines 
 def read_DIMACS(filename: str) -> tuple[list[list[int]], list[int]]:
     clauses = []
     variables = []
