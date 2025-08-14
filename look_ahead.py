@@ -1,6 +1,7 @@
 from collections import defaultdict
 import time
 
+#TODO: implement
 class SAT_lookAhead:
     def __init__(self, clauses, nvars,choose_lit ,score_h = None, VSIDS = None):
         self.clauses = clauses

@@ -1,4 +1,0 @@
-(or  
-    (and x (and (or aaa bbb) (not d)))
-    (or z (and qqq pp))
-)
