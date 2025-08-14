@@ -1,0 +1,700 @@
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-1.cnf lasted 0.162070
+number of decisions: 960
+number of UP steps: 74615
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-2.cnf lasted 0.053329
+number of decisions: 290
+number of UP steps: 24622
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-3.cnf lasted 0.004240
+number of decisions: 44
+number of UP steps: 1694
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-4.cnf lasted 0.013654
+number of decisions: 76
+number of UP steps: 6348
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-5.cnf lasted 0.002155
+number of decisions: 34
+number of UP steps: 415
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-6.cnf lasted 0.032034
+number of decisions: 175
+number of UP steps: 13187
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-7.cnf lasted 0.123544
+number of decisions: 500
+number of UP steps: 47062
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-8.cnf lasted 0.067638
+number of decisions: 334
+number of UP steps: 32665
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-9.cnf lasted 0.030471
+number of decisions: 181
+number of UP steps: 13388
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-10.cnf lasted 0.001497
+number of decisions: 27
+number of UP steps: 455
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-11.cnf lasted 0.016018
+number of decisions: 97
+number of UP steps: 7299
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-12.cnf lasted 0.016303
+number of decisions: 96
+number of UP steps: 7832
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-13.cnf lasted 0.056975
+number of decisions: 293
+number of UP steps: 26313
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-14.cnf lasted 0.008605
+number of decisions: 59
+number of UP steps: 3796
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-15.cnf lasted 0.038313
+number of decisions: 176
+number of UP steps: 17581
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-16.cnf lasted 0.006230
+number of decisions: 57
+number of UP steps: 2461
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-17.cnf lasted 0.017366
+number of decisions: 102
+number of UP steps: 7097
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-18.cnf lasted 0.035905
+number of decisions: 163
+number of UP steps: 16776
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-19.cnf lasted 0.054008
+number of decisions: 280
+number of UP steps: 25819
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-20.cnf lasted 0.044688
+number of decisions: 239
+number of UP steps: 19769
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-21.cnf lasted 0.025981
+number of decisions: 136
+number of UP steps: 12887
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-22.cnf lasted 0.004169
+number of decisions: 45
+number of UP steps: 1720
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-23.cnf lasted 0.002412
+number of decisions: 38
+number of UP steps: 744
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-24.cnf lasted 0.092761
+number of decisions: 443
+number of UP steps: 44759
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-25.cnf lasted 0.088054
+number of decisions: 461
+number of UP steps: 40610
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-26.cnf lasted 0.118072
+number of decisions: 420
+number of UP steps: 33280
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-27.cnf lasted 0.046702
+number of decisions: 128
+number of UP steps: 9502
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-28.cnf lasted 0.018222
+number of decisions: 64
+number of UP steps: 2638
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-29.cnf lasted 0.067239
+number of decisions: 215
+number of UP steps: 17561
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-30.cnf lasted 0.020899
+number of decisions: 77
+number of UP steps: 6799
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-31.cnf lasted 0.003307
+number of decisions: 35
+number of UP steps: 820
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-32.cnf lasted 0.075340
+number of decisions: 275
+number of UP steps: 25307
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-33.cnf lasted 0.075172
+number of decisions: 325
+number of UP steps: 27808
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-34.cnf lasted 0.045315
+number of decisions: 178
+number of UP steps: 17147
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-35.cnf lasted 0.010949
+number of decisions: 55
+number of UP steps: 4016
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-36.cnf lasted 0.041231
+number of decisions: 173
+number of UP steps: 14004
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-37.cnf lasted 0.029069
+number of decisions: 156
+number of UP steps: 13657
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-38.cnf lasted 0.084135
+number of decisions: 382
+number of UP steps: 33626
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-39.cnf lasted 0.104313
+number of decisions: 485
+number of UP steps: 37541
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-40.cnf lasted 0.013218
+number of decisions: 111
+number of UP steps: 5072
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-41.cnf lasted 0.003528
+number of decisions: 44
+number of UP steps: 855
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-42.cnf lasted 0.036973
+number of decisions: 285
+number of UP steps: 10372
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-43.cnf lasted 0.110704
+number of decisions: 573
+number of UP steps: 49541
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-44.cnf lasted 0.010792
+number of decisions: 65
+number of UP steps: 4536
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-45.cnf lasted 0.043454
+number of decisions: 231
+number of UP steps: 19847
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-46.cnf lasted 0.004394
+number of decisions: 43
+number of UP steps: 1720
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-47.cnf lasted 0.025970
+number of decisions: 111
+number of UP steps: 8539
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-48.cnf lasted 0.007327
+number of decisions: 60
+number of UP steps: 3484
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-49.cnf lasted 0.021135
+number of decisions: 131
+number of UP steps: 9681
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-50.cnf lasted 0.005885
+number of decisions: 47
+number of UP steps: 2650
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-51.cnf lasted 0.003082
+number of decisions: 49
+number of UP steps: 963
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-52.cnf lasted 0.037660
+number of decisions: 187
+number of UP steps: 18078
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-53.cnf lasted 0.006903
+number of decisions: 51
+number of UP steps: 2717
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-54.cnf lasted 0.014096
+number of decisions: 87
+number of UP steps: 6222
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-55.cnf lasted 0.028792
+number of decisions: 150
+number of UP steps: 13149
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-56.cnf lasted 0.010894
+number of decisions: 82
+number of UP steps: 4213
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-57.cnf lasted 0.002316
+number of decisions: 39
+number of UP steps: 619
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-58.cnf lasted 0.018624
+number of decisions: 113
+number of UP steps: 8828
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-59.cnf lasted 0.008483
+number of decisions: 66
+number of UP steps: 3849
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-60.cnf lasted 0.019235
+number of decisions: 122
+number of UP steps: 8815
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-61.cnf lasted 0.013687
+number of decisions: 77
+number of UP steps: 5147
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-62.cnf lasted 0.004505
+number of decisions: 28
+number of UP steps: 1191
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-63.cnf lasted 0.009764
+number of decisions: 55
+number of UP steps: 3170
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-64.cnf lasted 0.015702
+number of decisions: 72
+number of UP steps: 6300
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-65.cnf lasted 0.010317
+number of decisions: 80
+number of UP steps: 4536
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-66.cnf lasted 0.036698
+number of decisions: 176
+number of UP steps: 17188
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-67.cnf lasted 0.031077
+number of decisions: 189
+number of UP steps: 15339
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-68.cnf lasted 0.004262
+number of decisions: 48
+number of UP steps: 1784
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-69.cnf lasted 0.064406
+number of decisions: 287
+number of UP steps: 30445
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-70.cnf lasted 0.019611
+number of decisions: 125
+number of UP steps: 8226
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-71.cnf lasted 0.039926
+number of decisions: 211
+number of UP steps: 19640
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-72.cnf lasted 0.007239
+number of decisions: 56
+number of UP steps: 3352
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-73.cnf lasted 0.009220
+number of decisions: 58
+number of UP steps: 4137
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-74.cnf lasted 0.007599
+number of decisions: 45
+number of UP steps: 3499
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-75.cnf lasted 0.027475
+number of decisions: 135
+number of UP steps: 12658
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-76.cnf lasted 0.035914
+number of decisions: 178
+number of UP steps: 14922
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-77.cnf lasted 0.064776
+number of decisions: 245
+number of UP steps: 24038
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-78.cnf lasted 0.017578
+number of decisions: 103
+number of UP steps: 6019
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-79.cnf lasted 0.006203
+number of decisions: 49
+number of UP steps: 2001
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-80.cnf lasted 0.023421
+number of decisions: 109
+number of UP steps: 8245
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-81.cnf lasted 0.245956
+number of decisions: 1107
+number of UP steps: 95524
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-82.cnf lasted 0.081115
+number of decisions: 372
+number of UP steps: 31109
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-83.cnf lasted 0.012981
+number of decisions: 71
+number of UP steps: 4314
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-84.cnf lasted 0.008644
+number of decisions: 50
+number of UP steps: 2483
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-85.cnf lasted 0.051795
+number of decisions: 224
+number of UP steps: 20231
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-86.cnf lasted 0.023074
+number of decisions: 96
+number of UP steps: 8428
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-87.cnf lasted 0.024659
+number of decisions: 163
+number of UP steps: 11502
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-88.cnf lasted 0.003518
+number of decisions: 44
+number of UP steps: 1319
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-89.cnf lasted 0.028473
+number of decisions: 158
+number of UP steps: 13488
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-90.cnf lasted 0.013007
+number of decisions: 77
+number of UP steps: 6281
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-91.cnf lasted 0.024763
+number of decisions: 125
+number of UP steps: 11083
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-92.cnf lasted 0.045473
+number of decisions: 203
+number of UP steps: 17561
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-93.cnf lasted 0.018356
+number of decisions: 109
+number of UP steps: 6675
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-94.cnf lasted 0.012981
+number of decisions: 81
+number of UP steps: 5258
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-95.cnf lasted 0.002050
+number of decisions: 35
+number of UP steps: 674
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-96.cnf lasted 0.064217
+number of decisions: 347
+number of UP steps: 31194
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-97.cnf lasted 0.042655
+number of decisions: 248
+number of UP steps: 19190
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-98.cnf lasted 0.008833
+number of decisions: 60
+number of UP steps: 3977
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-99.cnf lasted 0.052745
+number of decisions: 259
+number of UP steps: 23020
+---------------------------------------------
+SAT result: True
+number of clauses: 1403
+number of variables: 375
+Experiment with inputs\flat125\ai\hoos\Research\SAT\GenGCP\Flat125-301\flat125-100.cnf lasted 0.043492
+number of decisions: 207
+number of UP steps: 19572
+---------------------------------------------
