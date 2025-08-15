@@ -1,6 +1,12 @@
 from collections import defaultdict
 import time
-
+import sys
+from DIMACS_reader import read_DIMACS
+from task1.DIMACS_encoding import DIMACS_decoder
+from propagate.unit_propagate_watched_literals import unit_propagate_w_watched_lits
+from decision_heuristics.choose_literal.choose_best_score import choose_literal
+from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
+import os
 #TODO: implement
 class SAT_lookAhead:
     def __init__(self, clauses, nvars,choose_lit ,score_h = None, VSIDS = None):
@@ -53,59 +59,209 @@ class SAT_lookAhead:
                 self.clause_to_Wliterals[cl_idx].append(clause[1])
                 self.literal_to_clauses[clause[1]].add(cl_idx)
 
-    def diff(clause) -> float:
-        raise NotImplementedError
-    
-    def mix_diff(clause) -> float:
-        raise NotImplementedError
+    def diff(self, literal) -> float:
+        """
+        Currently, just clause reduction heuristic
+        """
+        sum = 0
+        for clause in self.adjacency_dict[literal]:
+            for l in clause:
+                val = self.assign[abs(l)]
+                if (val and l > 0) or (val is False and l < 0):
+                    continue #clause satisfied
+            sum += len([l for l in clause if self.assign[abs(l)] is None])
+        return sum
+    def mix_diff(self,x : int, y : int) -> float:
+        """
+        Historical mix_diff from posit program.
+        """
+        return x + y + x*y * 1024
 
-    def look_ahead(clauses):
-        ok , steps_it = propagate(
-            changed_literal = falsified_lit,
-            adjacency_dict = self.adjacency_dict,
-            clauses = self.clauses,
-            value = self.value,
-            enqueue = self.enqueue,
-            assign = self.assign,
-            clause_to_Wliterals = self.clause_to_Wliterals,
-            literal_to_clauses = self.literal_to_clauses,
-            trail = self.trail,
-            vsids = self.vsids
-        )
-    def solve_with_look_ahead(self,propagate, clauses) -> bool:
-     #   print("rekurzuju")
+    def look_ahead(self,propagate):
+        unassigned = [i for i,val in enumerate(self.assign) if val is None]
+        best_val = -10000
+        best_lit = None
+   #     print(unassigned)
+        #TODO: bacha na to co je falsified literal
+        for var in unassigned[1:]:
+            conflicts = [False,False]
+            diff_vals = [0,0]
+            trail_len = len(self.trail)
+            for i,lit in enumerate([var,-var]):
+         #       print("lit: ", lit)
+         #       print("i: ", i)
+                self.enqueue(lit)
+                ok , steps_it = propagate(
+                    changed_literal = -lit,
+                    adjacency_dict = self.adjacency_dict,
+                    clauses = self.clauses,
+                    value = self.value,
+                    enqueue = self.enqueue,
+                    assign = self.assign,
+                    clause_to_Wliterals = self.clause_to_Wliterals,
+                    literal_to_clauses = self.literal_to_clauses,
+                    trail = self.trail,
+                    vsids = self.vsids
+                )
+        #        print("ok:", ok)
+                diff_vals[i] = self.diff(lit)
+                conflicts[i] = not ok
+                self.backtrack(trail_len)
+                self.steps_up += steps_it
+                # 1. We need to check whether there is no contradiction for both literals
+                # 2. if there is contradiction for only one, just enqueue put it into model
+                # 3. track best variable and return this variable
+
+            current_val = self.mix_diff(diff_vals[0], diff_vals[1])
+        #    print("curry: ",current_val)
+            if  conflicts[0] and conflicts[1]:
+                return None, False
+            
+            if conflicts[0]:
+                temp_len = len(self.trail)
+                self.enqueue(-var)
+                ok , steps_it = propagate(
+                    changed_literal = var,
+                    adjacency_dict = self.adjacency_dict,
+                    clauses = self.clauses,
+                    value = self.value,
+                    enqueue = self.enqueue,
+                    assign = self.assign,
+                    clause_to_Wliterals = self.clause_to_Wliterals,
+                    literal_to_clauses = self.literal_to_clauses,
+                    trail = self.trail,
+                    vsids = self.vsids
+                )
+            #    self.backtrack(temp_len)
+            #    if not ok: return None, False
+            #    else: self.enqueue(-var)
+                continue
+            elif conflicts[1]:
+                temp_len = len(self.trail)
+                self.enqueue(var)
+                ok , steps_it = propagate(
+                    changed_literal = -var,
+                    adjacency_dict = self.adjacency_dict,
+                    clauses = self.clauses,
+                    value = self.value,
+                    enqueue = self.enqueue,
+                    assign = self.assign,
+                    clause_to_Wliterals = self.clause_to_Wliterals,
+                    literal_to_clauses = self.literal_to_clauses,
+                    trail = self.trail,
+                    vsids = self.vsids
+                )
+                #self.backtrack(temp_len)
+
+               # if not ok: return None, False
+                #else: self.enqueue(var)
+         #       print("forcuju: ", var)
+                continue
+            if current_val > best_val:
+                best_lit = var
+                best_val = current_val
+
+        return best_lit, True
+    def solve_with_look_ahead(self,propagate) -> bool:
+      #  print("rekurzuju")
         if self.clauses == []: # TODO: debug 
             return True
         
-        self.clauses, dec_variable  = self.look_ahead(self.clauses)
-
-        self.steps_up+= steps_it
-        if not ok:
+        dec_literal, ok  = self.look_ahead(propagate)
+      #  print(self.assign)
+      #  print("dec_literal: ", dec_literal)
+        if not ok: # contradiction ... UNSAT
             return False
-        lit = self.choose_lit(
-            assign = self.assign,
-            score = self.score,
-            vars = self.nvars)
-        if lit is None:
+
+        if dec_literal is None:
+      #      print("correct")
+      #      print(self.assign)
             return True  # all variables assigned, SAT
 
         self.num_decisions += 1
         trail_len = len(self.trail)
 
-        self.enqueue(lit)
-        if self.dpll(lit,propagate):
+        self.enqueue(dec_literal)
+        ok, steps = propagate(
+            changed_literal=-dec_literal,
+            adjacency_dict=self.adjacency_dict,
+            clauses=self.clauses,
+            value=self.value,
+            enqueue=self.enqueue,
+            assign=self.assign,
+            clause_to_Wliterals=self.clause_to_Wliterals,
+            literal_to_clauses=self.literal_to_clauses,
+            trail=self.trail,
+            vsids=self.vsids,
+        )
+        self.steps_up += steps
+        if ok and self.solve_with_look_ahead(propagate):
             return True
         self.backtrack(trail_len)
 
-        self.enqueue(-lit)
-        if self.dpll(-lit,propagate):
+        # Try the opposite polarity
+        self.enqueue(-dec_literal)
+        ok, steps = propagate(
+            changed_literal=dec_literal,
+            adjacency_dict=self.adjacency_dict,
+            clauses=self.clauses,
+            value=self.value,
+            enqueue=self.enqueue,
+            assign=self.assign,
+            clause_to_Wliterals=self.clause_to_Wliterals,
+            literal_to_clauses=self.literal_to_clauses,
+            trail=self.trail,
+            vsids=self.vsids,
+        )
+        self.steps_up += steps
+        if ok and self.solve_with_look_ahead(propagate):
             return True
         self.backtrack(trail_len)
+
         return False
-
     def solve(self, propagete ):
         start = time.perf_counter()
-        sat = self.dpll(None, propagete)
+        sat = self.solve_with_look_ahead(propagete)
         end = time.perf_counter()
         model = {i: self.assign[i] for i in range(1, self.nvars+1)}
         return sat, model, end-start, self.num_decisions, self.steps_up
+    
+# TODO: debug -s variant
+if __name__ == "__main__":
+    clauses, variables = [], []
+    dimacs = True
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    if len(sys.argv) == 3:
+        filepath = os.path.join(BASE_DIR, sys.argv[2])
+        if sys.argv[1] == "-d":
+            clauses, variables,_,_ = read_DIMACS(filepath)
+        elif sys.argv[1] == "-s":
+            D_decoder = DIMACS_decoder(filepath)
+            D_decoder.get_var_mapping()
+            clauses = D_decoder.get_DIMACS()
+            variables = list(D_decoder.var2dimacs_map.values())
+            dimacs = False
+
+    solver = SAT_lookAhead(
+        clauses,
+        max(variables),
+        choose_lit=choose_literal,
+        score_h=lit_counts_h,
+        VSIDS=None
+    )
+    solved, model, t, n_dec, n_up = solver.solve(unit_propagate_w_watched_lits)
+
+    print("SAT:", solved)
+    if model:
+        if dimacs:
+            vals = sorted(model.keys())
+            for var in vals:
+                print(var if model[var] else -var)
+        else:
+            vals = sorted(model.keys())
+            for var in vals:
+                print(D_decoder.dmacs2var_map[var], ": ", model[var])
+
+    print("time:", t)
+    print("decisions:", n_dec)
+    print("unit propagations:", n_up)
