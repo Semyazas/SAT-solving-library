@@ -161,119 +161,48 @@ class SAT_lookAhead:
             for i,lit in enumerate([var,-var]):
                 self.enqueue(lit)
                 ok , steps_it = self.__propagate(propagate,-lit)
-                diff_vals[i] = self.diff(lit)
+                diff_vals[i] = self.WBH(lit)
                 conflicts[i] = not ok
                 self.backtrack(trail_len)
                 self.steps_up += steps_it
-                # 1. We need to check whether there is no contradiction for both literals
-                # 2. if there is contradiction for only one, just enqueue put it into model
-                # 3. track best variable and return this variable
 
             current_val = self.mix_diff(diff_vals[0], diff_vals[1])
-        #    print("curry: ",current_val)
             if  conflicts[0] and conflicts[1]:
                 return None, False
             
-            if conflicts[0]:
-                temp_len = len(self.trail)
-                self.enqueue(-var)
-                ok , steps_it = propagate(
-                    changed_literal = var,
-                    adjacency_dict = self.adjacency_dict,
-                    clauses = self.clauses,
-                    value = self.value,
-                    enqueue = self.enqueue,
-                    assign = self.assign,
-                    clause_to_Wliterals = self.clause_to_Wliterals,
-                    literal_to_clauses = self.literal_to_clauses,
-                    trail = self.trail,
-                    vsids = self.vsids
-                )
-            #    self.backtrack(temp_len)
-            #    if not ok: return None, False
-            #    else: self.enqueue(-var)
-                continue
-            elif conflicts[1]:
-                temp_len = len(self.trail)
-                self.enqueue(var)
-                ok , steps_it = propagate(
-                    changed_literal = -var,
-                    adjacency_dict = self.adjacency_dict,
-                    clauses = self.clauses,
-                    value = self.value,
-                    enqueue = self.enqueue,
-                    assign = self.assign,
-                    clause_to_Wliterals = self.clause_to_Wliterals,
-                    literal_to_clauses = self.literal_to_clauses,
-                    trail = self.trail,
-                    vsids = self.vsids
-                )
-                #self.backtrack(temp_len)
-
-               # if not ok: return None, False
-                #else: self.enqueue(var)
-         #       print("forcuju: ", var)
-                continue
+            for i,sign in enumerate([1,-1]):                        
+                if conflicts[i]:
+                    self.enqueue(-sign * var)
+                    ok, _ = self.__propagate(propagate,falsified_literal=sign*var)
+                    if not ok: return None, False
+                    continue
             if current_val > best_val:
                 best_lit = var
                 best_val = current_val
 
         return best_lit, True
     def solve_with_look_ahead(self,propagate) -> bool:
-      #  print("rekurzuju")
         if self.clauses == []: # TODO: debug 
             return True
         
         dec_literal, ok  = self.look_ahead(propagate)
-      #  print(self.assign)
-      #  print("dec_literal: ", dec_literal)
         if not ok: # contradiction ... UNSAT
             return False
 
         if dec_literal is None:
-      #      print("correct")
-      #      print(self.assign)
             return True  # all variables assigned, SAT
 
         self.num_decisions += 1
         trail_len = len(self.trail)
 
-        self.enqueue(dec_literal)
-        ok, steps = propagate(
-            changed_literal=-dec_literal,
-            adjacency_dict=self.adjacency_dict,
-            clauses=self.clauses,
-            value=self.value,
-            enqueue=self.enqueue,
-            assign=self.assign,
-            clause_to_Wliterals=self.clause_to_Wliterals,
-            literal_to_clauses=self.literal_to_clauses,
-            trail=self.trail,
-            vsids=self.vsids,
-        )
-        self.steps_up += steps
-        if ok and self.solve_with_look_ahead(propagate):
-            return True
-        self.backtrack(trail_len)
+        for sign in [1,-1]:
+            self.enqueue(sign * dec_literal)
+            ok, steps = self.__propagate(propagate,falsified_literal=-sign*dec_literal)
+            self.steps_up += steps
 
-        # Try the opposite polarity
-        self.enqueue(-dec_literal)
-        ok, steps = propagate(
-            changed_literal=dec_literal,
-            adjacency_dict=self.adjacency_dict,
-            clauses=self.clauses,
-            value=self.value,
-            enqueue=self.enqueue,
-            assign=self.assign,
-            clause_to_Wliterals=self.clause_to_Wliterals,
-            literal_to_clauses=self.literal_to_clauses,
-            trail=self.trail,
-            vsids=self.vsids,
-        )
-        self.steps_up += steps
-        if ok and self.solve_with_look_ahead(propagate):
-            return True
-        self.backtrack(trail_len)
+            if ok and self.solve_with_look_ahead(propagate):
+                return True
+            self.backtrack(trail_len)
 
         return False
     def solve(self, propagete ):
