@@ -1,0 +1,21 @@
+SAT result: True
+number of clauses:  1951
+number of variables:  525
+Experiment with inputs\flat175\ai\hoos\Research\SAT\GenGCP\Flat175-417\flat175-1.cnf lasted 0.032400699999925564
+number of decisions:  137
+number of UP steps:  12540
+---------------------------------------------
+SAT result: True
+number of clauses:  1951
+number of variables:  525
+Experiment with inputs\flat175\ai\hoos\Research\SAT\GenGCP\Flat175-417\flat175-2.cnf lasted 0.05303569999978208
+number of decisions:  187
+number of UP steps:  20685
+---------------------------------------------
+SAT result: True
+number of clauses:  1951
+number of variables:  525
+Experiment with inputs\flat175\ai\hoos\Research\SAT\GenGCP\Flat175-417\flat175-3.cnf lasted 0.11503520000042045
+number of decisions:  349
+number of UP steps:  41823
+---------------------------------------------
