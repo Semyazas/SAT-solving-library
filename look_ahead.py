@@ -7,7 +7,13 @@ from propagate.unit_propagate_watched_literals import unit_propagate_w_watched_l
 from decision_heuristics.choose_literal.choose_best_score import choose_literal
 from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
 import os
-#TODO: implement
+"""
+TODO: 
+    1) push changes
+    2) create heuristics
+    3) double literals
+    4) fancy data structure
+"""
 class SAT_lookAhead:
     def __init__(self, clauses, nvars,choose_lit ,score_h = None, VSIDS = None):
         self.clauses = clauses
@@ -63,47 +69,98 @@ class SAT_lookAhead:
         """
         Currently, just clause reduction heuristic
         """
+        #TODO: debugni
+        def gamma_k(k : int) -> float:
+            if k == 2: return 1
+            if k == 3: return 0.2
+            if k == 4: return 0.05
+            if k == 5: return 0.01
+            if k == 6: return 0.003
+            else:      return 20.4514 * (0.218673 ** k)
         sum = 0
         for clause in self.adjacency_dict[literal]:
             for l in clause:
                 val = self.assign[abs(l)]
                 if (val and l > 0) or (val is False and l < 0):
                     continue #clause satisfied
-            sum += len([l for l in clause if self.assign[abs(l)] is None])
+            sum += len([l for l in clause if self.assign[abs(l)] is None]) * gamma_k(len([l for l in clause if self.assign[abs(l)] is None]))
         return sum
+    
+    def WBH(self, literal) -> float:
+        """
+        Currently, just clause reduction heuristic
+        """
+        def gamma_k(k : int) -> float:
+            return 5 ** (k-3)
+        # #_k (x_i) ...number of occurences of not x_i in clauses of size k
+        # w(x_i) = \sum gamma_k #_k(x_i)
+        binary_clauseses = set()
+        for clause in self.clauses:
+            unassigned = [l for l in clause if self.assign[l] is not None]
+            if len(unassigned) == 2:
+                binary_clauseses.add(tuple(unassigned))
+
+        weight_of_literal = defaultdict(float)
+        for clause in binary_clauseses:
+            satisfied = False
+            for l in clause:
+                val = self.assign[abs(l)]
+                if (val and l > 0) or (val is False and l < 0):
+                    satisfied = True
+            if satisfied:
+                continue
+            for l in [l,-l]:
+                if l not in weight_of_literal:
+                    weight_of_literal[l] = 0
+                    counts = defaultdict(int) # len(clause) -> count
+                    for clause in self.adjacency_dict[-l]:
+                        counts[
+                            len([lit for lit in clause 
+                                if self.assign[lit] is None]
+                            )
+                        ] += 1
+
+                weight_of_literal[l] = sum(
+                    counts[key] * gamma_k(counts[key])
+                    for key in counts.keys()
+                ) 
+        return sum(
+            weight_of_literal[-cl[0]] + \
+            weight_of_literal[-cl[1]] 
+            for cl in binary_clauseses
+        )
     def mix_diff(self,x : int, y : int) -> float:
         """
         Historical mix_diff from posit program.
         """
         return x + y + x*y * 1024
 
+    def __propagate(self, propagate, falsified_literal)->None:
+        ok , steps_it = propagate(
+            changed_literal = falsified_literal,
+            adjacency_dict = self.adjacency_dict,
+            clauses = self.clauses,
+            value = self.value,
+            enqueue = self.enqueue,
+            assign = self.assign,
+            clause_to_Wliterals = self.clause_to_Wliterals,
+            literal_to_clauses = self.literal_to_clauses,
+            trail = self.trail,
+            vsids = self.vsids
+        )
+        return ok, steps_it
+
     def look_ahead(self,propagate):
         unassigned = [i for i,val in enumerate(self.assign) if val is None]
         best_val = -10000
         best_lit = None
-   #     print(unassigned)
-        #TODO: bacha na to co je falsified literal
         for var in unassigned[1:]:
             conflicts = [False,False]
             diff_vals = [0,0]
             trail_len = len(self.trail)
             for i,lit in enumerate([var,-var]):
-         #       print("lit: ", lit)
-         #       print("i: ", i)
                 self.enqueue(lit)
-                ok , steps_it = propagate(
-                    changed_literal = -lit,
-                    adjacency_dict = self.adjacency_dict,
-                    clauses = self.clauses,
-                    value = self.value,
-                    enqueue = self.enqueue,
-                    assign = self.assign,
-                    clause_to_Wliterals = self.clause_to_Wliterals,
-                    literal_to_clauses = self.literal_to_clauses,
-                    trail = self.trail,
-                    vsids = self.vsids
-                )
-        #        print("ok:", ok)
+                ok , steps_it = self.__propagate(propagate,-lit)
                 diff_vals[i] = self.diff(lit)
                 conflicts[i] = not ok
                 self.backtrack(trail_len)
