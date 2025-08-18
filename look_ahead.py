@@ -9,14 +9,25 @@ from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
 import os
 """
 TODO: 
-    1) push changes
-    2) create heuristics
-    3) double literals
-    4) fancy data structure
+    1) push changes             DONE
+    2) create heuristics        Partially DONE
+    3) double literals          Huh ? 
+    4) fancy data structure     In progress
 """
 class SAT_lookAhead:
-    def __init__(self, clauses, nvars,choose_lit ,score_h = None, VSIDS = None):
+    def __init__(self,
+            clauses, 
+            nvars, 
+            choose_lit,
+            score_h = None, 
+            VSIDS = None) -> None:
         self.clauses = clauses
+
+        self.clause_len = [len(cl) for cl in clauses]
+        self.clause_active = [True] * len(clauses)
+        # For undoing shrink/removal operations
+        self.mod_stack = []
+
         self.nvars = nvars
         self.assign = [None for _ in range(nvars+1)]   # 1-indexed
         self.trail = []                     # stack of assigned literals
@@ -35,9 +46,9 @@ class SAT_lookAhead:
                 clauses = clauses,
                 variables = [i for i in range(1,nvars+1)]
             )
-        for clause in clauses:
+        for i,clause in enumerate(clauses):
             for lit in clause:
-                self.adjacency_dict[lit].append(clause)
+                self.adjacency_dict[lit].append(i)
 
         self.begin_watched_literals()
 
@@ -51,12 +62,27 @@ class SAT_lookAhead:
         self.assign[abs(lit)] = lit > 0
         self.trail.append(lit)
 
-    def backtrack(self, old_len : int) -> None:
-        """Undo assignments down to old_len of trail."""
+        for cl_ind in self.adjacency_dict[lit]:
+            if self.clause_active[cl_ind]:
+                self.clause_active[cl_ind]  = False
+                self.mod_stack.append((cl_ind,len(self.trail)))
+
+    def assign_lit(self, lit: int) -> None:
+        """Only assign, do not touch clause_active."""
+        self.assign[abs(lit)] = lit > 0
+        self.trail.append(lit)
+    def backtrack(self, old_len: int, old_mod_stack: int) -> None:
         while len(self.trail) > old_len:
             lit = self.trail.pop()
             self.assign[abs(lit)] = None
-    
+
+        # restore only entries added after the snapshot
+        while len(self.mod_stack) > old_mod_stack:
+            cl_ind, depth = self.mod_stack.pop()
+            # only re-activate if that deactivation happened at or after the snapshot depth
+            if depth >= old_len:
+                self.clause_active[cl_ind] = True
+
     def begin_watched_literals(self) -> None:
         for  cl_idx,clause in enumerate(self.clauses):
             self.clause_to_Wliterals[cl_idx] = [clause[0]]
@@ -66,69 +92,59 @@ class SAT_lookAhead:
                 self.literal_to_clauses[clause[1]].add(cl_idx)
 
     def diff(self, literal) -> float:
-        """
-        Currently, just clause reduction heuristic
-        """
-        #TODO: debugni
-        def gamma_k(k : int) -> float:
+        def gamma_k(k: int) -> float:
             if k == 2: return 1
             if k == 3: return 0.2
             if k == 4: return 0.05
             if k == 5: return 0.01
             if k == 6: return 0.003
-            else:      return 20.4514 * (0.218673 ** k)
-        sum = 0
-        for clause in self.adjacency_dict[literal]:
-            for l in clause:
-                val = self.assign[abs(l)]
-                if (val and l > 0) or (val is False and l < 0):
-                    continue #clause satisfied
-            sum += len([l for l in clause if self.assign[abs(l)] is None]) * gamma_k(len([l for l in clause if self.assign[abs(l)] is None]))
-        return sum
-    
-    def WBH(self, literal) -> float:
-        """
-        Currently, just clause reduction heuristic
-        """
-        def gamma_k(k : int) -> float:
-            return 5 ** (k-3)
-        # #_k (x_i) ...number of occurences of not x_i in clauses of size k
-        # w(x_i) = \sum gamma_k #_k(x_i)
-        binary_clauseses = set()
-        for clause in self.clauses:
-            unassigned = [l for l in clause if self.assign[l] is not None]
-            if len(unassigned) == 2:
-                binary_clauseses.add(tuple(unassigned))
+            return 20.4514 * (0.218673 ** k)
 
-        weight_of_literal = defaultdict(float)
-        for clause in binary_clauseses:
-            satisfied = False
-            for l in clause:
-                val = self.assign[abs(l)]
-                if (val and l > 0) or (val is False and l < 0):
-                    satisfied = True
-            if satisfied:
+        score = 0
+        for clause_index in self.adjacency_dict[literal]:
+            # skip satisfied clauses
+            if not self.clause_active[clause_index]:
                 continue
-            for l in [l,-l]:
-                if l not in weight_of_literal:
-                    weight_of_literal[l] = 0
-                    counts = defaultdict(int) # len(clause) -> count
-                    for clause in self.adjacency_dict[-l]:
-                        counts[
-                            len([lit for lit in clause 
-                                if self.assign[lit] is None]
-                            )
-                        ] += 1
+            clause = self.clauses[clause_index]
+            unassigned = [l for l in clause if self.assign[abs(l)] is None]
+            k = len(unassigned)
+            if k > 0:
+                score += gamma_k(k)
+        return score
 
-                weight_of_literal[l] = sum(
-                    counts[key] * gamma_k(counts[key])
-                    for key in counts.keys()
-                ) 
-        return sum(
-            weight_of_literal[-cl[0]] + \
-            weight_of_literal[-cl[1]] 
-            for cl in binary_clauseses
-        )
+    def WBH(self, var) -> float:
+        def gamma_k(k: int) -> float:
+            return 5 ** (k - 3)
+
+        # Step 1: compute w_WBH(l) for all literals
+        weight_of_literal = defaultdict(float)
+        for clause in self.clauses:
+            # skip satisfied clauses
+            if any((self.assign[abs(l)] is True and l > 0) or 
+                (self.assign[abs(l)] is False and l < 0) 
+                for l in clause):
+                continue
+            k = sum(1 for l in clause if self.assign[abs(l)] is None)
+            if k == 0:
+                continue
+            for l in clause:
+                if self.assign[abs(l)] is None:  # only count unassigned
+                    weight_of_literal[l] += gamma_k(k)
+
+        # Step 2: compute WBH(var) using binary clauses containing var
+        score = 0
+        for clause in self.clauses:
+            if len(clause) != 2:
+                continue
+            if any((self.assign[abs(l)] is True and l > 0) or 
+                (self.assign[abs(l)] is False and l < 0) 
+                for l in clause):
+                continue
+            if var in clause or -var in clause:
+                x, y = clause
+                score += weight_of_literal[-x] + weight_of_literal[-y]
+        return score
+
     def mix_diff(self,x : int, y : int) -> float:
         """
         Historical mix_diff from posit program.
@@ -141,7 +157,7 @@ class SAT_lookAhead:
             adjacency_dict = self.adjacency_dict,
             clauses = self.clauses,
             value = self.value,
-            enqueue = self.enqueue,
+            enqueue = self.assign_lit,
             assign = self.assign,
             clause_to_Wliterals = self.clause_to_Wliterals,
             literal_to_clauses = self.literal_to_clauses,
@@ -158,12 +174,13 @@ class SAT_lookAhead:
             conflicts = [False,False]
             diff_vals = [0,0]
             trail_len = len(self.trail)
+            old_modstack_len = len(self.mod_stack)
             for i,lit in enumerate([var,-var]):
                 self.enqueue(lit)
                 ok , steps_it = self.__propagate(propagate,-lit)
-                diff_vals[i] = self.WBH(lit)
+                diff_vals[i] = self.diff(lit)
                 conflicts[i] = not ok
-                self.backtrack(trail_len)
+                self.backtrack(trail_len,old_modstack_len)
                 self.steps_up += steps_it
 
             current_val = self.mix_diff(diff_vals[0], diff_vals[1])
@@ -194,6 +211,7 @@ class SAT_lookAhead:
 
         self.num_decisions += 1
         trail_len = len(self.trail)
+        old_mod_stack_len = len(self.mod_stack)
 
         for sign in [1,-1]:
             self.enqueue(sign * dec_literal)
@@ -202,7 +220,7 @@ class SAT_lookAhead:
 
             if ok and self.solve_with_look_ahead(propagate):
                 return True
-            self.backtrack(trail_len)
+            self.backtrack(trail_len,old_mod_stack=old_mod_stack_len)
 
         return False
     def solve(self, propagete ):
