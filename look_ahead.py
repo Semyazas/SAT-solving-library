@@ -22,11 +22,33 @@ class SAT_lookAhead:
             score_h = None, 
             VSIDS = None) -> None:
         self.clauses = clauses
+        self.nvars = nvars
+        # in __init__
+        self.var_to_clauses = [[] for _ in range(self.nvars + 1)]
+        self.cl_unassigned = [len(cl) for cl in self.clauses]  # incremental unassigned count
+        self.mod_stack = []  # (kind, cl_idx, old_value) where kind in {"active","u"}
+        # tiny cache for gamma_k
+        self._gamma = {}
+        def _gamma_k(k: int) -> float:
+            if k in self._gamma: return self._gamma[k]
+            if k == 2: v = 1.0
+            elif k == 3: v = 0.2
+            elif k == 4: v = 0.05
+            elif k == 5: v = 0.01
+            elif k == 6: v = 0.003
+            else: v = 20.4514 * (0.218673 ** k)
+            self._gamma[k] = v
+            return v
+        self.adjacency_dict = defaultdict(list)
 
-        self.clause_len = [len(cl) for cl in clauses]
-        self.clause_active = [True] * len(clauses)
-        # For undoing shrink/removal operations
-        self.mod_stack = []
+        self._gamma_k = _gamma_k
+        self.clause_active = [True for _ in range(len(clauses))]
+        # build adjacency_dict (literal -> clause idx) AND var_to_clauses (var -> clause idx)
+        for ci, clause in enumerate(self.clauses):
+            for lit in clause:
+                self.adjacency_dict[lit].append(ci)
+                self.var_to_clauses[abs(lit)].append(ci)
+
 
         self.nvars = nvars
         self.assign = [None for _ in range(nvars+1)]   # 1-indexed
@@ -35,7 +57,6 @@ class SAT_lookAhead:
         self.steps_up = 0
         self.choose_lit = choose_lit
 
-        self.adjacency_dict = defaultdict(list)
         self.clause_to_Wliterals = defaultdict(list)
         self.literal_to_clauses = defaultdict(set)
         self.score = None
@@ -52,36 +73,57 @@ class SAT_lookAhead:
 
         self.begin_watched_literals()
 
+        self.implications = defaultdict(list)  # lit -> [implied_lit,...]
+
+        for clause in self.clauses:
+            if len(clause) == 2:  # only binary clauses
+                a, b = clause
+                self.implications[-a].append(b)
+                self.implications[-b].append(a)
+
     def value(self, lit):
         """Return literal truth value under current assignment or None."""
         val = self.assign[abs(lit)]
         return val if lit > 0 else (not val if val is not None else None)
 
-    def enqueue(self, lit : int) -> None:
-        """Assign literal and push to trail."""
-        self.assign[abs(lit)] = lit > 0
+    def enqueue(self, lit: int) -> None:
+        v = abs(lit)
+        self.assign[v] = (lit > 0)
         self.trail.append(lit)
 
-        for cl_ind in self.adjacency_dict[lit]:
-            if self.clause_active[cl_ind]:
-                self.clause_active[cl_ind]  = False
-                self.mod_stack.append((cl_ind,len(self.trail)))
+        # 1) mark satisfied clauses for the satisfying polarity
+        for ci in self.adjacency_dict[lit]:
+            if self.clause_active[ci]:
+                self.mod_stack.append(("active", ci, True))  # old active = True
+                self.clause_active[ci] = False
+
+        # 2) decrement unassigned count for all clauses containing this variable (any polarity),
+        #    but only if the clause is still active (i.e., not satisfied)
+        for ci in self.var_to_clauses[v]:
+            if self.clause_active[ci]:
+                old_u = self.cl_unassigned[ci]
+                if old_u:  # guard
+                    self.mod_stack.append(("u", ci, old_u))
+                    self.cl_unassigned[ci] = old_u - 1
+                
+
 
     def assign_lit(self, lit: int) -> None:
         """Only assign, do not touch clause_active."""
         self.assign[abs(lit)] = lit > 0
         self.trail.append(lit)
+        
     def backtrack(self, old_len: int, old_mod_stack: int) -> None:
         while len(self.trail) > old_len:
             lit = self.trail.pop()
             self.assign[abs(lit)] = None
-
-        # restore only entries added after the snapshot
         while len(self.mod_stack) > old_mod_stack:
-            cl_ind, depth = self.mod_stack.pop()
-            # only re-activate if that deactivation happened at or after the snapshot depth
-            if depth >= old_len:
-                self.clause_active[cl_ind] = True
+            kind, ci, old = self.mod_stack.pop()
+            if kind == "active":
+                self.clause_active[ci] = old
+            else:  # "u"
+                self.cl_unassigned[ci] = old
+
 
     def begin_watched_literals(self) -> None:
         for  cl_idx,clause in enumerate(self.clauses):
@@ -92,25 +134,16 @@ class SAT_lookAhead:
                 self.literal_to_clauses[clause[1]].add(cl_idx)
 
     def diff(self, literal) -> float:
-        def gamma_k(k: int) -> float:
-            if k == 2: return 1
-            if k == 3: return 0.2
-            if k == 4: return 0.05
-            if k == 5: return 0.01
-            if k == 6: return 0.003
-            return 20.4514 * (0.218673 ** k)
-
-        score = 0
-        for clause_index in self.adjacency_dict[literal]:
-            # skip satisfied clauses
-            if not self.clause_active[clause_index]:
+        score = 0.0
+        g = self._gamma_k
+        for ci in self.adjacency_dict[literal]:
+            if not self.clause_active[ci]:
                 continue
-            clause = self.clauses[clause_index]
-            unassigned = [l for l in clause if self.assign[abs(l)] is None]
-            k = len(unassigned)
-            if k > 0:
-                score += gamma_k(k)
+            u = self.cl_unassigned[ci]
+            if u > 0:
+                score += g(u)
         return score
+
 
     def WBH(self, var) -> float:
         def gamma_k(k: int) -> float:
@@ -118,13 +151,11 @@ class SAT_lookAhead:
 
         # Step 1: compute w_WBH(l) for all literals
         weight_of_literal = defaultdict(float)
-        for clause in self.clauses:
+        for i,clause in enumerate(self.clauses):
             # skip satisfied clauses
-            if any((self.assign[abs(l)] is True and l > 0) or 
-                (self.assign[abs(l)] is False and l < 0) 
-                for l in clause):
+            if  not self.clause_active[i]:
                 continue
-            k = sum(1 for l in clause if self.assign[abs(l)] is None)
+            k = self.cl_unassigned[i]
             if k == 0:
                 continue
             for l in clause:
@@ -133,15 +164,14 @@ class SAT_lookAhead:
 
         # Step 2: compute WBH(var) using binary clauses containing var
         score = 0
-        for clause in self.clauses:
-            if len(clause) != 2:
+        for i,clause in enumerate(self.clauses):
+            # skip satisfied clauses
+            if  not self.clause_active[i]:
                 continue
-            if any((self.assign[abs(l)] is True and l > 0) or 
-                (self.assign[abs(l)] is False and l < 0) 
-                for l in clause):
+            if self.cl_unassigned[i] != 2:
                 continue
             if var in clause or -var in clause:
-                x, y = clause
+                x, y = [lit for lit in clause if self.assign[abs(lit)] is None]
                 score += weight_of_literal[-x] + weight_of_literal[-y]
         return score
 
@@ -149,7 +179,7 @@ class SAT_lookAhead:
         """
         Historical mix_diff from posit program.
         """
-        return x + y + x*y * 1024
+        return x + y + x*y*1024
 
     def __propagate(self, propagate, falsified_literal)->None:
         ok , steps_it = propagate(
@@ -157,12 +187,12 @@ class SAT_lookAhead:
             adjacency_dict = self.adjacency_dict,
             clauses = self.clauses,
             value = self.value,
-            enqueue = self.assign_lit,
+            enqueue = self.enqueue,
             assign = self.assign,
             clause_to_Wliterals = self.clause_to_Wliterals,
             literal_to_clauses = self.literal_to_clauses,
             trail = self.trail,
-            vsids = self.vsids
+            vsids = self.vsids,
         )
         return ok, steps_it
 
@@ -178,7 +208,7 @@ class SAT_lookAhead:
             for i,lit in enumerate([var,-var]):
                 self.enqueue(lit)
                 ok , steps_it = self.__propagate(propagate,-lit)
-                diff_vals[i] = self.diff(lit)
+                diff_vals[i] = self.WBH(lit)
                 conflicts[i] = not ok
                 self.backtrack(trail_len,old_modstack_len)
                 self.steps_up += steps_it
