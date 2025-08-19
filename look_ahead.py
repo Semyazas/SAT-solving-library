@@ -3,7 +3,7 @@ import time
 import sys
 from DIMACS_reader import read_DIMACS
 from task1.DIMACS_encoding import DIMACS_decoder
-from propagate.unit_propagate_watched_literals import unit_propagate_w_watched_lits
+from propagate.propagate_binary import propagate_with_implications
 from decision_heuristics.choose_literal.choose_best_score import choose_literal
 from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
 import os
@@ -72,14 +72,16 @@ class SAT_lookAhead:
                 self.adjacency_dict[lit].append(i)
 
         self.begin_watched_literals()
-
-        self.implications = defaultdict(list)  # lit -> [implied_lit,...]
+        self.implications = defaultdict(list)  # lit -> [implied_lit, ...]
 
         for clause in self.clauses:
-            if len(clause) == 2:  # only binary clauses
+            if len(clause) == 2:
                 a, b = clause
-                self.implications[-a].append(b)
-                self.implications[-b].append(a)
+                # When 'a' is falsified, clause becomes unit 'b'
+                # When 'b' is falsified, clause becomes unit 'a'
+                self.implications[a].append(b)
+                self.implications[b].append(a)
+
 
     def value(self, lit):
         """Return literal truth value under current assignment or None."""
@@ -106,7 +108,6 @@ class SAT_lookAhead:
                     self.mod_stack.append(("u", ci, old_u))
                     self.cl_unassigned[ci] = old_u - 1
                 
-
 
     def assign_lit(self, lit: int) -> None:
         """Only assign, do not touch clause_active."""
@@ -182,7 +183,7 @@ class SAT_lookAhead:
         return x + y + x*y*1024
 
     def __propagate(self, propagate, falsified_literal)->None:
-        ok , steps_it = propagate(
+        ok , steps_it = propagate_with_implications(
             changed_literal = falsified_literal,
             adjacency_dict = self.adjacency_dict,
             clauses = self.clauses,
@@ -193,6 +194,7 @@ class SAT_lookAhead:
             literal_to_clauses = self.literal_to_clauses,
             trail = self.trail,
             vsids = self.vsids,
+            implications = self.implications
         )
         return ok, steps_it
 
@@ -200,12 +202,14 @@ class SAT_lookAhead:
         unassigned = [i for i,val in enumerate(self.assign) if val is None]
         best_val = -10000
         best_lit = None
+      #  print("poustim lookahead")
         for var in unassigned[1:]:
             conflicts = [False,False]
             diff_vals = [0,0]
             trail_len = len(self.trail)
             old_modstack_len = len(self.mod_stack)
             for i,lit in enumerate([var,-var]):
+       #         print("lit: ", lit)
                 self.enqueue(lit)
                 ok , steps_it = self.__propagate(propagate,-lit)
                 diff_vals[i] = self.WBH(lit)
@@ -215,6 +219,7 @@ class SAT_lookAhead:
 
             current_val = self.mix_diff(diff_vals[0], diff_vals[1])
             if  conflicts[0] and conflicts[1]:
+           #     print("boucham tady")
                 return None, False
             
             for i,sign in enumerate([1,-1]):                        
@@ -228,12 +233,15 @@ class SAT_lookAhead:
                 best_val = current_val
 
         return best_lit, True
+    
+    
     def solve_with_look_ahead(self,propagate) -> bool:
         if self.clauses == []: # TODO: debug 
             return True
-        
+      #  print("rekurzuju")
         dec_literal, ok  = self.look_ahead(propagate)
         if not ok: # contradiction ... UNSAT
+     #       print("UNSAT")
             return False
 
         if dec_literal is None:
@@ -283,7 +291,7 @@ if __name__ == "__main__":
         score_h=lit_counts_h,
         VSIDS=None
     )
-    solved, model, t, n_dec, n_up = solver.solve(unit_propagate_w_watched_lits)
+    solved, model, t, n_dec, n_up = solver.solve(propagate_with_implications)
 
     print("SAT:", solved)
     if model:
