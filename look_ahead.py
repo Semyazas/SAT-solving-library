@@ -31,14 +31,10 @@ class SAT_lookAhead:
         self._gamma = {}
         def _gamma_k(k: int) -> float:
             if k in self._gamma: return self._gamma[k]
-            if k == 2: v = 1.0
-            elif k == 3: v = 0.2
-            elif k == 4: v = 0.05
-            elif k == 5: v = 0.01
-            elif k == 6: v = 0.003
-            else: v = 20.4514 * (0.218673 ** k)
-            self._gamma[k] = v
+            else: v = 5 ** (k - 3)
+            self._gamma[k]= v
             return v
+
         self.adjacency_dict = defaultdict(list)
 
         self._gamma_k = _gamma_k
@@ -82,12 +78,38 @@ class SAT_lookAhead:
                 self.implications[a].append(b)
                 self.implications[b].append(a)
 
+        self.literal_weight = defaultdict(float)
+        self.wbh_score = 0
+        self._init_literal_weights()
+        self._init_literal_scores()
+
 
     def value(self, lit):
         """Return literal truth value under current assignment or None."""
         val = self.assign[abs(lit)]
         return val if lit > 0 else (not val if val is not None else None)
+    
+    def _init_literal_score(self):
+        #TODO: maybe more precompute
+        # Step 1: compute w_WBH(l) for all literals
+        # Step 2: compute WBH(var) using binary clauses containing var
+        score = 0
+        for i,clause in enumerate(self.clauses):
+            if self.cl_unassigned[i] != 2:
+                continue
+            x, y = [lit for lit in clause if self.assign[abs(lit)] is None]
+            score += self.literal_weight[-x] + self.literal_weight[-y]
+        return score
 
+    def _init_literal_weights(self):
+        # All clauses active, all literals unassigned at start
+        for ci, clause in enumerate(self.clauses):
+            k = len(clause)
+            if k == 0: 
+                continue
+            w = self._gamma_k(k)
+            for lit in clause:
+                self.literal_weight[lit] += w
     def enqueue(self, lit: int) -> None:
         v = abs(lit)
         self.assign[v] = (lit > 0)
@@ -98,10 +120,17 @@ class SAT_lookAhead:
             if self.clause_active[ci]:
                 self.mod_stack.append(("active", ci, True))  # old active = True
                 self.clause_active[ci] = False
+                for lit in self.clauses[ci]:
+                    self.literal_weight[lit] -= self._gamma_k(self.cl_unassigned[ci])
+                    self.mod_stack.append((
+                        "add",
+                        lit,
+                        self._gamma_k(self.cl_unassigned[ci])
+                    ))
 
         # 2) decrement unassigned count for all clauses containing this variable (any polarity),
         #    but only if the clause is still active (i.e., not satisfied)
-        for ci in self.var_to_clauses[v]:
+        for ci in self.adjacency_dict[-lit if self.assign[v] else lit]:
             if self.clause_active[ci]:
                 old_u = self.cl_unassigned[ci]
                 if old_u:  # guard
@@ -122,6 +151,8 @@ class SAT_lookAhead:
             kind, ci, old = self.mod_stack.pop()
             if kind == "active":
                 self.clause_active[ci] = old
+            elif kind == "add":
+                self.literal_weight[ci] += old
             else:  # "u"
                 self.cl_unassigned[ci] = old
 
@@ -147,22 +178,8 @@ class SAT_lookAhead:
 
 
     def WBH(self, var) -> float:
-        def gamma_k(k: int) -> float:
-            return 5 ** (k - 3)
-
+        #TODO: maybe more precompute
         # Step 1: compute w_WBH(l) for all literals
-        weight_of_literal = defaultdict(float)
-        for i,clause in enumerate(self.clauses):
-            # skip satisfied clauses
-            if  not self.clause_active[i]:
-                continue
-            k = self.cl_unassigned[i]
-            if k == 0:
-                continue
-            for l in clause:
-                if self.assign[abs(l)] is None:  # only count unassigned
-                    weight_of_literal[l] += gamma_k(k)
-
         # Step 2: compute WBH(var) using binary clauses containing var
         score = 0
         for i,clause in enumerate(self.clauses):
@@ -171,9 +188,9 @@ class SAT_lookAhead:
                 continue
             if self.cl_unassigned[i] != 2:
                 continue
-            if var in clause or -var in clause:
-                x, y = [lit for lit in clause if self.assign[abs(lit)] is None]
-                score += weight_of_literal[-x] + weight_of_literal[-y]
+
+            x, y = [lit for lit in clause if self.assign[abs(lit)] is None]
+            score += self.literal_weight[-x] + self.literal_weight[-y]
         return score
 
     def mix_diff(self,x : int, y : int) -> float:
