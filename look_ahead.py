@@ -81,7 +81,7 @@ class SAT_lookAhead:
         self.literal_weight = defaultdict(float)
         self.wbh_score = 0
         self._init_literal_weights()
-        self._init_literal_scores()
+        self.wbh_score = self._init_literal_score()
 
 
     def value(self, lit):
@@ -120,6 +120,15 @@ class SAT_lookAhead:
             if self.clause_active[ci]:
                 self.mod_stack.append(("active", ci, True))  # old active = True
                 self.clause_active[ci] = False
+
+                if self.cl_unassigned[ci] == 2:
+                    x, y = [l for l in self.clauses[ci] if self.assign[abs(l)] is None or l == lit]
+                    self.wbh_score -= self.literal_weight[-x] + self.literal_weight[-y]
+                    self.mod_stack.append(("add_score", ci, self.literal_weight[-x] + self.literal_weight[-y]))  # old active = True
+
+        # 1) mark satisfied clauses for the satisfying polarity
+        for ci in self.adjacency_dict[lit]:
+            if self.clause_active[ci]:
                 for lit in self.clauses[ci]:
                     self.literal_weight[lit] -= self._gamma_k(self.cl_unassigned[ci])
                     self.mod_stack.append((
@@ -153,6 +162,8 @@ class SAT_lookAhead:
                 self.clause_active[ci] = old
             elif kind == "add":
                 self.literal_weight[ci] += old
+            elif kind == "add_score":
+                self.wbh_score += old
             else:  # "u"
                 self.cl_unassigned[ci] = old
 
@@ -181,17 +192,7 @@ class SAT_lookAhead:
         #TODO: maybe more precompute
         # Step 1: compute w_WBH(l) for all literals
         # Step 2: compute WBH(var) using binary clauses containing var
-        score = 0
-        for i,clause in enumerate(self.clauses):
-            # skip satisfied clauses
-            if  not self.clause_active[i]:
-                continue
-            if self.cl_unassigned[i] != 2:
-                continue
-
-            x, y = [lit for lit in clause if self.assign[abs(lit)] is None]
-            score += self.literal_weight[-x] + self.literal_weight[-y]
-        return score
+        return self.wbh_score
 
     def mix_diff(self,x : int, y : int) -> float:
         """
@@ -215,18 +216,71 @@ class SAT_lookAhead:
         )
         return ok, steps_it
 
+    def pre_select(self, percent: int = 10) -> list[int]:
+        """
+        Preselect variables using Clause Reduction Approximation (CRA).
+
+        Returns a list of variable indices (positive ints) selected as the top
+        `percent` percent by CRA score among currently unassigned variables.
+        """
+        # 1) precompute #>2(l): occurrences of literal l in clauses with size > 2
+        lit_occ_gt2 = defaultdict(int)
+        for ci, clause in enumerate(self.clauses):
+            if len(clause) > 2 and self.clause_active[ci]:
+                for lit in clause:
+                    lit_occ_gt2[lit] += 1
+
+        # 2) compute CRA for each currently unassigned variable x
+        CRA = {}
+        free_vars = [v for v in range(1, self.nvars + 1) if self.assign[v] is None]
+
+        for x in free_vars:
+            sum_pos = 0
+            sum_neg = 0
+
+            # clauses where literal x appears (positive occurrence)
+            for ci in self.adjacency_dict[x]:
+                if not self.clause_active[ci]:
+                    continue
+                # sum #>2(¬yi) for other literals yi in this clause
+                for yi in self.clauses[ci]:
+                    if yi == x:
+                        continue
+                    sum_pos += lit_occ_gt2.get(-yi, 0)
+
+            # clauses where literal -x appears (negative occurrence)
+            for ci in self.adjacency_dict[-x]:
+                if not self.clause_active[ci]:
+                    continue
+                for yi in self.clauses[ci]:
+                    if yi == -x:
+                        continue
+                    sum_neg += lit_occ_gt2.get(-yi, 0)
+
+            CRA[x] = sum_pos * sum_neg
+
+        # 3) If no free vars, return empty list
+        if not CRA:
+            return []
+
+        # 4) pick top `percent` percent variables by CRA score (ties broken by variable index)
+        pct = max(1, int(len(CRA) * percent / 100))  # at least 1
+        # sort by score descending, tie-breaker: smaller var index first
+        sorted_vars = sorted(CRA.items(), key=lambda kv: (-kv[1], kv[0]))
+        selected = [v for v, score in sorted_vars[:pct]]
+
+        return selected
+
     def look_ahead(self,propagate):
-        unassigned = [i for i,val in enumerate(self.assign) if val is None]
         best_val = -10000
         best_lit = None
-      #  print("poustim lookahead")
-        for var in unassigned[1:]:
+
+        for var in self.pre_select(25):
             conflicts = [False,False]
             diff_vals = [0,0]
             trail_len = len(self.trail)
             old_modstack_len = len(self.mod_stack)
             for i,lit in enumerate([var,-var]):
-       #         print("lit: ", lit)
                 self.enqueue(lit)
                 ok , steps_it = self.__propagate(propagate,-lit)
                 diff_vals[i] = self.WBH(lit)
@@ -236,7 +290,6 @@ class SAT_lookAhead:
 
             current_val = self.mix_diff(diff_vals[0], diff_vals[1])
             if  conflicts[0] and conflicts[1]:
-           #     print("boucham tady")
                 return None, False
             
             for i,sign in enumerate([1,-1]):                        
@@ -245,6 +298,7 @@ class SAT_lookAhead:
                     ok, _ = self.__propagate(propagate,falsified_literal=sign*var)
                     if not ok: return None, False
                     continue
+
             if current_val > best_val:
                 best_lit = var
                 best_val = current_val
