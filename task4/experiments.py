@@ -6,16 +6,10 @@ from task23.experiments import parse_inputs
 from look_ahead import SAT_lookAhead
 from DIMACS_reader import read_DIMACS
 from task1.DIMACS_encoding import DIMACS_decoder
-
-from decision_heuristics.choose_literal.choose_best_score import choose_literal
-from decision_heuristics.choose_literal.choose_random import choose_random
-from decision_heuristics.precompute_score.jaroslow_wang_h import JW_heuristic
-from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
-
-from propagate.unit_propagate_adjacency_list import unit_propagate_basic
-from propagate.unit_propagate_watched_literals import unit_propagate_w_watched_lits
-from decision_heuristics.precompute_score.VSIDS import VSIDs
-
+from look_ahead_parts.preselection.preselect import pre_select
+from difference_heuristics.wbh import WBH_heuristic
+from difference_heuristics.crh import CRH_heuristics
+from propagate.propagate_binary import Binary_propagation
 def run_small_experiment(
     input_file: str,
     output,
@@ -34,36 +28,26 @@ def run_small_experiment(
         variables = decoder.var2dimacs_map.values()
         n_vars, n_cl = len(variables), len(clauses)
 
-    # Choose decision heuristic
-    score = None
-    vsids = None
-    if score_h is None:
-        heuristic_fn = choose_random
-    else:
-        heuristic_fn = choose_literal
-        if score_h == "jw":
-            score = JW_heuristic
-        elif score_h == "lc":
-            score = lit_counts_h
+    # Choose difference heuristic
+    h = None
+    if score_h == "jw":
+        h = WBH_heuristic
+    elif score_h == "lc":
+        h = CRH_heuristics
 
-        elif score_h == "vsids":
-            vsids = VSIDs(n_vars)
-            heuristic_fn = vsids.pick_literal
-            
+    prop = None
+    if watched_lits:
+        prop = Binary_propagation
     # Instantiate solver
     solver = SAT_lookAhead(
         clauses,
         max(variables),
-        choose_lit=heuristic_fn,
-        score_h=score,
-        VSIDS=vsids
+        heuristic=h,
+        propagation=prop,
+        preselect=pre_select
     )
-
     # Choose unit propagation method
-    propagate_fn = unit_propagate_w_watched_lits if watched_lits else unit_propagate_basic
-
-    # Solve
-    sat, _, cpu_time, n_decisions, n_up = solver.solve(propagate_fn)
+    sat, _, cpu_time, n_decisions, n_up = solver.solve(prop.propagate_with_implications)
 
     # Output results
     print(f"SAT result: {sat}", file=output)
@@ -75,6 +59,7 @@ def run_small_experiment(
     print(f"{'-' * 45}", file=output)
 
     return sat, cpu_time, n_decisions, n_up, n_vars, n_cl
+
 if __name__ == "__main__":
     file_names, is_dimacs, watched_lits, score_h,\
     all_sat, output_file = parse_inputs(sys.argv,path_prefix="..\\task23")

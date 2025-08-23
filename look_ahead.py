@@ -4,8 +4,6 @@ import sys
 from DIMACS_reader import read_DIMACS
 from task1.DIMACS_encoding import DIMACS_decoder
 from propagate.propagate_binary import Binary_propagation
-from decision_heuristics.choose_literal.choose_best_score import choose_literal
-from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
 from difference_heuristics.wbh import WBH_heuristic
 from look_ahead_parts.look_ahead_variants.look_ahead_baisc import look_ahead_basic
 from look_ahead_parts.preselection.preselect import pre_select
@@ -21,7 +19,6 @@ class SAT_lookAhead:
     def __init__(self,
             clauses, 
             nvars,
-            look_ahead, 
             heuristic,
             propagation,
             preselect) -> None:
@@ -54,50 +51,13 @@ class SAT_lookAhead:
             modstack       = self.mod_stack,
             clause_active  = self.clause_active
         )
-        self.preselect = pre_select
-    def look_ahead(self):
-        best_val = -10000
-        best_lit = None
-
-        for var in pre_select(clauses = self.clauses, clause_active = self.clause_active,
-                              adjacency_dict = self.adjacency_dict, nvars = self.nvars,
-                              assign = self.assign, percent = 25):
-            conflicts = [False,False]
-            diff_vals = [0,0]
-            trail_len = len(self.trail)
-            old_modstack_len = len(self.mod_stack)
-            for i,lit in enumerate([var,-var]):
-                self.enqueue(lit)
-                ok , steps_it = self.__propagate(-lit)
-                diff_vals[i] = self.heuristic.diff(lit)
-                conflicts[i] = not ok
-                self.backtrack(trail_len,old_modstack_len)
-                self.steps_up += steps_it
-
-            current_val = self.mix_diff(diff_vals[0], diff_vals[1])
-            if  conflicts[0] and conflicts[1]:
-                return None, False
-            
-            for i,sign in enumerate([1,-1]):                        
-                if conflicts[i]:
-                    self.enqueue(-sign * var)
-                    ok, _ = self.__propagate(falsified_literal=sign*var)
-                    if not ok: return None, False
-                    continue
-
-            if current_val > best_val:
-                best_lit = var
-                best_val = current_val
-
-        return best_lit, True
-    
+        self.pre_select = pre_select 
     def _init_adjacency_dict(self):
         for ci, clause in enumerate(self.clauses):
             for lit in clause:
                 self.adjacency_dict[lit].append(ci)
 
     def _update_cl_lens(self,lit : int, v : int)->None:
-
         for ci in self.adjacency_dict[-lit if self.assign[v] else lit]:
             if self.clause_active[ci]:
                 old_u = self.cl_unassigned[ci]
@@ -159,15 +119,131 @@ class SAT_lookAhead:
             implications = self.prop.implications
         )
         return ok, steps_it
+    def look_ahead(self):
+        best_val = -10000
+        best_lit = None
+
+        for var in self.pre_select(
+                clauses = self.clauses, clause_active = self.clause_active,
+                adjacency_dict = self.adjacency_dict, nvars = self.nvars,
+                assign = self.assign, percent = 25):
+            conflicts = [False,False]
+            diff_vals = [0,0]
+            trail_len = len(self.trail)
+            old_modstack_len = len(self.mod_stack)
+            for i,lit in enumerate([var,-var]):
+                self.enqueue(lit)
+                ok , steps_it = self.__propagate(-lit)
+                diff_vals[i] = self.heuristic.diff(lit)
+                conflicts[i] = not ok
+                self.backtrack(trail_len,old_modstack_len)
+                self.steps_up += steps_it
+
+            current_val = self.mix_diff(diff_vals[0], diff_vals[1])
+            if  conflicts[0] and conflicts[1]:
+                return None, False
+            
+            for i,sign in enumerate([1,-1]):                        
+                if conflicts[i]:
+                    self.enqueue(-sign * var)
+                    ok, _ = self.__propagate(falsified_literal=sign*var)
+                    if not ok: return None, False
+                    continue
+
+            if current_val > best_val:
+                best_lit = var
+                best_val = current_val
+
+        return best_lit, True
     
-    
+    def get_number_of_new_binary_clauses(self,lit):
+        res = 0
+        for ci in self.adjacency_dict[lit]:
+            if self.clause_active[ci] and self.cl_unassigned[ci] == 2:
+                res +=1
+        return res
+                
+
+    def double_look_ahead(self):
+        best_val = -10000
+        best_lit = None
+        threshold = self.nvars*0.17 * 1e10
+        for var in self.pre_select(
+                clauses=self.clauses, clause_active=self.clause_active,
+                adjacency_dict=self.adjacency_dict, nvars=self.nvars,
+                assign=self.assign, percent=25):
+            conflicts = [False, False]
+            diff_vals = [0, 0]
+            trail_len = len(self.trail)
+            old_modstack_len = len(self.mod_stack)
+
+            for i, lit in enumerate([var, -var]):
+                self.enqueue(lit)
+                ok, steps_it = self.__propagate(-lit)
+                diff_vals[i] = self.heuristic.diff(lit)
+                conflicts[i] = not ok
+             #   print( self.get_number_of_new_binary_clauses(-lit) )
+             #   print(threshold)
+             #   print("----")
+                if ok  and \
+                    self.get_number_of_new_binary_clauses(-lit) > threshold:
+                    #print("fungju")
+                    # SECOND-LEVEL LOOKAHEAD
+                    second_best = -10000
+                    for var2 in self.pre_select(
+                            clauses=self.clauses, clause_active=self.clause_active,
+                            adjacency_dict=self.adjacency_dict, nvars=self.nvars,
+                            assign=self.assign, percent=25):
+                        trail2 = len(self.trail)
+                        mod2 = len(self.mod_stack)
+                        inner_conf = [False, False]
+                        inner_diff = [0,0]
+                        for j, lit2 in enumerate([var2, -var2]):
+                            self.enqueue(lit2)
+                            ok2, steps2 = self.__propagate(-lit2)
+                            inner_diff[j] = self.heuristic.diff(lit2)
+                            inner_conf[j] = not ok2
+                            self.backtrack(trail2, mod2)
+                            self.steps_up += steps2
+
+                        if inner_conf[0] and inner_conf[1]:
+                            conflicts[i] = True
+                            break
+                        score2 = self.mix_diff(inner_diff[0], inner_diff[1])
+                        if score2 > second_best:
+                            second_best = score2
+                    diff_vals[i] = second_best
+
+                self.backtrack(trail_len, old_modstack_len)
+
+                self.steps_up += steps_it
+
+            # decision for var
+            current_val = self.mix_diff(diff_vals[0], diff_vals[1])
+
+            if conflicts[0] and conflicts[1]:
+                return None, False
+
+            for i, sign in enumerate([1, -1]):
+                if conflicts[i]:
+                    self.enqueue(-sign * var)
+                    ok, _ = self.__propagate(falsified_literal=sign * var)
+                    if not ok:
+                        return None, False
+                    continue
+
+            if current_val > best_val:
+                best_val = current_val
+                best_lit = var
+
+        return best_lit, True
+
     def solve_with_look_ahead(self,propagate) -> bool:
         if self.clauses == []: # TODO: debug 
             return True
-      #  print("rekurzuju")
-        dec_literal, ok  = self.look_ahead()
+
+        dec_literal, ok  = self.double_look_ahead()
         if not ok: # contradiction ... UNSAT
-     #       print("UNSAT")
             return False
 
         if dec_literal is None:
@@ -212,7 +288,6 @@ if __name__ == "__main__":
     solver = SAT_lookAhead(
         clauses,
         max(variables),
-        look_ahead=look_ahead_basic,
         heuristic=WBH_heuristic,
         propagation=Binary_propagation,
         preselect=pre_select
