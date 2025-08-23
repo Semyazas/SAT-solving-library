@@ -7,7 +7,6 @@ class WBH_heuristic(DifferenceHeuristic):
         self.cl_unassigned  = args["cl_unassigned"]
         self.assign         = args["assign"]
         self.mod_stack      = args["modstack"]
-        self.wbh_score      = 0
         self.clause_active  = args["clause_active"]
         self.adjacency_dict = args["adjacency_dict"]
         self._gamma         = {}
@@ -18,6 +17,7 @@ class WBH_heuristic(DifferenceHeuristic):
             return v
         self._gamma_k         = _gamma_k
         self.literal_weight = self._init_literal_weights()
+        self.wbh_score      = self._init_literal_score()
 
     def _init_literal_weights(self):
         # All clauses active, all literals unassigned at start
@@ -47,20 +47,21 @@ class WBH_heuristic(DifferenceHeuristic):
         for ci in self.adjacency_dict[lit]:
             if self.clause_active[ci]:
                 for lit in self.clauses[ci]:
-                    self.literal_weight[lit] -= self._gamma_k(self.cl_unassigned[ci])
+                    self.literal_weight[lit] -= \
+                        self._gamma_k(self.cl_unassigned[ci])
                     self.mod_stack.append((
                         "add",
                         lit,
                         self._gamma_k(self.cl_unassigned[ci])
                     ))
-    def update_score(self, var : int, ci : int, lit : int) -> None:
-        if self.cl_unassigned[ci] == 2:
-            x, y = [l for l in self.clauses[ci] if self.assign[abs(l)] is None or l == lit]
-            self.wbh_score -= self.literal_weight[-x] + self.literal_weight[-y]
-            self.mod_stack.append(("add_score", ci, self.literal_weight[-x] + self.literal_weight[-y]))  # old active = True
-
-    def WBH(self, var) -> float:
+                    
+    def diff(self, var) -> float:
         #TODO: maybe more precompute
         # Step 1: compute w_WBH(l) for all literals
         # Step 2: compute WBH(var) using binary clauses containing var
+      #  print(self.wbh_score)
         return self.wbh_score
+    def remove_binary_clause(self, ci, x, y):
+        delta = self.literal_weight[-x] + self.literal_weight[-y]
+        self.wbh_score -= delta
+        self.mod_stack.append(("add_score", ci, delta))
