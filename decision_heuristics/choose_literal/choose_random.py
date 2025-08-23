@@ -7,7 +7,7 @@ def choose_random(**kwargs) -> int:
     if not unassigned:
         return None
   #  print(unassigned)
-    var = random.choice(unassigned)
+    var = random.choice(unassigned[1:])
     lit = var if random.random() < 0.5 else -var
 
     return lit 

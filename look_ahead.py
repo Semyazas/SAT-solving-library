@@ -7,7 +7,8 @@ from propagate.propagate_binary import Binary_propagation
 from decision_heuristics.choose_literal.choose_best_score import choose_literal
 from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
 from difference_heuristics.wbh import WBH_heuristic
-from difference_heuristics.crh import CRH_heuristics
+from look_ahead_parts.look_ahead_variants.look_ahead_baisc import look_ahead_basic
+from look_ahead_parts.preselection.preselect import pre_select
 import os
 """
 TODO: 
@@ -19,10 +20,11 @@ TODO:
 class SAT_lookAhead:
     def __init__(self,
             clauses, 
-            nvars, 
-            choose_lit,
-            score_h = None, 
-            VSIDS = None) -> None:
+            nvars,
+            look_ahead, 
+            heuristic,
+            propagation,
+            preselect) -> None:
         self.clauses = clauses
         self.nvars = nvars
         # in __init__
@@ -39,52 +41,90 @@ class SAT_lookAhead:
         self.num_decisions = 0
         self.steps_up = 0
         # Precompute literal occurrences for fast heuristic
-
-        self.prop = Binary_propagation(
+        self.prop = propagation(
             clauses = self.clauses,
             assign  = self.assign,
             enqueue = self.enqueue
         )
-        self.heuristic = CRH_heuristics(
+        self.heuristic = heuristic(
             clauses        = self.clauses,
             adjacency_dict = self.adjacency_dict,
             cl_unassigned  = self.cl_unassigned,
             assign         = self.assign,
-            mod_stack      = self.mod_stack,
+            modstack       = self.mod_stack,
             clause_active  = self.clause_active
         )
+        self.preselect = pre_select
+    def look_ahead(self):
+        best_val = -10000
+        best_lit = None
+
+        for var in pre_select(clauses = self.clauses, clause_active = self.clause_active,
+                              adjacency_dict = self.adjacency_dict, nvars = self.nvars,
+                              assign = self.assign, percent = 25):
+            conflicts = [False,False]
+            diff_vals = [0,0]
+            trail_len = len(self.trail)
+            old_modstack_len = len(self.mod_stack)
+            for i,lit in enumerate([var,-var]):
+                self.enqueue(lit)
+                ok , steps_it = self.__propagate(-lit)
+                diff_vals[i] = self.heuristic.diff(lit)
+                conflicts[i] = not ok
+                self.backtrack(trail_len,old_modstack_len)
+                self.steps_up += steps_it
+
+            current_val = self.mix_diff(diff_vals[0], diff_vals[1])
+            if  conflicts[0] and conflicts[1]:
+                return None, False
+            
+            for i,sign in enumerate([1,-1]):                        
+                if conflicts[i]:
+                    self.enqueue(-sign * var)
+                    ok, _ = self.__propagate(falsified_literal=sign*var)
+                    if not ok: return None, False
+                    continue
+
+            if current_val > best_val:
+                best_lit = var
+                best_val = current_val
+
+        return best_lit, True
+    
     def _init_adjacency_dict(self):
         for ci, clause in enumerate(self.clauses):
             for lit in clause:
                 self.adjacency_dict[lit].append(ci)
 
     def _update_cl_lens(self,lit : int, v : int)->None:
+
         for ci in self.adjacency_dict[-lit if self.assign[v] else lit]:
             if self.clause_active[ci]:
                 old_u = self.cl_unassigned[ci]
-                if old_u:  # guard
-                    self.mod_stack.append(("u", ci, old_u))
-                    self.cl_unassigned[ci] = old_u - 1
+                self.mod_stack.append(("u", ci, old_u))
+                self.cl_unassigned[ci] = old_u - 1
         
     def enqueue(self, lit: int) -> None:
         v = abs(lit)
         self.assign[v] = (lit > 0)
         self.trail.append(lit)
 
-        # 1) mark satisfied clauses for the satisfying polarity
         for ci in self.adjacency_dict[lit]:
             if self.clause_active[ci]:
-                self.mod_stack.append(("active", ci, True))  # old active = True
-                self.clause_active[ci] = False
-                self.heuristic.update_score(v = v,ci = ci,lit =lit)
-        # 1) mark satisfied clauses for the satisfying polarity
+                # --- score update first ---
+                if len(self.clauses[ci]) == 2:
+                    x, y = self.clauses[ci]
+                    # only subtract if it's really still "active"
+                    if self.assign[abs(x)] is None or self.assign[abs(y)] is None:
+                        self.heuristic.remove_binary_clause(ci, x, y)
 
-        self.heuristic.update_weights(lit = lit)
-        # 2) decrement unassigned count for all clauses containing this variable (any polarity),
-        #    but only if the clause is still active (i.e., not satisfied)
-        self._update_cl_lens(lit,v)
-                
-        
+                # --- then mark clause inactive ---
+                self.clause_active[ci] = False
+                self.mod_stack.append(("active", ci, True))
+
+        self.heuristic.update_weights(lit=lit)
+        self._update_cl_lens(lit, v)
+         
     def backtrack(self, old_len: int, old_mod_stack: int) -> None:
         while len(self.trail) > old_len:
             lit = self.trail.pop()
@@ -106,7 +146,7 @@ class SAT_lookAhead:
         """
         return x + y + x*y*1024
 
-    def __propagate(self, propagate, falsified_literal)->None:
+    def __propagate(self, falsified_literal)->None:
         ok , steps_it = self.prop.propagate_with_implications(
             changed_literal = falsified_literal,
             adjacency_dict = self.adjacency_dict,
@@ -119,78 +159,13 @@ class SAT_lookAhead:
             implications = self.prop.implications
         )
         return ok, steps_it
-
-    def pre_select(self, percent: int = 10) -> list[int]:
-        lit_occ_gt2 = defaultdict(int)
-        for ci, clause in enumerate(self.clauses):
-            if len(clause) > 2 and self.clause_active[ci]:
-                for lit in clause:
-                    lit_occ_gt2[lit] += 1
-
-        CRA = {}
-        free_vars = [v for v in range(1, self.nvars + 1) if self.assign[v] is None]
-        for x in free_vars:
-            sum_pos = 0
-            sum_neg = 0
-            for sign, sum in [(1,sum_pos),(-1,sum_neg)]:
-                for ci in self.adjacency_dict[sign * x]:
-                    if not self.clause_active[ci]:
-                        continue
-                    for yi in self.clauses[ci]:
-                        if yi == sign * x:
-                            continue
-                        sum += lit_occ_gt2.get(-yi, 0)
-            CRA[x] = sum_pos * sum_neg
-        if not CRA:
-            return []
-
-        pct = max(1, int(len(CRA) * percent / 100))  # at least 1
-        # sort by score descending, tie-breaker: smaller var index first
-        sorted_vars = sorted(CRA.items(), key=lambda kv: (-kv[1], kv[0]))
-        selected = [v for v, score in sorted_vars[:pct]]
-
-        return selected
-
-    def look_ahead(self,propagate):
-        best_val = -10000
-        best_lit = None
-
-        for var in self.pre_select(15):
-            conflicts = [False,False]
-            diff_vals = [0,0]
-            trail_len = len(self.trail)
-            old_modstack_len = len(self.mod_stack)
-            for i,lit in enumerate([var,-var]):
-                self.enqueue(lit)
-                ok , steps_it = self.__propagate(propagate,-lit)
-                diff_vals[i] = self.heuristic.diff(lit)
-                conflicts[i] = not ok
-                self.backtrack(trail_len,old_modstack_len)
-                self.steps_up += steps_it
-
-            current_val = self.mix_diff(diff_vals[0], diff_vals[1])
-            if  conflicts[0] and conflicts[1]:
-                return None, False
-            
-            for i,sign in enumerate([1,-1]):                        
-                if conflicts[i]:
-                    self.enqueue(-sign * var)
-                    ok, _ = self.__propagate(propagate,falsified_literal=sign*var)
-                    if not ok: return None, False
-                    continue
-
-            if current_val > best_val:
-                best_lit = var
-                best_val = current_val
-
-        return best_lit, True
     
     
     def solve_with_look_ahead(self,propagate) -> bool:
         if self.clauses == []: # TODO: debug 
             return True
       #  print("rekurzuju")
-        dec_literal, ok  = self.look_ahead(propagate)
+        dec_literal, ok  = self.look_ahead()
         if not ok: # contradiction ... UNSAT
      #       print("UNSAT")
             return False
@@ -204,7 +179,7 @@ class SAT_lookAhead:
 
         for sign in [1,-1]:
             self.enqueue(sign * dec_literal)
-            ok, steps = self.__propagate(propagate,falsified_literal=-sign*dec_literal)
+            ok, steps = self.__propagate(falsified_literal=-sign*dec_literal)
             self.steps_up += steps
 
             if ok and self.solve_with_look_ahead(propagate):
@@ -219,7 +194,6 @@ class SAT_lookAhead:
         model = {i: self.assign[i] for i in range(1, self.nvars+1)}
         return sat, model, end-start, self.num_decisions, self.steps_up
     
-# TODO: debug -s variant
 if __name__ == "__main__":
     clauses, variables = [], []
     dimacs = True
@@ -238,12 +212,12 @@ if __name__ == "__main__":
     solver = SAT_lookAhead(
         clauses,
         max(variables),
-        choose_lit=choose_literal,
-        score_h=lit_counts_h,
-        VSIDS=None
+        look_ahead=look_ahead_basic,
+        heuristic=WBH_heuristic,
+        propagation=Binary_propagation,
+        preselect=pre_select
     )
     solved, model, t, n_dec, n_up = solver.solve(solver.prop.propagate_with_implications)
-
     print("SAT:", solved)
     if model:
         if dimacs:
