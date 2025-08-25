@@ -72,11 +72,7 @@ class SAT_lookAhead:
         for ci in self.adjacency_dict[lit]:
             if self.clause_active[ci]:
                 # --- score update first ---
-                if len(self.clauses[ci]) == 2:
-                    x, y = self.clauses[ci]
-                    # only subtract if it's really still "active"
-                    if self.assign[abs(x)] is None or self.assign[abs(y)] is None:
-                        self.heuristic.remove_binary_clause(ci, x, y)
+                self.heuristic.update_score(ci = ci, lit = lit)
 
                 # --- then mark clause inactive ---
                 self.clause_active[ci] = False

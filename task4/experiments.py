@@ -15,10 +15,10 @@ def run_small_experiment(
     output,
     DIMACS: bool = False,
     watched_lits: bool = False,
-    score_h: str = None
+    score_h: str = None,
+    threshold = 1e1000000
 ) -> tuple[bool, float, int, int, int, int]:
     """Run SAT solver experiment on one input file."""
-    print("input file: ", input_file)
     if DIMACS:
         clauses, variables, n_vars, n_cl = read_DIMACS(input_file)
     else:
@@ -44,7 +44,8 @@ def run_small_experiment(
         max(variables),
         heuristic=h,
         propagation=prop,
-        preselect=pre_select
+        preselect=pre_select,
+        threshold_mod=threshold
     )
     # Choose unit propagation method
     sat, _, cpu_time, n_decisions, n_up = solver.solve(prop.propagate_with_implications)
@@ -62,15 +63,17 @@ def run_small_experiment(
 
 if __name__ == "__main__":
     file_names, is_dimacs, watched_lits, score_h,\
-    all_sat, output_file = parse_inputs(sys.argv,path_prefix="..\\task23")
-    
+    all_sat, output_file = parse_inputs(sys.argv[:5],path_prefix="..\\task23")
+    threshold = 1e1000
+    if len(sys.argv) == 6:
+        threshold = float(sys.argv[5])
     total_time = total_n_dec = total_n_up = 0
     last_n_vars = last_n_cl = 0
 
     with open(output_file, "w") as f:
         for file_path in file_names:
             sat, t, n_dec, n_up, n_vars, n_cl = run_small_experiment(
-                file_path, f, is_dimacs, watched_lits, score_h
+                file_path, f, is_dimacs, watched_lits, score_h,threshold
             )
             total_time += t
             total_n_dec += n_dec
