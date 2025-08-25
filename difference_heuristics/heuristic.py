@@ -12,3 +12,6 @@ class DifferenceHeuristic:
     @abstractmethod
     def update_score(**args):
         pass
+    @abstractmethod
+    def diff(**args):
+        pass

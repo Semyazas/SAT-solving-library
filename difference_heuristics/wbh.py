@@ -12,9 +12,10 @@ class WBH_heuristic(DifferenceHeuristic):
         self._gamma         = {}
         def _gamma_k(k: int) -> float:
             if k in self._gamma: return self._gamma[k]
-            else: v = 5 ** (k - 3)
+            else: v = 5 ** (k-3)
             self._gamma[k]= v
             return v
+
         self._gamma_k         = _gamma_k
         self.literal_weight = self._init_literal_weights()
         self.wbh_score      = self._init_literal_score()
@@ -61,7 +62,13 @@ class WBH_heuristic(DifferenceHeuristic):
         # Step 2: compute WBH(var) using binary clauses containing var
       #  print(self.wbh_score)
         return self.wbh_score
-    def remove_binary_clause(self, ci, x, y):
-        delta = self.literal_weight[-x] + self.literal_weight[-y]
-        self.wbh_score -= delta
-        self.mod_stack.append(("add_score", ci, delta))
+    def update_score(self, **args):
+        ci = args["ci"]
+        lit = args["lit"]
+        if self.cl_unassigned[ci] == 2:
+            un =  [l for l in self.clauses[ci] if self.assign[abs(l)] is None or l == lit]
+            if len(un) == 2:
+                x,y = [l for l in self.clauses[ci] if self.assign[abs(l)] is None or l == lit]
+                delta = self.literal_weight[-x] + self.literal_weight[-y]
+                self.wbh_score -= delta
+                self.mod_stack.append(("add_score", ci, delta))
