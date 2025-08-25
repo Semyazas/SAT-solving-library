@@ -21,9 +21,11 @@ class SAT_lookAhead:
             nvars,
             heuristic,
             propagation,
-            preselect) -> None:
+            preselect,
+            threshold_mod) -> None:
         self.clauses = clauses
         self.nvars = nvars
+        self.threshold_mod = threshold_mod
         # in __init__
         self.cl_unassigned = [len(cl) for cl in self.clauses]  # incremental unassigned count
         self.mod_stack = []  # (kind, cl_idx, old_value) where kind in {"active","u"}
@@ -115,42 +117,7 @@ class SAT_lookAhead:
             implications = self.prop.implications
         )
         return ok, steps_it
-    def look_ahead(self):
-        best_val = -10000
-        best_lit = None
 
-        for var in self.pre_select(
-                clauses = self.clauses, clause_active = self.clause_active,
-                adjacency_dict = self.adjacency_dict, nvars = self.nvars,
-                assign = self.assign, percent = 25):
-            conflicts = [False,False]
-            diff_vals = [0,0]
-            trail_len = len(self.trail)
-            old_modstack_len = len(self.mod_stack)
-            for i,lit in enumerate([var,-var]):
-                self.enqueue(lit)
-                ok , steps_it = self.__propagate(-lit)
-                diff_vals[i] = self.heuristic.diff(lit)
-                conflicts[i] = not ok
-                self.backtrack(trail_len,old_modstack_len)
-                self.steps_up += steps_it
-
-            current_val = self.mix_diff(diff_vals[0], diff_vals[1])
-            if  conflicts[0] and conflicts[1]:
-                return None, False
-            
-            for i,sign in enumerate([1,-1]):                        
-                if conflicts[i]:
-                    self.enqueue(-sign * var)
-                    ok, _ = self.__propagate(falsified_literal=sign*var)
-                    if not ok: return None, False
-                    continue
-
-            if current_val > best_val:
-                best_lit = var
-                best_val = current_val
-
-        return best_lit, True
     
     def get_number_of_new_binary_clauses(self,lit):
         res = 0
@@ -163,7 +130,7 @@ class SAT_lookAhead:
     def double_look_ahead(self):
         best_val = -10000
         best_lit = None
-        threshold = self.nvars*0.17 * 1e10
+        threshold = self.nvars*0.17 *self.threshold_mod
         for var in self.pre_select(
                 clauses=self.clauses, clause_active=self.clause_active,
                 adjacency_dict=self.adjacency_dict, nvars=self.nvars,
@@ -183,13 +150,13 @@ class SAT_lookAhead:
              #   print("----")
                 if ok  and \
                     self.get_number_of_new_binary_clauses(-lit) > threshold:
-                    #print("fungju")
+                    # print("fungju")
                     # SECOND-LEVEL LOOKAHEAD
                     second_best = -10000
                     for var2 in self.pre_select(
                             clauses=self.clauses, clause_active=self.clause_active,
                             adjacency_dict=self.adjacency_dict, nvars=self.nvars,
-                            assign=self.assign, percent=25):
+                            assign=self.assign, percent=10):
                         trail2 = len(self.trail)
                         mod2 = len(self.mod_stack)
                         inner_conf = [False, False]
