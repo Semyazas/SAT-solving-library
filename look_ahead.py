@@ -8,13 +8,7 @@ from difference_heuristics.wbh import WBH_heuristic
 from look_ahead_parts.look_ahead_variants.look_ahead_baisc import look_ahead_basic
 from look_ahead_parts.preselection.preselect import pre_select
 import os
-"""
-TODO: 
-    1) push changes             DONE
-    2) create heuristics        Partially DONE
-    3) double literals          Huh ? 
-    4) fancy data structure     In progress
-"""
+
 class SAT_lookAhead:
     def __init__(self,
             clauses, 
