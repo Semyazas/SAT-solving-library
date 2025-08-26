@@ -133,6 +133,11 @@ def parse_inputs(args: list[str],    path_prefix : str = "" # odkud voláme expe
         prefix_map = {
             "utf20":  path_prefix + "\\inputs\\utf20\\uf20-0",
             "uuf50":  path_prefix + "\\inputs\\uuf50\\UUF50.218.1000\\uuf50-0",
+            "uuf75":  path_prefix + "\\inputs\\uuf75\\UUF75.325.100\\uuf75-0",
+            "uuf100": path_prefix + "\\inputs\\uuf100\\UUF100.430.1000\\uuf100-0",
+            "utf50":  path_prefix + "\\inputs\\utf50\\uf50-0",
+            "utf75":  path_prefix + "\\inputs\\utf75\\ai\\hoos\\Shortcuts\\UF75.325.100\\uf75-0",
+            "utf100": path_prefix + "\\inputs\\utf100\\uf100-0",
             "uuf753": path_prefix + "\\inputs\\uuf753\\UUF175.753.100\\uuf175-0",
             "flat30": path_prefix + "\\inputs\\flat30\\flat30-",
             "flat50": path_prefix + "\\inputs\\flat50\\flat50-",
