@@ -5,10 +5,8 @@ from DIMACS_reader import read_DIMACS
 from task1.DIMACS_encoding import DIMACS_decoder
 from propagate.propagate_binary import Binary_propagation
 from difference_heuristics.wbh import WBH_heuristic
-from look_ahead_parts.look_ahead_variants.look_ahead_baisc import look_ahead_basic
 from look_ahead_parts.preselection.preselect import pre_select
 import os
-
 class SAT_lookAhead:
     def __init__(self,
             clauses, 
