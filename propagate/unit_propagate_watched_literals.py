@@ -26,10 +26,10 @@ def unit_propagate_w_watched_lits(
 
             # check if clause is already satisfied
             val = assign[abs(other)]
+
             if (val and other > 0) or (val is False and other < 0):
                 continue
-
-                # try to move watched literal
+            # try to move watched literal
             moved = False
             for lit in clauses[cl_idx]:
                 if lit != other:
