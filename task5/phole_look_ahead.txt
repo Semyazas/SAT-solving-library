@@ -1,0 +1,7 @@
+SAT result: False
+number of clauses: 753
+number of variables: 175
+Experiment with ..\task23\inputs\uuf753\UUF175.753.100\uuf175-01.cnf lasted 9.613200
+number of decisions: 1254
+number of UP steps: 1049695
+---------------------------------------------

@@ -1,0 +1,700 @@
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-01.cnf lasted 0.021707
+number of decisions: 20
+number of UP steps: 2340
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-02.cnf lasted 0.023215
+number of decisions: 10
+number of UP steps: 2089
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-03.cnf lasted 0.020440
+number of decisions: 12
+number of UP steps: 2400
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-04.cnf lasted 0.027227
+number of decisions: 18
+number of UP steps: 2724
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-05.cnf lasted 0.017614
+number of decisions: 14
+number of UP steps: 1898
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-06.cnf lasted 0.021682
+number of decisions: 16
+number of UP steps: 2556
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-07.cnf lasted 0.014572
+number of decisions: 10
+number of UP steps: 1453
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-08.cnf lasted 0.028575
+number of decisions: 16
+number of UP steps: 2945
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-09.cnf lasted 0.019915
+number of decisions: 14
+number of UP steps: 1935
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-010.cnf lasted 0.010554
+number of decisions: 10
+number of UP steps: 1207
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-011.cnf lasted 0.018580
+number of decisions: 13
+number of UP steps: 1882
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-012.cnf lasted 0.048388
+number of decisions: 19
+number of UP steps: 3328
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-013.cnf lasted 0.022366
+number of decisions: 12
+number of UP steps: 2093
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-014.cnf lasted 0.029642
+number of decisions: 10
+number of UP steps: 2216
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-015.cnf lasted 0.017953
+number of decisions: 12
+number of UP steps: 1997
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-016.cnf lasted 0.022184
+number of decisions: 13
+number of UP steps: 1654
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-017.cnf lasted 0.030037
+number of decisions: 15
+number of UP steps: 2368
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-018.cnf lasted 0.019504
+number of decisions: 10
+number of UP steps: 1905
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-019.cnf lasted 0.029336
+number of decisions: 11
+number of UP steps: 2650
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-020.cnf lasted 0.033637
+number of decisions: 13
+number of UP steps: 2545
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-021.cnf lasted 0.029662
+number of decisions: 24
+number of UP steps: 3186
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-022.cnf lasted 0.021070
+number of decisions: 20
+number of UP steps: 2873
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-023.cnf lasted 0.028711
+number of decisions: 18
+number of UP steps: 2704
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-024.cnf lasted 0.029948
+number of decisions: 20
+number of UP steps: 2603
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-025.cnf lasted 0.020273
+number of decisions: 12
+number of UP steps: 1851
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-026.cnf lasted 0.024102
+number of decisions: 12
+number of UP steps: 1844
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-027.cnf lasted 0.021667
+number of decisions: 13
+number of UP steps: 1802
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-028.cnf lasted 0.024402
+number of decisions: 15
+number of UP steps: 2775
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-029.cnf lasted 0.022858
+number of decisions: 13
+number of UP steps: 2338
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-030.cnf lasted 0.015321
+number of decisions: 10
+number of UP steps: 1310
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-031.cnf lasted 0.019593
+number of decisions: 12
+number of UP steps: 1700
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-032.cnf lasted 0.016503
+number of decisions: 10
+number of UP steps: 1671
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-033.cnf lasted 0.021337
+number of decisions: 11
+number of UP steps: 1912
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-034.cnf lasted 0.016152
+number of decisions: 12
+number of UP steps: 1932
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-035.cnf lasted 0.036219
+number of decisions: 23
+number of UP steps: 3420
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-036.cnf lasted 0.014774
+number of decisions: 7
+number of UP steps: 1386
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-037.cnf lasted 0.030751
+number of decisions: 26
+number of UP steps: 3414
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-038.cnf lasted 0.008158
+number of decisions: 3
+number of UP steps: 803
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-039.cnf lasted 0.020150
+number of decisions: 11
+number of UP steps: 2376
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-040.cnf lasted 0.024115
+number of decisions: 14
+number of UP steps: 2651
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-041.cnf lasted 0.038210
+number of decisions: 15
+number of UP steps: 2399
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-042.cnf lasted 0.024907
+number of decisions: 16
+number of UP steps: 2795
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-043.cnf lasted 0.018990
+number of decisions: 13
+number of UP steps: 2265
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-044.cnf lasted 0.024449
+number of decisions: 16
+number of UP steps: 2150
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-045.cnf lasted 0.027595
+number of decisions: 19
+number of UP steps: 2755
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-046.cnf lasted 0.016885
+number of decisions: 11
+number of UP steps: 1611
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-047.cnf lasted 0.025164
+number of decisions: 18
+number of UP steps: 2439
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-048.cnf lasted 0.035635
+number of decisions: 11
+number of UP steps: 3203
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-049.cnf lasted 0.036183
+number of decisions: 21
+number of UP steps: 2648
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-050.cnf lasted 0.027203
+number of decisions: 19
+number of UP steps: 2996
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-051.cnf lasted 0.018630
+number of decisions: 10
+number of UP steps: 2078
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-052.cnf lasted 0.028284
+number of decisions: 21
+number of UP steps: 3053
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-053.cnf lasted 0.032528
+number of decisions: 20
+number of UP steps: 2661
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-054.cnf lasted 0.038456
+number of decisions: 32
+number of UP steps: 4094
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-055.cnf lasted 0.016119
+number of decisions: 13
+number of UP steps: 1487
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-056.cnf lasted 0.033614
+number of decisions: 21
+number of UP steps: 3037
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-057.cnf lasted 0.015573
+number of decisions: 9
+number of UP steps: 1292
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-058.cnf lasted 0.015007
+number of decisions: 8
+number of UP steps: 1404
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-059.cnf lasted 0.037640
+number of decisions: 25
+number of UP steps: 3794
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-060.cnf lasted 0.020841
+number of decisions: 19
+number of UP steps: 2502
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-061.cnf lasted 0.020908
+number of decisions: 19
+number of UP steps: 2267
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-062.cnf lasted 0.018849
+number of decisions: 8
+number of UP steps: 1507
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-063.cnf lasted 0.034401
+number of decisions: 18
+number of UP steps: 2758
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-064.cnf lasted 0.030443
+number of decisions: 16
+number of UP steps: 2470
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-065.cnf lasted 0.021796
+number of decisions: 16
+number of UP steps: 2215
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-066.cnf lasted 0.026068
+number of decisions: 18
+number of UP steps: 2855
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-067.cnf lasted 0.027970
+number of decisions: 13
+number of UP steps: 2863
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-068.cnf lasted 0.021649
+number of decisions: 14
+number of UP steps: 1684
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-069.cnf lasted 0.019176
+number of decisions: 18
+number of UP steps: 1932
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-070.cnf lasted 0.018309
+number of decisions: 10
+number of UP steps: 1872
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-071.cnf lasted 0.021655
+number of decisions: 10
+number of UP steps: 2316
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-072.cnf lasted 0.028513
+number of decisions: 16
+number of UP steps: 2486
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-073.cnf lasted 0.023675
+number of decisions: 13
+number of UP steps: 2339
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-074.cnf lasted 0.021218
+number of decisions: 14
+number of UP steps: 1697
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-075.cnf lasted 0.016191
+number of decisions: 10
+number of UP steps: 1303
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-076.cnf lasted 0.018139
+number of decisions: 9
+number of UP steps: 1282
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-077.cnf lasted 0.033724
+number of decisions: 14
+number of UP steps: 2995
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-078.cnf lasted 0.024133
+number of decisions: 16
+number of UP steps: 2104
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-079.cnf lasted 0.028352
+number of decisions: 12
+number of UP steps: 2279
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-080.cnf lasted 0.021590
+number of decisions: 10
+number of UP steps: 1713
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-081.cnf lasted 0.020207
+number of decisions: 6
+number of UP steps: 1184
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-082.cnf lasted 0.020938
+number of decisions: 9
+number of UP steps: 1643
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-083.cnf lasted 0.031840
+number of decisions: 9
+number of UP steps: 1610
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-084.cnf lasted 0.037367
+number of decisions: 14
+number of UP steps: 2177
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-085.cnf lasted 0.044526
+number of decisions: 21
+number of UP steps: 2228
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-086.cnf lasted 0.098953
+number of decisions: 26
+number of UP steps: 5316
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-087.cnf lasted 0.042529
+number of decisions: 19
+number of UP steps: 3626
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-088.cnf lasted 0.025883
+number of decisions: 7
+number of UP steps: 1252
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-089.cnf lasted 0.029178
+number of decisions: 7
+number of UP steps: 1809
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-090.cnf lasted 0.060016
+number of decisions: 17
+number of UP steps: 3280
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-091.cnf lasted 0.026309
+number of decisions: 6
+number of UP steps: 1700
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-092.cnf lasted 0.024632
+number of decisions: 18
+number of UP steps: 2768
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-093.cnf lasted 0.023246
+number of decisions: 11
+number of UP steps: 1353
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-094.cnf lasted 0.050229
+number of decisions: 23
+number of UP steps: 3911
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-095.cnf lasted 0.025549
+number of decisions: 16
+number of UP steps: 2257
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-096.cnf lasted 0.037848
+number of decisions: 22
+number of UP steps: 2995
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-097.cnf lasted 0.035806
+number of decisions: 13
+number of UP steps: 2658
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-098.cnf lasted 0.032781
+number of decisions: 21
+number of UP steps: 2406
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-099.cnf lasted 0.044993
+number of decisions: 32
+number of UP steps: 3850
+---------------------------------------------
+SAT result: False
+number of clauses: 218
+number of variables: 50
+Experiment with ..\task23\inputs\uuf50\UUF50.218.1000\uuf50-0100.cnf lasted 0.017912
+number of decisions: 6
+number of UP steps: 1171
+---------------------------------------------

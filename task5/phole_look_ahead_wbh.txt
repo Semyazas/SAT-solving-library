@@ -1,0 +1,21 @@
+SAT result: True
+number of clauses: 581
+number of variables: 61
+Experiment with ..\task23\inputs\ais\ais6.cnf lasted 0.850354
+number of decisions: 15
+number of UP steps: 8716
+---------------------------------------------
+SAT result: True
+number of clauses: 1520
+number of variables: 113
+Experiment with ..\task23\inputs\ais\ais8.cnf lasted 33.076145
+number of decisions: 126
+number of UP steps: 161007
+---------------------------------------------
+SAT result: True
+number of clauses: 3151
+number of variables: 181
+Experiment with ..\task23\inputs\ais\ais10.cnf lasted 52.300645
+number of decisions: 63
+number of UP steps: 161167
+---------------------------------------------

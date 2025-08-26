@@ -1,0 +1,14 @@
+SAT result: False
+number of clauses: 204
+number of variables: 56
+Experiment with ..\task23\inputs\pigeon-hole\hole7.cnf lasted 10.100963
+number of decisions: 14760
+number of UP steps: 1084608
+---------------------------------------------
+SAT result: False
+number of clauses: 297
+number of variables: 72
+Experiment with ..\task23\inputs\pigeon-hole\hole8.cnf lasted 141.508942
+number of decisions: 160955
+number of UP steps: 13628561
+---------------------------------------------
