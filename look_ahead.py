@@ -14,7 +14,7 @@ class SAT_lookAhead:
             heuristic,
             propagation,
             preselect,
-            threshold_mod) -> None:
+            threshold_mod=1) -> None:
         self.clauses = clauses
         self.nvars = nvars
         self.threshold_mod = threshold_mod
@@ -229,7 +229,8 @@ if __name__ == "__main__":
     clauses, variables = [], []
     dimacs = True
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    if len(sys.argv) == 3:
+    threshold = 1
+    if len(sys.argv) == 3 or len(sys.argv) == 4:
         filepath = os.path.join(BASE_DIR, sys.argv[2])
         if sys.argv[1] == "-d":
             clauses, variables,_,_ = read_DIMACS(filepath)
@@ -239,13 +240,25 @@ if __name__ == "__main__":
             clauses = D_decoder.get_DIMACS()
             variables = list(D_decoder.var2dimacs_map.values())
             dimacs = False
-
+        else:
+            print("error: correct usage: py look_ahead -[s/d] [input_file_path] [threshold_modifier]")
+            exit()
+        if len(sys.argv) == 4 :
+            if sys.argv[3].isnumeric():
+                threshold = float(sys.argv[3])
+            else:
+                print("error: correct usage: py look_ahead -[s/d] [input_file_path] [threshold_modifier]")
+                exit()
+    else:
+        print("error: correct usage: py look_ahead -[s/d] [input_file_path] [threshold_modifier]")
+        exit()
     solver = SAT_lookAhead(
         clauses,
         max(variables),
         heuristic=WBH_heuristic,
         propagation=Binary_propagation,
-        preselect=pre_select
+        preselect=pre_select,
+        threshold_mod=threshold
     )
     solved, model, t, n_dec, n_up = solver.solve(solver.prop.propagate_with_implications)
     print("SAT:", solved)
