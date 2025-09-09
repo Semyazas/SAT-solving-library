@@ -1,0 +1,3 @@
+average_time_iterative:  198.21538959999816
+average_time_non_iterative:  57.88974894999046
+number of equivalences:  16
