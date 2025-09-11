@@ -1,6 +1,0 @@
-x: C:\Users\marti\Documents\cviko_verifikace\labs_verification\task23\inputs\ais\ais6.cnf
-y: C:\Users\marti\Documents\cviko_verifikace\labs_verification\task23\inputs\ais\ais10.cnf
-Average completion time:  0.016436549980426207
-x -> y ?:  False
-x <- y ?:  False
-x <-> y ?:  False

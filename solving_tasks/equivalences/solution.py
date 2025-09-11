@@ -51,7 +51,7 @@ def non_iterative_method(F : CNF, Alpha : CNF)->dict:
         "implied" : not sat,
         "time": toc - tic
     } 
-def iterative_mathod(F: CNF, Alpha : CNF)->tuple[bool,float]:
+def iterative_method_old(F: CNF, Alpha : CNF)->tuple[bool,float]:
     tic = time.perf_counter()
     for clause in Alpha.clauses:
         solver = Minisat22(use_timer=True)
@@ -67,6 +67,25 @@ def iterative_mathod(F: CNF, Alpha : CNF)->tuple[bool,float]:
         "implied" : True,
         "time": toc - tic
     } 
+def iterative_method(F: CNF, Alpha: CNF) -> dict:
+    tic = time.perf_counter()
+
+    # initialize solver ONCE with base formula F
+    with Minisat22(bootstrap_with=F.clauses, use_timer=True) as solver:
+        for clause in Alpha.clauses:
+            assumptions = [-lit for lit in clause]
+            for assumption in assumptions:
+                sat = solver.solve(assumptions=[assumption])
+                if sat:
+                    return {
+                        "implied": False,
+                        "time": time.perf_counter() - tic
+                    }
+    toc = time.perf_counter()
+    return {
+        "implied": True,
+        "time": toc - tic
+    }
 if __name__ == "__main__":
     # we do implication from left to right
     ap = argparse.ArgumentParser(description="Running experiments on bacbone.")
@@ -82,7 +101,7 @@ if __name__ == "__main__":
         cnf2 = CNF(from_file=args.input_file2)
         is_implied_left_to_right = None
         if args.solver == "it":
-            is_implied_left_to_right = iterative_mathod
+            is_implied_left_to_right = iterative_method
         elif args.solver == "n":
             is_implied_left_to_right = non_iterative_method
 
