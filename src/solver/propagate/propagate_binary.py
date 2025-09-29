@@ -1,15 +1,23 @@
-from .unit_propagate_watched_literals import unit_propagate_w_watched_lits
+from .unit_propagate_watched_literals import Unit_propagation_watched_literals
+from .propagate import Unit_propagation
 from collections import defaultdict
-class Binary_propagation:
+
+class Binary_propagation(Unit_propagation):
     def __init__(self,**args):
-        self.assign = args["assign"]
-        self.base_enqueue = args["enqueue"]
+        super().__init__(**args)
         self.implications =  defaultdict(list)
-        self.clauses = args["clauses"]
         self.clause_to_Wliterals = defaultdict(list)
         self.literal_to_clauses = defaultdict(set)
         self._init_implications()
-        self.begin_watched_literals()
+        self._begin_watched_literals()
+        self.assign = args["assignment"]
+
+        self.propagation = Unit_propagation_watched_literals(
+            clauses = self.clauses,
+            enqueue = self.enqueue,
+            assignment = self.assign,
+            value = args["value"]
+        )
     def _init_implications(self):
         for clause in self.clauses:
             if len(clause) == 2:
@@ -19,7 +27,7 @@ class Binary_propagation:
                 self.implications[a].append(b)
                 self.implications[b].append(a)
 
-    def begin_watched_literals(self) -> None:
+    def _begin_watched_literals(self) -> None:
         for  cl_idx,clause in enumerate(self.clauses):
             self.clause_to_Wliterals[cl_idx] = [clause[0]]
             self.literal_to_clauses[clause[0]].add(cl_idx)
@@ -27,7 +35,7 @@ class Binary_propagation:
                 self.clause_to_Wliterals[cl_idx].append(clause[1])
                 self.literal_to_clauses[clause[1]].add(cl_idx)
 
-    def propagate_with_implications(self,**args):
+    def propagate(self,**args):
         steps = 0
         stack = []
         first = args.get("changed_literal", None)
@@ -41,7 +49,7 @@ class Binary_propagation:
             # If already assigned consistently, base_enqueue may be a no-op in your code,
             # but that’s fine; we still push the falsified literal to drive both engines.
             if self.assign[abs(lit)] is None:
-                self.base_enqueue(lit)
+                self.enqueue(lit)
                 steps += 1
             # Always queue the falsified literal; watched/binary will skip if nothing to do.
             stack.append(-lit)
@@ -52,7 +60,6 @@ class Binary_propagation:
 
         while stack:
             falsified = stack.pop()
-
             # --- Binary implications: falsifying `falsified` forces each implied
             for implied in self.implications[falsified]:
                 val = self.assign[abs(implied)]
@@ -63,7 +70,7 @@ class Binary_propagation:
 
             # --- Longer clauses via watched literals, also keyed by the falsified literal
             local_args["changed_literal"] = falsified
-            ok, s = unit_propagate_w_watched_lits(**local_args)
+            ok, s = self.propagation.propagate(**local_args)
             if not ok:
                 return False, steps + s
             # Any enqueues done inside watched-literals re-enter via enqueue_and_queue

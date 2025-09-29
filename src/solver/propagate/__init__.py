@@ -1,3 +1,3 @@
 from .propagate_binary import Binary_propagation
-from .unit_propagate_watched_literals import unit_propagate_w_watched_lits
-from .unit_propagate_adjacency_list import unit_propagate_basic
+from .unit_propagate_watched_literals import Unit_propagation_watched_literals
+from .unit_propagate_adjacency_list import Unit_propagation_basic
