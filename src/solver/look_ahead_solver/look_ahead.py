@@ -33,8 +33,9 @@ class SAT_lookAhead:
         # Precompute literal occurrences for fast heuristic
         self.prop = propagation(
             clauses = self.clauses,
-            assign  = self.assign,
-            enqueue = self.enqueue
+            assignment  = self.assign,
+            enqueue = self.enqueue,
+            value = self._value
         )
         self.heuristic = heuristic(
             clauses        = self.clauses,
@@ -45,6 +46,12 @@ class SAT_lookAhead:
             clause_active  = self.clause_active
         )
         self.pre_select = pre_select 
+
+    def _value(self, lit):
+        """Return literal truth value under current assignment or None."""
+        val = self.assign[abs(lit)]
+        return val if lit > 0 else (not val if val is not None else None)
+
     def _init_adjacency_dict(self):
         for ci, clause in enumerate(self.clauses):
             for lit in clause:
@@ -96,7 +103,7 @@ class SAT_lookAhead:
         return x + y + x*y*1024
 
     def __propagate(self, falsified_literal)->None:
-        ok , steps_it = self.prop.propagate_with_implications(
+        ok , steps_it = self.prop.propagate(
             changed_literal = falsified_literal,
             adjacency_dict = self.adjacency_dict,
             clauses = self.clauses,
@@ -117,7 +124,6 @@ class SAT_lookAhead:
                 res +=1
         return res
                 
-
     def double_look_ahead(self):
         best_val = -10000
         best_lit = None
@@ -259,7 +265,7 @@ if __name__ == "__main__":
         preselect=pre_select,
         threshold_mod=threshold
     )
-    solved, model, t, n_dec, n_up = solver.solve(solver.prop.propagate_with_implications)
+    solved, model, t, n_dec, n_up = solver.solve(solver.prop.propagate)
     print("SAT:", solved)
     if model:
         if dimacs:
