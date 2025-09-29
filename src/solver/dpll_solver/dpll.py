@@ -2,7 +2,7 @@ from collections import defaultdict
 import time
 import sys
 from src.parser import read_DIMACS, DIMACS_decoder
-from src.solver.propagate import unit_propagate_w_watched_lits
+from src.solver.propagate import Unit_propagation_watched_literals
 from src.solver.dpll_solver.decision_heuristics import choose_literal, lit_counts_h
 import os
 class SAT_dpll:
@@ -11,18 +11,23 @@ class SAT_dpll:
     If we call this file, it will use watched literals and literal counts 
     heuristic as default.
     """
-    def __init__(self, clauses, nvars,choose_lit ,score_h = None, VSIDS = None):
+    def __init__(self,
+            clauses, 
+            nvars,
+            choose_lit,
+            assign, 
+            score_h = None, 
+            VSIDS = None, 
+            propagation = None):
         self.clauses = clauses
         self.nvars = nvars
-        self.assign = [None for _ in range(nvars+1)]   # 1-indexed
+        self.assign = assign   # 1-indexed
         self.trail = []                     # stack of assigned literals
         self.num_decisions = 0
         self.steps_up = 0
         self.choose_lit = choose_lit
+        self.propagation = propagation
 
-        self.adjacency_dict = defaultdict(list)
-        self.clause_to_Wliterals = defaultdict(list)
-        self.literal_to_clauses = defaultdict(set)
         self.score = None
         self.vsids = VSIDS
         # Precompute literal occurrences for fast heuristic
@@ -31,11 +36,6 @@ class SAT_dpll:
                 clauses = clauses,
                 variables = [i for i in range(1,nvars+1)]
             )
-        for clause in clauses:
-            for lit in clause:
-                self.adjacency_dict[lit].append(clause)
-
-        self.begin_watched_literals()
 
     def value(self, lit):
         """Return literal truth value under current assignment or None."""
@@ -53,27 +53,14 @@ class SAT_dpll:
             lit = self.trail.pop()
             self.assign[abs(lit)] = None
     
-    def begin_watched_literals(self) -> None:
-        for  cl_idx,clause in enumerate(self.clauses):
-            self.clause_to_Wliterals[cl_idx] = [clause[0]]
-            self.literal_to_clauses[clause[0]].add(cl_idx)
-            if len(clause) >=2:
-                self.clause_to_Wliterals[cl_idx].append(clause[1])
-                self.literal_to_clauses[clause[1]].add(cl_idx)
-
-
-    def dpll(self,literal : int, propagate ) -> bool:
-     #   print("rekurzuju")
+    def dpll(self,literal : int) -> bool:
         falsified_lit = literal if literal == None else -literal
-        ok , steps_it = propagate(
+        ok , steps_it = self.propagation.propagate(
             changed_literal = falsified_lit,
-            adjacency_dict = self.adjacency_dict,
             clauses = self.clauses,
             value = self.value,
             enqueue = self.enqueue,
             assign = self.assign,
-            clause_to_Wliterals = self.clause_to_Wliterals,
-            literal_to_clauses = self.literal_to_clauses,
             trail = self.trail,
             vsids = self.vsids
         )
@@ -92,24 +79,23 @@ class SAT_dpll:
         trail_len = len(self.trail)
 
         self.enqueue(lit)
-        if self.dpll(lit,propagate):
+        if self.dpll(lit):
             return True
         self.backtrack(trail_len)
 
         self.enqueue(-lit)
-        if self.dpll(-lit,propagate):
+        if self.dpll(-lit):
             return True
         self.backtrack(trail_len)
         return False
 
-    def solve(self, propagete ):
+    def solve(self):
         start = time.perf_counter()
-        sat = self.dpll(None, propagete)
+        sat = self.dpll(None)
         end = time.perf_counter()
         model = {i: self.assign[i] for i in range(1, self.nvars+1)}
         return sat, model, end-start, self.num_decisions, self.steps_up
 
-# TODO: debug -s variant
 if __name__ == "__main__":
     clauses, variables = [], []
     dimacs = True
@@ -124,14 +110,22 @@ if __name__ == "__main__":
             variables = list(D_decoder.var2dimacs_map.values())
             dimacs = False
 
+    assign = [None] * (max(variables) + 1)  # 1-indexed
     solver = SAT_dpll(
         clauses,
         max(variables),
         choose_lit=choose_literal,
         score_h=lit_counts_h,
-        VSIDS=None
+        VSIDS=None,
+        assign=assign,
+        propagation=Unit_propagation_watched_literals(
+            clauses=clauses,
+            enqueue=lambda x: solver.enqueue(x),
+            assignment=assign,
+            value = lambda x: solver.value(x)
+        )
     )
-    solved, model, t, n_dec, n_up = solver.solve(unit_propagate_w_watched_lits)
+    solved, model, t, n_dec, n_up = solver.solve()
 
     print("SAT:", solved)
     if model:
