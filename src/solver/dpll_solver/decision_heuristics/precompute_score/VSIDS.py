@@ -6,13 +6,10 @@ class VSIDs:
         self.decay = decay
         self.bump_value = 1.0
         self.nvars = nvars
-
-
     def pick_literal(self, **args) -> int:
         assigned = args["assign"]
         unassigned_vars = [i for i,l in enumerate(assigned)
                         if l is None]
-      #  print("funguju")
         var = None if not unassigned_vars else max(unassigned_vars, key=lambda v: self.activity[v])
         if var == None:
             return None

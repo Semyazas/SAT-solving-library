@@ -13,10 +13,10 @@ def JW_heuristic(clauses : list[list[int]],
                     l_score += (1/2)**len(clause)
             scores[lit] = l_score
     return scores
-"""
+
 def get_JW_val(literal : int, scores : defaultdict) -> float:
     return scores[literal]
-"""
+
 if __name__ == "__main__":
     clauses = [[1,2],[1,2,3,4],[3],[-3,1,5]]
     scores = JW_heuristic(clauses=clauses,variables=[1,2,3])
