@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "solver"
+version = "0.1.0"
+description = "SAT solver experiments and utilities"
+authors = [
+    {name = "Martin Kunst", email = "martin.kunst2001@centrum.cz"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
