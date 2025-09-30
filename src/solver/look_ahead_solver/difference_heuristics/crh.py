@@ -1,4 +1,4 @@
-from difference_heuristics.heuristic import DifferenceHeuristic
+from .heuristic import DifferenceHeuristic
 
 class CRH_heuristics(DifferenceHeuristic):
     def __init__(self, **args):

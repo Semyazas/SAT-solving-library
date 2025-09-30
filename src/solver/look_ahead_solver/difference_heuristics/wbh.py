@@ -1,5 +1,5 @@
 from collections import defaultdict
-from difference_heuristics.heuristic import DifferenceHeuristic
+from .heuristic import DifferenceHeuristic
 
 class WBH_heuristic(DifferenceHeuristic):
     def __init__(self, **args):
@@ -33,9 +33,6 @@ class WBH_heuristic(DifferenceHeuristic):
         return literal_weight
     
     def _init_literal_score(self) -> int:
-        #TODO: maybe more precompute
-        # Step 1: compute w_WBH(l) for all literals
-        # Step 2: compute WBH(var) using binary clauses containing var
         score = 0
         for i,clause in enumerate(self.clauses):
             if self.cl_unassigned[i] != 2:
@@ -57,10 +54,6 @@ class WBH_heuristic(DifferenceHeuristic):
                     ))
                     
     def diff(self, var) -> float:
-        #TODO: maybe more precompute
-        # Step 1: compute w_WBH(l) for all literals
-        # Step 2: compute WBH(var) using binary clauses containing var
-      #  print(self.wbh_score)
         return self.wbh_score
     def update_score(self, **args):
         ci = args["ci"]
