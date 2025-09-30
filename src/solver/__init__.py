@@ -1,3 +1,5 @@
-from .propagate.unit_propagate_watched_literals import unit_propagate_w_watched_lits
-from .dpll_solver.decision_heuristics.choose_literal.choose_best_score import choose_literal
-from .look_ahead_solver.difference_heuristics.wbh import WBH_heuristic
+from .dpll_solver.dpll import SAT_dpll   
+from .look_ahead_solver import  look_ahead_parts
+from .look_ahead_solver.look_ahead import  SAT_lookAhead
+
+from .propagate import propagate
