@@ -1,11 +1,10 @@
 from collections import defaultdict
 import time
-import sys
-from src.parser import read_DIMACS, DIMACS_decoder
-from src.solver.propagate import Binary_propagation
-from src.solver.look_ahead_solver.difference_heuristics import WBH_heuristic
-from src.solver.look_ahead_solver.look_ahead_parts.preselection.preselect import pre_select
-import os
+import argparse
+from parser import read_DIMACS, DIMACS_decoder
+from solver.propagate import Binary_propagation
+from solver.look_ahead_solver.difference_heuristics import WBH_heuristic
+from solver.look_ahead_solver.look_ahead_parts.preselection.preselect import pre_select
 class SAT_lookAhead:
     def __init__(self,
             clauses, 
@@ -123,7 +122,34 @@ class SAT_lookAhead:
             if self.clause_active[ci] and self.cl_unassigned[ci] == 2:
                 res +=1
         return res
-                
+
+    def inner_look_ahead(self, conflicts : list[int]) -> int:
+        second_best = -10000
+        for var2 in self.pre_select(
+                clauses=self.clauses, clause_active=self.clause_active,
+                adjacency_dict=self.adjacency_dict, nvars=self.nvars,
+                assign=self.assign, percent=10):
+            trail2 = len(self.trail)
+            mod2 = len(self.mod_stack)
+            inner_conf = [False, False]
+            inner_diff = [0,0]
+            for j, lit2 in enumerate([var2, -var2]):
+                self.enqueue(lit2)
+                ok2, steps2 = self.__propagate(-lit2)
+                inner_diff[j] = self.heuristic.diff(lit2)
+                inner_conf[j] = not ok2
+                self.backtrack(trail2, mod2)
+                self.steps_up += steps2
+
+                if inner_conf[0] and inner_conf[1]:
+                    conflicts[i] = True
+                    break
+                score2 = self.mix_diff(inner_diff[0], inner_diff[1])
+                if score2 > second_best:
+                    second_best = score2 
+
+        return second_best           
+    
     def double_look_ahead(self):
         best_val = -10000
         best_lit = None
@@ -142,40 +168,11 @@ class SAT_lookAhead:
                 ok, steps_it = self.__propagate(-lit)
                 diff_vals[i] = self.heuristic.diff(lit)
                 conflicts[i] = not ok
-             #   print( self.get_number_of_new_binary_clauses(-lit) )
-             #   print(threshold)
-             #   print("----")
                 if ok  and \
                     self.get_number_of_new_binary_clauses(-lit) > threshold:
-                    # print("fungju")
-                    # SECOND-LEVEL LOOKAHEAD
-                    second_best = -10000
-                    for var2 in self.pre_select(
-                            clauses=self.clauses, clause_active=self.clause_active,
-                            adjacency_dict=self.adjacency_dict, nvars=self.nvars,
-                            assign=self.assign, percent=10):
-                        trail2 = len(self.trail)
-                        mod2 = len(self.mod_stack)
-                        inner_conf = [False, False]
-                        inner_diff = [0,0]
-                        for j, lit2 in enumerate([var2, -var2]):
-                            self.enqueue(lit2)
-                            ok2, steps2 = self.__propagate(-lit2)
-                            inner_diff[j] = self.heuristic.diff(lit2)
-                            inner_conf[j] = not ok2
-                            self.backtrack(trail2, mod2)
-                            self.steps_up += steps2
-
-                        if inner_conf[0] and inner_conf[1]:
-                            conflicts[i] = True
-                            break
-                        score2 = self.mix_diff(inner_diff[0], inner_diff[1])
-                        if score2 > second_best:
-                            second_best = score2
-                    diff_vals[i] = second_best
-
+                    # SECOND-LEVEL LOOKAHEAD                   
+                    diff_vals[i] = self.inner_look_ahead(conflicts)
                 self.backtrack(trail_len, old_modstack_len)
-
                 self.steps_up += steps_it
 
             # decision for var
@@ -230,54 +227,62 @@ class SAT_lookAhead:
         model = {i: self.assign[i] for i in range(1, self.nvars+1)}
         return sat, model, end-start, self.num_decisions, self.steps_up
     
-if __name__ == "__main__":
-    # TODO: Use parser
+def main()->None:
+    parser = argparse.ArgumentParser(
+        description="SAT solver with look-ahead and different input formats."
+    )
+    parser.add_argument(
+        "mode",
+        choices=["d", "s"],
+        help="Choose input mode: -d for raw DIMACS file, -s for preprocessed solver input."
+    )
+    parser.add_argument(
+        "filepath",
+        help="Path to the input file."
+    )
+    parser.add_argument(
+        "threshold",
+        type=float,
+        nargs="?",
+        default=1.0,
+        help="Threshold modifier (default=1.0)."
+    )
+    args = parser.parse_args()
+
     clauses, variables = [], []
     dimacs = True
-    threshold = 1
-    if len(sys.argv) == 3 or len(sys.argv) == 4:
-        filepath = sys.argv[2]
-        if sys.argv[1] == "-d":
-            clauses, variables,_,_ = read_DIMACS(filepath)
-        elif sys.argv[1] == "-s":
-            D_decoder = DIMACS_decoder(filepath)
-            D_decoder.get_var_mapping()
-            clauses = D_decoder.get_DIMACS()
-            variables = list(D_decoder.var2dimacs_map.values())
-            dimacs = False
-        else:
-            print("error: correct usage: py look_ahead -[s/d] [input_file_path] [threshold_modifier]")
-            exit()
-        if len(sys.argv) == 4 :
-            if sys.argv[3].isnumeric():
-                threshold = float(sys.argv[3])
-            else:
-                print("error: correct usage: py look_ahead -[s/d] [input_file_path] [threshold_modifier]")
-                exit()
-    else:
-        print("error: correct usage: py look_ahead -[s/d] [input_file_path] [threshold_modifier]")
-        exit()
+
+    if args.mode == "d":
+        clauses, variables, _, _ = read_DIMACS(args.filepath)
+    elif args.mode == "s":
+        D_decoder = DIMACS_decoder(args.filepath)
+        D_decoder.get_var_mapping()
+        clauses = D_decoder.get_DIMACS()
+        variables = list(D_decoder.var2dimacs_map.values())
+        dimacs = False
     solver = SAT_lookAhead(
         clauses,
         max(variables),
         heuristic=WBH_heuristic,
         propagation=Binary_propagation,
         preselect=pre_select,
-        threshold_mod=threshold
+        threshold_mod=args.threshold
     )
     solved, model, t, n_dec, n_up = solver.solve(solver.prop.propagate)
+
     print("SAT:", solved)
     if model:
+        vals = sorted(model.keys())
         if dimacs:
-            vals = sorted(model.keys())
             for var in vals:
                 print(var if model[var] else -var)
         else:
-            vals = sorted(model.keys())
             for var in vals:
                 print(D_decoder.dmacs2var_map[var], ": ", model[var])
 
     print("time:", t)
     print("decisions:", n_dec)
     print("unit propagations:", n_up)
-    # TODO: zagitovat
+
+if __name__ == "__main__":
+    main()

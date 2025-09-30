@@ -1,10 +1,8 @@
-from collections import defaultdict
 import time
-import sys
-from src.parser import read_DIMACS, DIMACS_decoder
-from src.solver.propagate import Unit_propagation_watched_literals
-from src.solver.dpll_solver.decision_heuristics import choose_literal, lit_counts_h
-import os
+from parser import read_DIMACS, DIMACS_decoder
+from solver.propagate import Unit_propagation_watched_literals
+from solver.dpll_solver.decision_heuristics import choose_literal, lit_counts_h
+import argparse
 class SAT_dpll:
     """
     Class that implements SAT solver using dpll algorithm.
@@ -96,19 +94,31 @@ class SAT_dpll:
         model = {i: self.assign[i] for i in range(1, self.nvars+1)}
         return sat, model, end-start, self.num_decisions, self.steps_up
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser(
+        description="SAT solver using DPLL with DIMACS or solver input."
+    )
+    parser.add_argument(
+        "mode",
+        choices=["d", "s"],
+        help="Choose input mode: -d for raw DIMACS file, -s for preprocessed solver input."
+    )
+    parser.add_argument(
+        "filepath",
+        help="Path to the input file."
+    )
+    args = parser.parse_args()
     clauses, variables = [], []
     dimacs = True
-    if len(sys.argv) == 3:
-        filepath = sys.argv[2]
-        if sys.argv[1] == "-d":
-            clauses, variables,_,_ = read_DIMACS(filepath)
-        elif sys.argv[1] == "-s":
-            D_decoder = DIMACS_decoder(filepath)
-            D_decoder.get_var_mapping()
-            clauses = D_decoder.get_DIMACS()
-            variables = list(D_decoder.var2dimacs_map.values())
-            dimacs = False
+
+    if args.mode == "d":
+        clauses, variables, _, _ = read_DIMACS(args.filepath)
+    elif args.mode == "s":
+        D_decoder = DIMACS_decoder(args.filepath)
+        D_decoder.get_var_mapping()
+        clauses = D_decoder.get_DIMACS()
+        variables = list(D_decoder.var2dimacs_map.values())
+        dimacs = False
 
     assign = [None] * (max(variables) + 1)  # 1-indexed
     solver = SAT_dpll(
@@ -122,22 +132,24 @@ if __name__ == "__main__":
             clauses=clauses,
             enqueue=lambda x: solver.enqueue(x),
             assignment=assign,
-            value = lambda x: solver.value(x)
+            value=lambda x: solver.value(x)
         )
     )
     solved, model, t, n_dec, n_up = solver.solve()
 
     print("SAT:", solved)
     if model:
+        vals = sorted(model.keys())
         if dimacs:
-            vals = sorted(model.keys())
             for var in vals:
                 print(var if model[var] else -var)
         else:
-            vals = sorted(model.keys())
             for var in vals:
                 print(D_decoder.dmacs2var_map[var], ": ", model[var])
 
     print("time:", t)
     print("decisions:", n_dec)
     print("unit propagations:", n_up)
+
+if __name__ == "__main__":
+    main()
