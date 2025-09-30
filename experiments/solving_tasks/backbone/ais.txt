@@ -1,0 +1,36 @@
+
+File:  ..\..\task23\inputs\ais\ais6.cnf
+# Stats
+sat: True
+sat_calls: 95
+time_sec: 0.00388550000207033
+vars: 61
+clauses: 581
+confirmed_backbones: 2
+
+File:  ..\..\task23\inputs\ais\ais8.cnf
+# Stats
+sat: True
+sat_calls: 95
+time_sec: 0.04527349999989383
+vars: 113
+clauses: 1520
+confirmed_backbones: 3
+
+File:  ..\..\task23\inputs\ais\ais10.cnf
+# Stats
+sat: True
+sat_calls: 96
+time_sec: 0.23900030000368133
+vars: 181
+clauses: 3151
+confirmed_backbones: 0
+
+File:  ..\..\task23\inputs\ais\ais12.cnf
+# Stats
+sat: True
+sat_calls: 108
+time_sec: 12.86276610000641
+vars: 265
+clauses: 5666
+confirmed_backbones: 0

@@ -1,15 +1,15 @@
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from task23.experiments import parse_inputs
+from dpll_experiments.experiments import parse_inputs
 
-from look_ahead import SAT_lookAhead
-from DIMACS_reader import read_DIMACS
-from task1.DIMACS_encoding import DIMACS_decoder
-from look_ahead_parts.preselection.preselect import pre_select
-from difference_heuristics.wbh import WBH_heuristic
-from difference_heuristics.crh import CRH_heuristics
-from propagate.propagate_binary import Binary_propagation
+from solver.look_ahead_solver.look_ahead import SAT_lookAhead
+from parser import read_DIMACS,  DIMACS_decoder
+
+from solver.look_ahead_solver.look_ahead_parts.preselection.preselect import pre_select
+from solver.look_ahead_solver.difference_heuristics import WBH_heuristic, CRH_heuristics
+from solver.propagate import Binary_propagation
+
 def run_small_experiment(
     input_file: str,
     output,
@@ -48,7 +48,7 @@ def run_small_experiment(
         threshold_mod=threshold
     )
     # Choose unit propagation method
-    sat, _, cpu_time, n_decisions, n_up = solver.solve(prop.propagate_with_implications)
+    sat, _, cpu_time, n_decisions, n_up = solver.solve(prop.propagate)
 
     # Output results
     print(f"SAT result: {sat}", file=output)
@@ -63,7 +63,7 @@ def run_small_experiment(
 
 if __name__ == "__main__":
     file_names, is_dimacs, watched_lits, score_h,\
-    all_sat, output_file = parse_inputs(sys.argv[:5],path_prefix="..\\task23")
+    all_sat, output_file = parse_inputs(sys.argv[:5],path_prefix="..\\dpll_experiments\\")
     threshold = 1e1000
     if len(sys.argv) == 6:
         threshold = float(sys.argv[5])

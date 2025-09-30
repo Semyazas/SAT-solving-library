@@ -1,0 +1,4 @@
+average_time_iterative_new:  0.0016313999949488789
+average_time_iterative_old:  1.7220692750051967
+average_time_non_iterative:  30.173770050008898
+number of equivalences:  4

@@ -3,20 +3,14 @@ import sys
 import time
 
 # Add root directory to Python path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from dpll import SAT_dpll
-from DIMACS_reader import read_DIMACS
-from task1.DIMACS_encoding import DIMACS_decoder
+from solver import SAT_dpll
+from solver.dpll_solver.decision_heuristics.choose_literal import choose_random, choose_literal
+from solver.dpll_solver.decision_heuristics.precompute_score import JW_heuristic, lit_counts_h, VSIDs
 
-from decision_heuristics.choose_literal.choose_best_score import choose_literal
-from decision_heuristics.choose_literal.choose_random import choose_random
-from decision_heuristics.precompute_score.jaroslow_wang_h import JW_heuristic
-from decision_heuristics.precompute_score.lit_counts_h import lit_counts_h
+from solver.propagate import Unit_propagation_basic, Unit_propagation_watched_literals
 
-from propagate.unit_propagate_adjacency_list import unit_propagate_basic
-from propagate.unit_propagate_watched_literals import unit_propagate_w_watched_lits
-from decision_heuristics.precompute_score.VSIDS import VSIDs
+from parser import read_DIMACS,  DIMACS_decoder
 
 def collect_files_ais(prefix : str) -> list[str]:
     return [f"{prefix}inputs\\ais\\ais{i}.cnf" for i in range(6, 13, 2)]
@@ -58,23 +52,25 @@ def run_small_experiment(
         elif score_h == "vsids":
             vsids = VSIDs(n_vars)
             heuristic_fn = vsids.pick_literal
-            
-    # Instantiate solver
+
+    propagation = Unit_propagation_watched_literals if watched_lits else Unit_propagation_basic
+    assign = [None for _ in range(n_vars + 1)]
     solver = SAT_dpll(
         clauses,
         max(variables),
         choose_lit=heuristic_fn,
         score_h=score,
-        VSIDS=vsids
+        VSIDS=vsids,
+        propagation= propagation(
+            clauses = clauses,
+            enqueue = lambda x : solver.enqueue(x),
+            assignment = assign,
+            value = lambda x : solver.value(x)
+        ),
+        assign = assign
     )
+    sat, _, cpu_time, n_decisions, n_up = solver.solve()
 
-    # Choose unit propagation method
-    propagate_fn = unit_propagate_w_watched_lits if watched_lits else unit_propagate_basic
-
-    # Solve
-    sat, _, cpu_time, n_decisions, n_up = solver.solve(propagate_fn)
-
-    # Output results
     print(f"SAT result: {sat}", file=output)
     print(f"number of clauses: {n_cl}", file=output)
     print(f"number of variables: {n_vars}", file=output)
