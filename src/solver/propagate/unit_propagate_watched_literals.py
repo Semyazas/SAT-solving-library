@@ -1,5 +1,6 @@
 from .propagate import Unit_propagation
 from collections import defaultdict
+
 class Unit_propagation_watched_literals(Unit_propagation):
     def __init__(self, **args):
         super().__init__(**args)
