@@ -1,7 +1,26 @@
-This is my SAT solver repo. It contains DPLL solver in file dpll. If you want to decide whether problem is SAT, just invoke "py dpll [-d if file is in dimacs, if satlib then -s] [name of file]".
+# SAT solver project
 
-DPLL solver takes its propagate function as an input for modularity. Possible propagate functions are in folder propagate.
+This is my SAT solver project. It contains DPLL solvers in src/ and experiments/ contains files that can run experiments that can run on benchmark problems. So far there are implemented look_ahead and dpll solvers. This project is mainly for learning purposes.
 
-It also takes as input decision heuristic and function that chooses literal (either according to best score given by heuristics or some other critirea (for example random)).
+If you want to decide whether problem is SAT, just invoke "py dpll [-d if file is in dimacs, if satlib then -s] [name of file]". If you wanto to use other solver, you can do it analogously.
+
+## Structure of project
+
+We have 2 main folders in src, these folders are solvers and parser. Parser contains functions that read input files and make them into CNF. 
+
+Solvers contains sorce code for solvers.
+Each solver takes its propagate function as parameter on input for modularity. Possible propagate functions are in folder propagate/.
+
+### DPLL solver
+
+DPLL solver takes as paramater its decision heuristic and function that chooses literal (either according to best score given by heuristics or some other critirea (for example random)). Decision heuristics are in folder decision_heuristics
+
+### Look ahead solver
+
+Look ahead solver takes as additional parameter difference heuristic, which helps it choose literal on which to do look ahead operation. Difference heuristics are in folder decision_heuristics.
+
+### Experiments
+
+We have 2 sets of experiments. One is with dpll, other with look_ahead solver. In each of them we test how solver performs on SAT benchmark problems.
 
 If you want to run experiments just run "py experiments [output_file] [input_file] [a/w -- a means that we use adjacency lists, w means we use watched literals] [lc/jw/rand -- lc means we use number of occurences heuristics, jw means that we use Jeroslow-Wang heuristics, rand means we use random choice of decision literal] "
