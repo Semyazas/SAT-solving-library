@@ -1,7 +1,7 @@
 # SAT solver project
 
 
-This is my SAT solver project. It contains DPLL solvers in ```src/``` and ```experiments/``` contains files that can run experiments that can run on benchmark problems. So far there are implemented look_ahead and dpll solvers. This project is mainly for learning purposes.
+This is my SAT solver project. It contains SAT solvers in ```src/``` and also experiments testing their performance in folder ```experiments/``` on [SATLIB benchmark problems](https://www.cs.ubc.ca/~hoos/SATLIB/benchm.html). So far there are implemented look_ahead and dpll solvers. This project is mainly for learning purposes.
 
 # Installation
 You can install package with solvers by running
