@@ -1,7 +1,0 @@
-SAT result: False
-number of clauses: 204
-number of variables: 56
-Experiment with inputs\pigeon-hole\hole7.cnf lasted 0.744690
-number of decisions: 32780
-number of UP steps: 318495
----------------------------------------------
